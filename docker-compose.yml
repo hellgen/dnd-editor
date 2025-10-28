@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: dnd-editor-db
+    restart: always
+    environment:
+      POSTGRES_USER: dnduser
+      POSTGRES_PASSWORD: dnduser
+      POSTGRES_DB: dnd-editor-db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+  migrate:
+    image: flyway/flyway:9
+    container_name: migrate-db
+    depends_on:
+      - db
+    environment:
+      FLYWAY_URL: jdbc:postgresql://db:5432/dnd-editor-db
+      FLYWAY_USER: user
+      FLYWAY_PASSWORD: pass
+    volumes:
+      - ./migrations:/flyway/sql
+    entrypoint: ["flyway"]
+    command: ["migrate"]
+
+volumes:
+  pgdata:
