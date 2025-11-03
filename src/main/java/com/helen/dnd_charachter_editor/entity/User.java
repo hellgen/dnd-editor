@@ -1,4 +1,4 @@
-package com.helen.dnd_charachter_editor;
+package com.helen.dnd_charachter_editor.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
