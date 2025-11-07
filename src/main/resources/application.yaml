@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: dnd-charachter-editor
+
+security:
+  jwt:
+    secret_key: 4eeab38d706831be4b36612ead768ef8182d1dd6f0e14e5dc934652e297fb16a
+    access_token_expiration: 900 # 15 min
+    refresh_token_expiration: 30d # 30 days
