@@ -1,11 +1,14 @@
 package com.helen.dnd_charachter_editor.filter;
 
+import com.helen.dnd_charachter_editor.entity.User;
+import com.helen.dnd_charachter_editor.repository.UserRepository;
 import com.helen.dnd_charachter_editor.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,17 +18,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.lang.module.Configuration;
+import java.util.Collections;
+import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService;
-
-    public JwtFilter(JwtService jwtService, UserDetailsService userDetailsService) {
-        this.jwtService = jwtService;
-        this.userDetailsService = userDetailsService;
-    }
+    private final UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(
@@ -45,16 +47,16 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            Optional<User> user = userRepository.findByUsername(username);
 
-
-            if (jwtService.isValid(token, userDetails)) {
+            //TODO: Подумай, как улучшить optional, чтобы не делать нового поьзователя
+            if (jwtService.isValid(token, user.orElse(new User()))) {
 
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities()
+                                user,
+                                token,
+                                Collections.emptyList()
                         );
 
                 authToken.setDetails(

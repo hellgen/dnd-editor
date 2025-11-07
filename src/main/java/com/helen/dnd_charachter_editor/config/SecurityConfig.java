@@ -3,6 +3,7 @@ package com.helen.dnd_charachter_editor.config;
 import com.helen.dnd_charachter_editor.filter.JwtFilter;
 import com.helen.dnd_charachter_editor.handler.CustomAccessDeniedHandler;
 import com.helen.dnd_charachter_editor.handler.CustomLogoutHandler;
+import com.helen.dnd_charachter_editor.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +29,7 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final CustomLogoutHandler customLogoutHandler;
-    private final org.springframework.security.core.userdetails.UserDetailsService userDetailsService;
+//    private final AuthService userDetailsService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -37,13 +38,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/auth/register",
-                                "/auth/login",
-                                "/auth/refresh"
+                                "auth/register",
+                                "auth/login",
+                                "auth/refresh"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-                .userDetailsService(userDetailsService)
+//                .userDetailsService(userDetailsService)
 
                 .exceptionHandling(e -> e
                         .accessDeniedHandler(accessDeniedHandler)

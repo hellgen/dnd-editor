@@ -4,14 +4,19 @@ import com.helen.dnd_charachter_editor.dto.request.LoginRequest;
 import com.helen.dnd_charachter_editor.dto.request.RefreshTokenRequest;
 import com.helen.dnd_charachter_editor.dto.request.RegisterRequest;
 import com.helen.dnd_charachter_editor.dto.response.AuthResponse;
+import com.helen.dnd_charachter_editor.entity.Token;
 import com.helen.dnd_charachter_editor.entity.User;
 import com.helen.dnd_charachter_editor.mapper.UserMapper;
+import com.helen.dnd_charachter_editor.repository.TokenRepository;
 import com.helen.dnd_charachter_editor.repository.UserRepository;
 import com.helen.dnd_charachter_editor.service.AuthService;
 import com.helen.dnd_charachter_editor.service.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.token.TokenService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +27,8 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
+//    private final AuthenticationManager authenticationManager;
+    private final TokenRepository tokenRepository;
 
     @Override
     public AuthResponse register(RegisterRequest request) {
@@ -44,24 +50,32 @@ public class AuthServiceImpl implements AuthService {
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
 
+        Token token = createToken(accessToken, refreshToken, user);
+
+        tokenRepository.save(token);
+
         return new AuthResponse(accessToken, refreshToken, "Bearer");
     }
 
     @Override
     public AuthResponse login(LoginRequest request) {
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.email(),
-                        request.password()
-                )
-        );
+//        authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(
+//                        request.email(),
+//                        request.password()
+//                )
+//        );
 
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
+
+        Token token = createToken(accessToken, refreshToken, user);
+
+        tokenRepository.save(token);
 
         return new AuthResponse(accessToken, refreshToken, "Bearer");
     }
@@ -84,6 +98,25 @@ public class AuthServiceImpl implements AuthService {
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
 
+        Token token = createToken(accessToken, refreshToken, user);
+
+        tokenRepository.save(token);
+
         return new AuthResponse(accessToken, refreshToken, "Bearer");
+    }
+
+    private Token createToken(String accessToken, String refreshToken, User user) {
+        Token token = new Token();
+
+        token.setAccessToken(accessToken);
+        token.setRefreshToken(refreshToken);
+        token.setUser(user);
+
+        return token;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }

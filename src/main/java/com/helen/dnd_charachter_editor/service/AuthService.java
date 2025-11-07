@@ -5,8 +5,9 @@ import com.helen.dnd_charachter_editor.dto.request.RefreshTokenRequest;
 import com.helen.dnd_charachter_editor.dto.request.RegisterRequest;
 import com.helen.dnd_charachter_editor.dto.response.AuthResponse;
 import com.helen.dnd_charachter_editor.entity.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface AuthService {
+public interface AuthService extends UserDetailsService {
 
     AuthResponse register(RegisterRequest request);
 

@@ -7,6 +7,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,27 +15,25 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.time.Duration;
 import java.util.Date;
 import java.util.function.Function;
 
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
 
     @Value("${security.jwt.secret_key}")
     private String secretKey;
 
     @Value("${security.jwt.access_token_expiration}")
-    private long accessTokenExpiration;
+    private Duration accessTokenExpiration;
 
     @Value("${security.jwt.refresh_token_expiration}")
-    private long refreshTokenExpiration;
+    private Duration refreshTokenExpiration;
 
     private final TokenRepository tokenRepository;
-
-    public JwtService(TokenRepository tokenRepository) {
-        this.tokenRepository = tokenRepository;
-    }
 
     public boolean isValid(String token, UserDetails user) {
         String username = extractUsername(token);
@@ -91,11 +90,11 @@ public class JwtService {
         return generateToken(user, refreshTokenExpiration);
     }
 
-    private String generateToken(User user, long expiryTime) {
+    private String generateToken(User user, Duration expiryTime) {
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiryTime))
+                .setExpiration(new Date(System.currentTimeMillis() + expiryTime.toMillis()))
                 .signWith(getSigningKey())
                 .compact();
     }
