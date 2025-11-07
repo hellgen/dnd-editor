@@ -4,8 +4,10 @@ import com.helen.dnd_charachter_editor.dto.request.LoginRequest;
 import com.helen.dnd_charachter_editor.dto.request.RefreshTokenRequest;
 import com.helen.dnd_charachter_editor.dto.request.RegisterRequest;
 import com.helen.dnd_charachter_editor.dto.response.AuthResponse;
+import com.helen.dnd_charachter_editor.entity.Token;
 import com.helen.dnd_charachter_editor.entity.User;
 import com.helen.dnd_charachter_editor.mapper.UserMapper;
+import com.helen.dnd_charachter_editor.repository.TokenRepository;
 import com.helen.dnd_charachter_editor.repository.UserRepository;
 import com.helen.dnd_charachter_editor.service.AuthService;
 import com.helen.dnd_charachter_editor.service.JwtService;
@@ -23,6 +25,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final TokenRepository tokenRepository;
 
     @Override
     public AuthResponse register(RegisterRequest request) {
@@ -44,6 +47,10 @@ public class AuthServiceImpl implements AuthService {
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
 
+        Token token = createToken(accessToken, refreshToken, user);
+
+        tokenRepository.save(token);
+
         return new AuthResponse(accessToken, refreshToken, "Bearer");
     }
 
@@ -62,6 +69,10 @@ public class AuthServiceImpl implements AuthService {
 
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
+
+        Token token = createToken(accessToken, refreshToken, user);
+
+        tokenRepository.save(token);
 
         return new AuthResponse(accessToken, refreshToken, "Bearer");
     }
@@ -84,6 +95,19 @@ public class AuthServiceImpl implements AuthService {
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
 
+        Token token = createToken(accessToken, refreshToken, user);
+
+        tokenRepository.save(token);
+
         return new AuthResponse(accessToken, refreshToken, "Bearer");
+    }
+
+    private Token createToken(String accessToken, String refreshToken, User user) {
+        Token token = new Token();
+
+        token.setAccessToken(accessToken);
+        token.setRefreshToken(refreshToken);
+        token.setUser(user);
+        return token;
     }
 }
