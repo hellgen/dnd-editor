@@ -16,6 +16,7 @@ import java.util.UUID;
 @Table(name = "token", schema = "dnd_editor")
 public class Token {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private UUID id;
 

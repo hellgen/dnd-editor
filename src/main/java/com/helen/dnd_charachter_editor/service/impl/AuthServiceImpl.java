@@ -20,6 +20,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -44,6 +46,10 @@ public class AuthServiceImpl implements AuthService {
 
         // Хэшируем пароль
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        Instant now = Instant.now();
+
+        user.setCreatedAt(now);
 
         userRepository.save(user);
 
@@ -110,6 +116,7 @@ public class AuthServiceImpl implements AuthService {
 
         token.setAccessToken(accessToken);
         token.setRefreshToken(refreshToken);
+        token.setLoggedOut(false);
         token.setUser(user);
 
         return token;
