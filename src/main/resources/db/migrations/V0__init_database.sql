@@ -1,4 +1,4 @@
-create schema if not exists dnd_editor;
+    create schema if not exists dnd_editor;
 
 create table if not exists dnd_editor.users (
     id UUID not null unique primary key,
