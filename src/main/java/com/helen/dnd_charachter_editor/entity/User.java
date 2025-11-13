@@ -6,34 +6,28 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "users", schema = "dnd_editor")
-public class User {
+public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_gen")
-    @SequenceGenerator(name = "users_id_gen", sequenceName = "users_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private UUID id;
 
     @Size(max = 50)
     @NotNull
     @Column(name = "username", nullable = false, length = 50)
     private String username;
-
-    @Size(max = 50)
-    @NotNull
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
-
-    @Size(max = 50)
-    @NotNull
-    @Column(name = "surname", nullable = false, length = 50)
-    private String surname;
 
     @Size(max = 100)
     @NotNull
@@ -53,4 +47,8 @@ public class User {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
 }

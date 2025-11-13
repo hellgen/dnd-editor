@@ -8,11 +8,11 @@ services:
     environment:
       POSTGRES_USER: dnduser
       POSTGRES_PASSWORD: dnduser
-      POSTGRES_DB: dnd-editor-db
+      POSTGRES_DB: dnd_editor_db
     ports:
       - "5433:5432"
     volumes:
-      - pgdata:/var/lib/postgresql
+      - pgdata:/var/lib/postgresql/data
 
   migrate:
     image: flyway/flyway:9
@@ -20,13 +20,34 @@ services:
     depends_on:
       - db
     environment:
-      FLYWAY_URL: jdbc:postgresql://db:5432/dnd-editor-db
+      FLYWAY_URL: jdbc:postgresql://db:5432/dnd_editor_db
       FLYWAY_USER: dnduser
       FLYWAY_PASSWORD: dnduser
     volumes:
       - ./src/main/resources/db/migrations:/flyway/sql
     entrypoint: ["flyway"]
     command: ["migrate"]
+
+  webapi:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: dnd-app
+    hostname: webapi
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/dnd_editor_db
+      - POSTGRES_USER=dnduser
+      - POSTGRES_PASSWORD=dnduser
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:8080 || exit 1" ]
+      interval: 10s
+      retries: 5
+      start_period: 15s
+      timeout: 10s
 
 volumes:
   pgdata:
