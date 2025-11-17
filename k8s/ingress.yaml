@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules: # укажи свой домен
-    - host: "82.202.141.156"  # <- сюда твой публичный домен или сервер IP
+    - host: dnd-editor.duckdns.org  # <- сюда твой публичный домен или сервер IP
       http:
         paths:
           - path: /
