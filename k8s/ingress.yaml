@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dnd-editor-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/auth-response-headers: "Authorization" # если нужно передавать авторизационные заголовки
+spec:
+  rules:
+    - host: api-obshaga-service.ru  # укажи свой домен
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dnd-editor
+                port:
+                  number: 80  # Сервер слушает на порту 80, но будет направлен на 443 через Ingress
+#  tls:
+#    - hosts:
+#        - api-obshaga-service.ru
+#      secretName: my-ssl-secret  # Это имя Kubernetes секрета, который содержит SSL сертификат
