@@ -4,7 +4,7 @@ COPY . .
 RUN gradle clean build -x test
 
 FROM eclipse-temurin:21-jdk
-COPY --from=builder /app/build/libs/dnd-editor-*.jar service.jar
+COPY --from=builder /app/build/libs/dnd-charachter-editor-0.0.1-SNAPSHOT.jar service.jar
 ENV SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/dnd_editor_db
 ENV POSTGRES_USER=dnduser
 ENV POSTGRES_PASSWORD=dnduser
