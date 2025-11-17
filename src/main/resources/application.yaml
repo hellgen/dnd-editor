@@ -18,6 +18,20 @@ spring:
         locations:
           - db.migration
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus, info, beans, trace
+  endpoint:
+    health:
+      show-details: always
+  server:
+    port: 8080
+  spring:
+    security:
+      enabled: false
+
 springdoc:
   swagger-ui:
     enabled: true
