@@ -5,9 +5,9 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/auth-response-headers: "Authorization" # если нужно передавать авторизационные заголовки
 spec:
-  rules:
-    - host: api-obshaga-service.ru  # укажи свой домен
-      http:
+  ingressClassName: nginx
+  rules: # укажи свой домен
+    - http:
         paths:
           - path: /
             pathType: Prefix
