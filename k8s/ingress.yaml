@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: dnd-editor-ingress
   annotations:
-    traefik.ingress.kubernetes.io/auth-response-headers: "Authorization" # если нужно передавать авторизационные заголовки
+    traefik.ingress.kubernetes.io/auth-response-headers: web #"Authorization" если нужно передавать авторизационные заголовки
 spec:
   ingressClassName: traefik
   rules: # укажи свой домен
