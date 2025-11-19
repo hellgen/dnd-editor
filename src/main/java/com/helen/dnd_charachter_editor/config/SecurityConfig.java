@@ -30,6 +30,7 @@ public class SecurityConfig {
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final CustomLogoutHandler customLogoutHandler;
 //    private final AuthService userDetailsService;
+    //тест рестарта пода
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
