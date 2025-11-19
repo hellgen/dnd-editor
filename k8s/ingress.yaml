@@ -15,7 +15,7 @@ spec:
               service:
                 name: dnd-editor
                 port:
-                  number: 80  # Сервер слушает на порту 80, но будет направлен на 443 через Ingress
+                  number: 8080  # Сервер слушает на порту 80, но будет направлен на 443 через Ingress
 #  tls:
 #    - hosts:
 #        - api-obshaga-service.ru
