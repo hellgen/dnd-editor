@@ -40,7 +40,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "auth/register",
                                 "auth/login",
-                                "auth/refresh"
+                                "auth/refresh",
+                                "/actuator/health"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
