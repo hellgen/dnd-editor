@@ -15,6 +15,7 @@ spec:   # Запускаем 1 новый pod перед удалением ст
       labels:
         app: dnd-editor
     spec:
+#      hostNetwork: true
       imagePullSecrets:
         - name: ghcr-secret
       automountServiceAccountToken: false  # отключаем автоматическое монтирование, если не нужно
