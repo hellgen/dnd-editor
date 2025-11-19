@@ -42,7 +42,7 @@ public class SecurityConfig {
                                 "auth/register",
                                 "auth/login",
                                 "auth/refresh",
-                                "/actuator/health"
+                                "actuator/health"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
