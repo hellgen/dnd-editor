@@ -20,7 +20,7 @@ services:
     depends_on:
       - db
     environment:
-      FLYWAY_URL: jdbc:postgresql://82.202.141.156:5433/dnd_editor_db
+      FLYWAY_URL: jdbc:postgresql://db:5432/dnd_editor_db
       FLYWAY_USER: dnduser
       FLYWAY_PASSWORD: dnduser
     volumes:
@@ -39,7 +39,7 @@ services:
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://82.202.141.156:5433/dnd_editor_db
+      - SPRING_DATASOURCE_URL=jdbc:jdbc:postgresql://db:5432/dnd_editor_db
       - POSTGRES_USER=dnduser
       - POSTGRES_PASSWORD=dnduser
     healthcheck:

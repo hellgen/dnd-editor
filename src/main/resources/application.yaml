@@ -22,7 +22,7 @@ spring:
       hibernate:
         format_sql: true
   datasource:
-    url: jdbc:postgresql://82.202.141.156:5433/dnd_editor_db
+    url: jdbc:postgresql://localhost:5433/dnd_editor_db
     username: dnduser
     password: dnduser
     flyway:
