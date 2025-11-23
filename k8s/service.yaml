@@ -7,6 +7,6 @@ spec:
     app: dnd-editor
   ports:
     - protocol: TCP
-      port: 80         # Внутренний порт, по которому шлюз доступен в кластере
-      targetPort: 8080   # Порт, на котором слушает контейнер
-  type: ClusterIP      # Так шлюз доступен только внутри кластера; внешний доступ обеспечит Ingress или NodePort
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

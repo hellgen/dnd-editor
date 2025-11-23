@@ -1,16 +1,20 @@
+# docker-compose.yaml
 version: "3.9"
 
 services:
   db:
     image: postgres:15
     container_name: dnd-editor-db
+    hostname: dnd-editor-db
     restart: always
     environment:
+      POSTGRES_DB: dnd_editor_db
       POSTGRES_USER: dnduser
       POSTGRES_PASSWORD: dnduser
-      POSTGRES_DB: dnd_editor_db
     ports:
       - "5433:5432"
+    networks:
+      - shared-network
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -29,10 +33,10 @@ services:
     command: ["migrate"]
 
   webapi:
+    container_name: dnd-app
     build:
       dockerfile: Dockerfile
       context: .
-    container_name: dnd-app
     hostname: webapi
     ports:
       - "8080:8080"

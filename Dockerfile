@@ -1,12 +1,21 @@
+# builder stage
 FROM gradle:8.10-jdk21 AS builder
 WORKDIR /app
 COPY . .
-RUN gradle clean build -x test
+# Собираем артефакт (исключаем тесты в CI если нужно - можно убрать)
+RUN gradle clean assemble -x test
 
+# runtime stage
 FROM eclipse-temurin:21-jdk
-COPY --from=builder /app/build/libs/dnd-charachter-editor-0.0.1-SNAPSHOT.jar service.jar
-ENV SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/dnd_editor_db
-ENV POSTGRES_USER=dnduser
-ENV POSTGRES_PASSWORD=dnduser
+WORKDIR /app
+
+ARG JAR_FILE=build/libs/*.jar
+COPY --from=builder /app/${JAR_FILE} app.jar
+
+ARG INTERNAL_REPO_LOGIN
+ARG INTERNAL_REPO_PASSWORD
+ENV INTERNAL_REPO_LOGIN=$INTERNAL_REPO_LOGIN
+ENV INTERNAL_REPO_PASSWORD=$INTERNAL_REPO_PASSWORD
+
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "service.jar"]
+CMD ["java", "-Dspring.profiles.active=prod", "-jar", "/app/app.jar"]

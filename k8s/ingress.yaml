@@ -3,10 +3,11 @@ kind: Ingress
 metadata:
   name: dnd-editor-ingress
   annotations:
-    nginx.ingress.kubernetes.io/auth-response-headers: "Authorization" # если нужно передавать авторизационные заголовки
+    nginx.ingress.kubernetes.io/auth-response-headers: "Authorization"
+    # nginx.ingress.kubernetes.io/rewrite-target: /  # если нужно переписывать путь
 spec:
   rules:
-    - host: 82.202.141.156 # укажи свой домен
+    - host: 82.202.141.156  # можно заменить на домен, например example.com
       http:
         paths:
           - path: /
@@ -15,8 +16,8 @@ spec:
               service:
                 name: dnd-editor
                 port:
-                  number: 80  # Сервер слушает на порту 80, но будет направлен на 443 через Ingress
-#  tls:
-#    - hosts:
-#        - api-obshaga-service.ru
-#      secretName: my-ssl-secret  # Это имя Kubernetes секрета, который содержит SSL сертификат
+                  number: 80
+  # tls:
+  #   - hosts:
+  #       - example.com
+  #     secretName: tls-secret
