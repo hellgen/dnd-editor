@@ -7,7 +7,7 @@ metadata:
     # nginx.ingress.kubernetes.io/rewrite-target: /  # если нужно переписывать путь
 spec:
   rules:
-    - host: 82.202.141.156  # можно заменить на домен, например example.com
+    - host: 82.202.141.156.nip.io      # можно заменить на домен, например example.com
       http:
         paths:
           - path: /
