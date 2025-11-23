@@ -6,7 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-response-headers: "Authorization" # если нужно передавать авторизационные заголовки
 spec:
   rules:
-    - host: 82.202.141.156.nip.io # укажи свой домен
+    - host: 82.202.141.156 # укажи свой домен
       http:
         paths:
           - path: /
