@@ -39,9 +39,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "auth/register",
-                                "auth/login",
-                                "auth/refresh"
+                                "/auth/register",
+                                "/auth/login",
+                                "/auth/refresh"
                         ).permitAll()
                         .requestMatchers("/actuator/**").permitAll()
                         .anyRequest().authenticated()
