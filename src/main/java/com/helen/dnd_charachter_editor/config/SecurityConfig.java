@@ -44,7 +44,7 @@ public class SecurityConfig {
                                 "/auth/refresh"
                         ).permitAll()
                         .requestMatchers("/actuator/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
 //                .userDetailsService(userDetailsService)
 
