@@ -124,11 +124,9 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd dnd-editor
-
-            echo "Updating deployment.yaml image tag..."
-            
             git pull origin master
-            
+          
+            echo "Updating deployment.yaml image tag..."
             sed -i "s|ghcr.io/hellgen/dnd-editor:.*|${{ needs.push-image.outputs.image-sha-tag }}|g" k8s/deployment.yaml
 
             sudo kubectl apply -f k8s/deployment.yaml
