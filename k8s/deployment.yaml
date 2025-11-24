@@ -21,7 +21,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: dnd-editor
-          image: ghcr.io/hellgen/dnd-editor:latest
+          image: ghcr.io/hellgen/dnd-editor
           ports:
             - containerPort: 8080
           resources:
