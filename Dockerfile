@@ -2,15 +2,14 @@
 FROM gradle:8.10-jdk21 AS builder
 WORKDIR /app
 COPY . .
-# Собираем артефакт (исключаем тесты в CI если нужно - можно убрать)
 RUN gradle clean assemble -x test
 
 # runtime stage
 FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
-ARG JAR_FILE=build/libs/*.jar
-COPY --from=builder /app/${JAR_FILE} app.jar
+# КОПИРУЕМ JAR БЕЗ ARG — напрямую
+COPY --from=builder /app/build/libs/*.jar /app/app.jar
 
 ARG INTERNAL_REPO_LOGIN
 ARG INTERNAL_REPO_PASSWORD
