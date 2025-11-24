@@ -6,14 +6,10 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, prometheus, info, beans, trace
-  security:
-    enabled: false
+        include: health, info, beans, trace, prometheus
   endpoint:
     health:
       show-details: always
-  tracing:
-    enabled: true
 
 spring:
   application:

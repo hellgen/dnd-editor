@@ -43,8 +43,8 @@ public class SecurityConfig {
                                 "/auth/login",
                                 "/auth/refresh"
                         ).permitAll()
-                        .requestMatchers("/actuator/**").permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/actuator/**").permitAll()   // <--- обязательно
+                        .anyRequest().authenticated()
                 )
 //                .userDetailsService(userDetailsService)
 
