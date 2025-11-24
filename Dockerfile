@@ -9,7 +9,7 @@ FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 # КОПИРУЕМ JAR БЕЗ ARG — напрямую
-COPY --from=builder /app/build/libs/*.jar /app/app.jar
+COPY --from=builder /app/build/libs/*SNAPSHOT.jar /app/app.jar
 
 ARG INTERNAL_REPO_LOGIN
 ARG INTERNAL_REPO_PASSWORD
