@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/dnd_editor_db
+    username: dnduser
+    password: dnduser
