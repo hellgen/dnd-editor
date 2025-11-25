@@ -21,7 +21,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-test
-    container_name: my-app
+    container_name: dnd-app
     depends_on:
       db:
         condition: service_healthy
