@@ -68,7 +68,7 @@ jobs:
             || (docker ps -a && docker logs dnd-app || true && exit 1)
 
       - name: Stop containers
-        run: docker-compose -f docker-compose-test.yml down --volumes
+        run: docker-compose -f docker-compose-test.yaml down --volumes
 
   push-image:
     name: Build and Push Docker Image to GHCR
