@@ -53,5 +53,9 @@ services:
       start_period: 15s
       timeout: 10s
 
+networks:
+  shared-network:
+    driver: bridge
+
 volumes:
   pgdata:
