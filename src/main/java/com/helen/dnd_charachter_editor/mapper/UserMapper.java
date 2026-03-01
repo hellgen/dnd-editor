@@ -1,6 +1,6 @@
 package com.helen.dnd_charachter_editor.mapper;
 
-import com.helen.dnd_charachter_editor.dto.request.RegisterRequest;
+import com.helen.dnd_charachter_editor.entity.RegisterRequest;
 import com.helen.dnd_charachter_editor.entity.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

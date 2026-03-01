@@ -1,8 +1,8 @@
 package com.helen.dnd_charachter_editor.service.impl;
 
-import com.helen.dnd_charachter_editor.dto.request.LoginRequest;
-import com.helen.dnd_charachter_editor.dto.request.RefreshTokenRequest;
-import com.helen.dnd_charachter_editor.dto.request.RegisterRequest;
+import com.helen.dnd_charachter_editor.dto.request.registration.LoginRequest;
+import com.helen.dnd_charachter_editor.dto.request.registration.RefreshTokenRequest;
+import com.helen.dnd_charachter_editor.entity.RegisterRequest;
 import com.helen.dnd_charachter_editor.dto.response.AuthResponse;
 import com.helen.dnd_charachter_editor.entity.Token;
 import com.helen.dnd_charachter_editor.entity.User;
@@ -13,8 +13,6 @@ import com.helen.dnd_charachter_editor.service.AuthService;
 import com.helen.dnd_charachter_editor.service.JwtService;
 import lombok.RequiredArgsConstructor;
 //import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.token.TokenService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;

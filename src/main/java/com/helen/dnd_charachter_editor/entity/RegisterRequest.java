@@ -1,4 +1,4 @@
-package com.helen.dnd_charachter_editor.dto.request;
+package com.helen.dnd_charachter_editor.entity;
 
 public record RegisterRequest (
         String email,
