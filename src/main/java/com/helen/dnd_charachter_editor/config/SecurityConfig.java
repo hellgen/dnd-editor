@@ -3,7 +3,6 @@ package com.helen.dnd_charachter_editor.config;
 import com.helen.dnd_charachter_editor.filter.JwtFilter;
 import com.helen.dnd_charachter_editor.handler.CustomAccessDeniedHandler;
 import com.helen.dnd_charachter_editor.handler.CustomLogoutHandler;
-import com.helen.dnd_charachter_editor.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

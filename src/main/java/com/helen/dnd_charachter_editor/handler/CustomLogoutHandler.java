@@ -1,7 +1,7 @@
 package com.helen.dnd_charachter_editor.handler;
 
-import com.helen.dnd_charachter_editor.entity.Token;
-import com.helen.dnd_charachter_editor.repository.TokenRepository;
+import com.helen.dnd_charachter_editor.entity.auth.Token;
+import com.helen.dnd_charachter_editor.repository.auth.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
