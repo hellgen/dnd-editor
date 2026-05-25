@@ -4,17 +4,20 @@ package com.helen.dnd_charachter_editor.service.character.impl;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterAbilityRequest;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterAbilityResponse;
 import com.helen.dnd_charachter_editor.entity.character.CharacterAbility;
-import com.helen.dnd_charachter_editor.entity.referencetable.Ability;
-import com.helen.dnd_charachter_editor.entity.referencetable.RaceAbilityBonus;
-import com.helen.dnd_charachter_editor.entity.referencetable.SubraceAbilityBonus;
+import com.helen.dnd_charachter_editor.entity.character.UserCharacter;
+import com.helen.dnd_charachter_editor.entity.reference.table.Ability;
+import com.helen.dnd_charachter_editor.entity.reference.table.RaceAbilityBonus;
+import com.helen.dnd_charachter_editor.entity.reference.table.SubraceAbilityBonus;
 import com.helen.dnd_charachter_editor.mapper.character.CharacterAbilityMapper;
 import com.helen.dnd_charachter_editor.repository.character.CharacterAbilityRepository;
-import com.helen.dnd_charachter_editor.repository.referncetable.AbilityRepository;
-import com.helen.dnd_charachter_editor.repository.referncetable.RaceAbilityBonusRepository;
-import com.helen.dnd_charachter_editor.repository.referncetable.SubraceAbilityBonusRepository;
+import com.helen.dnd_charachter_editor.repository.character.CharacterRepository;
+import com.helen.dnd_charachter_editor.repository.refernce.table.AbilityRepository;
+import com.helen.dnd_charachter_editor.repository.refernce.table.RaceAbilityBonusRepository;
+import com.helen.dnd_charachter_editor.repository.refernce.table.SubraceAbilityBonusRepository;
 import com.helen.dnd_charachter_editor.service.character.CharacterAbilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -31,22 +34,14 @@ public class CharacterAbilityServiceImpl implements CharacterAbilityService {
 
     @Override
     @Transactional
-    public CharacterAbilityResponse setCharacterAbility(
-            UUID characterId,
-            UUID abilityId,
-            SetCharacterAbilityRequest request
-    ) {
-        Character character = characterRepository.findById(characterId)
-                .orElseThrow(() -> new RuntimeException("Персонаж не найден"));
+    public CharacterAbilityResponse setCharacterAbility(UUID characterId, UUID abilityId, SetCharacterAbilityRequest request) {
+        UserCharacter character = characterRepository.findById(characterId).orElseThrow(() -> new RuntimeException("Персонаж не найден"));
 
-        Ability ability = abilityRepository.findById(abilityId)
-                .orElseThrow(() -> new RuntimeException("Характеристика не найдена"));
+        Ability ability = abilityRepository.findById(abilityId).orElseThrow(() -> new RuntimeException("Характеристика не найдена"));
 
         validateCharacterRaceAndSubrace(character);
 
-        CharacterAbility characterAbility = characterAbilityRepository
-                .findByCharacterIdAndAbilityId(characterId, abilityId)
-                .orElseGet(CharacterAbility::new);
+        CharacterAbility characterAbility = characterAbilityRepository.findByCharacterIdAndAbilityId(characterId, abilityId).orElseGet(CharacterAbility::new);
 
         characterAbility.setCharacter(character);
         characterAbility.setAbility(ability);
@@ -57,14 +52,10 @@ public class CharacterAbilityServiceImpl implements CharacterAbilityService {
         Integer raceBonus = getRaceBonus(character, abilityId);
         Integer subraceBonus = getSubraceBonus(character, abilityId);
 
-        return characterAbilityMapper.toResponse(
-                savedCharacterAbility,
-                raceBonus,
-                subraceBonus
-        );
+        return characterAbilityMapper.toResponse(savedCharacterAbility, raceBonus, subraceBonus);
     }
 
-    private void validateCharacterRaceAndSubrace(Character character) {
+    private void validateCharacterRaceAndSubrace(UserCharacter character) {
         if (character.getRace() == null) {
             throw new RuntimeException("У персонажа не выбрана раса");
         }
@@ -85,25 +76,19 @@ public class CharacterAbilityServiceImpl implements CharacterAbilityService {
         }
     }
 
-    private Integer getRaceBonus(Character character, UUID abilityId) {
+    private Integer getRaceBonus(UserCharacter character, UUID abilityId) {
         UUID raceId = character.getRace().getId();
 
-        return raceAbilityBonusRepository
-                .findByRaceIdAndAbilityId(raceId, abilityId)
-                .map(RaceAbilityBonus::getBonusValue)
-                .orElse(0);
+        return raceAbilityBonusRepository.findByRaceIdAndAbilityId(raceId, abilityId).map(RaceAbilityBonus::getBonusValue).orElse(0);
     }
 
-    private Integer getSubraceBonus(Character character, UUID abilityId) {
+    private Integer getSubraceBonus(UserCharacter character, UUID abilityId) {
         if (character.getSubrace() == null) {
             return 0;
         }
 
         UUID subraceId = character.getSubrace().getId();
 
-        return subraceAbilityBonusRepository
-                .findBySubraceIdAndAbilityId(subraceId, abilityId)
-                .map(SubraceAbilityBonus::getBonusValue)
-                .orElse(0);
+        return subraceAbilityBonusRepository.findBySubraceIdAndAbilityId(subraceId, abilityId).map(SubraceAbilityBonus::getBonusValue).orElse(0);
     }
 }

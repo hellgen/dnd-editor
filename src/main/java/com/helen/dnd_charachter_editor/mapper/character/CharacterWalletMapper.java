@@ -6,9 +6,9 @@ import com.helen.dnd_charachter_editor.entity.character.CharacterWallet;
 
 public class CharacterWalletMapper {
 
-    public WalletResponse toResponse(CharacterWallet wallet) {
+    public static WalletResponse toResponse(CharacterWallet wallet) {
         return WalletResponse.builder()
-                .characterWalletId(wallet.getCharacterWalletId())
+                .characterWalletId(wallet.getId())
                 .characterId(wallet.getCharacterId())
                 .copper(wallet.getCopper())
                 .silver(wallet.getSilver())

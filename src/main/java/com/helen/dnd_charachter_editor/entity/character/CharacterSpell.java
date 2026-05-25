@@ -1,6 +1,6 @@
 package com.helen.dnd_charachter_editor.entity.character;
 
-import com.helen.dnd_charachter_editor.entity.referencetable.Spell;
+import com.helen.dnd_charachter_editor.entity.reference.table.Spell;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -24,7 +24,7 @@ public class CharacterSpell {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "character_id", nullable = false)
-    private Character character;
+    private UserCharacter character;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

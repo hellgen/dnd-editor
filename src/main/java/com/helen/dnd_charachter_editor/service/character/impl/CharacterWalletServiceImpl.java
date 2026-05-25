@@ -4,7 +4,7 @@ import com.helen.dnd_charachter_editor.dto.request.character.WalletUpdateRequest
 import com.helen.dnd_charachter_editor.dto.response.character.WalletResponse;
 import com.helen.dnd_charachter_editor.entity.character.CharacterWallet;
 import com.helen.dnd_charachter_editor.mapper.character.CharacterWalletMapper;
-import com.helen.dnd_charachter_editor.repository.CharacterRepository;
+import com.helen.dnd_charachter_editor.repository.character.CharacterRepository;
 import com.helen.dnd_charachter_editor.repository.character.CharacterWalletRepository;
 import com.helen.dnd_charachter_editor.service.character.CharacterWalletService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,6 @@ public class CharacterWalletServiceImpl implements CharacterWalletService {
 
     private final CharacterWalletRepository characterWalletRepository;
     private final CharacterRepository characterRepository;
-    private final CharacterWalletMapper characterWalletMapper;
 
     @Override
     public WalletResponse getWallet(UUID characterId) {
@@ -28,7 +27,7 @@ public class CharacterWalletServiceImpl implements CharacterWalletService {
 
         CharacterWallet wallet = getOrCreateWallet(characterId);
 
-        return characterWalletMapper.toResponse(wallet);
+        return CharacterWalletMapper.toResponse(wallet);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class CharacterWalletServiceImpl implements CharacterWalletService {
 
         CharacterWallet savedWallet = characterWalletRepository.save(wallet);
 
-        return characterWalletMapper.toResponse(savedWallet);
+        return CharacterWalletMapper.toResponse(savedWallet);
     }
 
     private CharacterWallet getOrCreateWallet(UUID characterId) {
@@ -68,20 +67,20 @@ public class CharacterWalletServiceImpl implements CharacterWalletService {
     }
 
     private CharacterWallet createEmptyWallet(UUID characterId) {
-        CharacterWallet wallet = CharacterWallet.builder()
-                .characterId(characterId)
-                .copper(0)
-                .silver(0)
-                .electrum(0)
-                .gold(0)
-                .platinum(0)
-                .build();
+        CharacterWallet wallet = new CharacterWallet();
+
+        wallet.setCharacterId(characterId);
+        wallet.setCopper(0);
+        wallet.setSilver(0);
+        wallet.setElectrum(0);
+        wallet.setGold(0);
+        wallet.setPlatinum(0);
 
         return characterWalletRepository.save(wallet);
     }
 
     private void checkCharacterExists(UUID characterId) {
-        if (!characterRepository.existsByCharacterId(characterId)) {
+        if (!characterRepository.existsById(characterId)) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
                     "Character with id " + characterId + " not found"

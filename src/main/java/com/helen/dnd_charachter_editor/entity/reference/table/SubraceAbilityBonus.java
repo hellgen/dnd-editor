@@ -1,6 +1,5 @@
-package com.helen.dnd_charachter_editor.entity.character;
+package com.helen.dnd_charachter_editor.entity.reference.table;
 
-import com.helen.dnd_charachter_editor.entity.reference.table.Ability;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -13,17 +12,17 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "character_abilities", schema = "dnd_editor")
-public class CharacterAbility {
+@Table(name = "subrace_ability_bonuses", schema = "dnd_editor")
+public class SubraceAbilityBonus {
     @Id
-    @Column(name = "character_ability_id", nullable = false)
+    @Column(name = "subrace_ability_bonus_id", nullable = false)
     private UUID id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "character_id", nullable = false)
-    private UserCharacter character;
+    @JoinColumn(name = "subrace_id", nullable = false)
+    private Subrace subrace;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -32,7 +31,7 @@ public class CharacterAbility {
     private Ability ability;
 
     @NotNull
-    @Column(name = "value", nullable = false)
-    private Integer value;
+    @Column(name = "bonus_value", nullable = false)
+    private Integer bonusValue;
 
 }
