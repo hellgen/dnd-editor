@@ -22,7 +22,7 @@ import java.time.Instant;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService {
+public class DefaultAuthService implements AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

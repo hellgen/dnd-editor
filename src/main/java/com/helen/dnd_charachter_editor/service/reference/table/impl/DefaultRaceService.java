@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class RaceServiceImpl implements RaceService {
+public class DefaultRaceService implements RaceService {
     private final RaceRepository raceRepository;
     private final SubraceRepository subraceRepository;
 
@@ -34,10 +34,15 @@ public class RaceServiceImpl implements RaceService {
     }
 
     @Override
-    public RaceResponse getRace(UUID raceId) {
+    public RaceResponse getRaceResponse(UUID raceId) {
         Race race = getRaceByIdOrThrow(raceId);
 
         return RaceMapper.toListResponse(race);
+    }
+
+    @Override
+    public Race getRace(UUID raceId) {
+        return getRaceByIdOrThrow(raceId);
     }
 
     @Override
@@ -58,10 +63,15 @@ public class RaceServiceImpl implements RaceService {
     }
 
     @Override
-    public SubraceResponse getSubrace(UUID raceId, UUID subraceId) {
+    public SubraceResponse getSubraceResponse(UUID raceId, UUID subraceId) {
         Subrace subrace = getSubraceByIdAndRaceIdOrThrow(raceId, subraceId);
 
         return SubraceMapper.toListResponse(subrace);
+    }
+
+    @Override
+    public Subrace getSubrace(UUID raceId, UUID subraceId) {
+        return getSubraceByIdAndRaceIdOrThrow(raceId, subraceId);
     }
 
     @Override

@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ItemServiceImpl implements ItemService {
+public class DefaultItemService implements ItemService {
 
     private final ItemRepository itemRepository;
     private final ItemMapper itemMapper;
