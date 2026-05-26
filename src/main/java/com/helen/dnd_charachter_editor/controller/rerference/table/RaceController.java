@@ -24,7 +24,7 @@ public class RaceController {
 
     @GetMapping("/{raceId}")
     public RaceResponse getRace(@PathVariable UUID raceId) {
-        return raceService.getRace(raceId);
+        return raceService.getRaceResponse(raceId);
     }
 
     @GetMapping("/{raceId}/subraces")
@@ -42,7 +42,7 @@ public class RaceController {
             @PathVariable UUID raceId,
             @PathVariable UUID subraceId
     ) {
-        return raceService.getSubrace(raceId, subraceId);
+        return raceService.getSubraceResponse(raceId, subraceId);
     }
 
     @GetMapping("/{raceId}/subraces/{subraceId}/description")

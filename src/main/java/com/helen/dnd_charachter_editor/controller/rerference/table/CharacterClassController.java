@@ -31,7 +31,7 @@ public class CharacterClassController {
     public CharacterClassResponse getClassById(
             @PathVariable UUID classId
     ) {
-        return characterClassService.getClassById(classId);
+        return characterClassService.getClassResponseById(classId);
     }
 
     @GetMapping("/{classId}/features")
@@ -70,7 +70,7 @@ public class CharacterClassController {
             @PathVariable UUID classId,
             @PathVariable UUID classArchetypeId
     ) {
-        return characterClassService.getClassArchetypeById(
+        return characterClassService.getClassArchetypeResponseById(
                 classId,
                 classArchetypeId
         );

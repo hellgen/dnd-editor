@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CharacterWalletServiceImpl implements CharacterWalletService {
+public class DefaultCharacterWalletService implements CharacterWalletService {
 
     private final CharacterWalletRepository characterWalletRepository;
     private final CharacterRepository characterRepository;

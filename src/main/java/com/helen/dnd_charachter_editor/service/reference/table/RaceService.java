@@ -4,6 +4,8 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.RaceDescript
 import com.helen.dnd_charachter_editor.dto.response.reference.table.RaceResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.SubraceDescriptionResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.SubraceResponse;
+import com.helen.dnd_charachter_editor.entity.reference.table.Race;
+import com.helen.dnd_charachter_editor.entity.reference.table.Subrace;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,13 +13,17 @@ import java.util.UUID;
 public interface RaceService {
     List<RaceResponse> getAllRaces();
 
-    RaceResponse getRace(UUID raceId);
+    RaceResponse getRaceResponse(UUID raceId);
+
+    Race getRace(UUID raceId);
 
     RaceDescriptionResponse getRaceDescription(UUID raceId);
 
     List<SubraceResponse> getAllSubracesByRaceId(UUID raceId);
 
-    SubraceResponse getSubrace(UUID raceId, UUID subraceId);
+    SubraceResponse getSubraceResponse(UUID raceId, UUID subraceId);
+
+    Subrace getSubrace(UUID raceId, UUID subraceId);
 
     SubraceDescriptionResponse getSubraceDescription(UUID raceId, UUID subraceId);
 }

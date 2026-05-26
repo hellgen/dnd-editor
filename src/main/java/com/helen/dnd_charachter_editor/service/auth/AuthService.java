@@ -15,6 +15,7 @@ public interface AuthService extends UserDetailsService {
 
     void logout(String refreshToken);
 
-    User getCurrentUser() ;
+    User getCurrentUser();
+
     AuthResponse refresh(RefreshTokenRequest request);
 }

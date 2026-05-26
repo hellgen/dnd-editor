@@ -23,14 +23,13 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CharacterAbilityServiceImpl implements CharacterAbilityService {
+public class DefaultCharacterAbilityService implements CharacterAbilityService {
 
     private final CharacterRepository characterRepository;
     private final AbilityRepository abilityRepository;
     private final CharacterAbilityRepository characterAbilityRepository;
     private final RaceAbilityBonusRepository raceAbilityBonusRepository;
     private final SubraceAbilityBonusRepository subraceAbilityBonusRepository;
-    private final CharacterAbilityMapper characterAbilityMapper;
 
     @Override
     @Transactional
@@ -52,7 +51,7 @@ public class CharacterAbilityServiceImpl implements CharacterAbilityService {
         Integer raceBonus = getRaceBonus(character, abilityId);
         Integer subraceBonus = getSubraceBonus(character, abilityId);
 
-        return characterAbilityMapper.toResponse(savedCharacterAbility, raceBonus, subraceBonus);
+        return CharacterAbilityMapper.toResponse(savedCharacterAbility, raceBonus, subraceBonus);
     }
 
     private void validateCharacterRaceAndSubrace(UserCharacter character) {

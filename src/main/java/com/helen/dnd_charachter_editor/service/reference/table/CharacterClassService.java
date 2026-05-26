@@ -4,13 +4,18 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.CharacterCla
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassArchetypeFeatureResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassArchetypeResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassFeatureResponse;
+import com.helen.dnd_charachter_editor.entity.reference.table.CharacterClass;
+import com.helen.dnd_charachter_editor.entity.reference.table.ClassArchetype;
+
 import java.util.List;
 import java.util.UUID;
 
 public interface CharacterClassService {
     List<CharacterClassResponse> getAllClasses();
 
-    CharacterClassResponse getClassById(UUID classId);
+    CharacterClassResponse getClassResponseById(UUID classId);
+
+    CharacterClass getClassById(UUID classId);
 
     List<ClassFeatureResponse> getAllFeaturesByLevel(
             UUID classId,
@@ -25,7 +30,12 @@ public interface CharacterClassService {
 
     List<ClassArchetypeResponse> getAllArchetypes(UUID classId);
 
-    ClassArchetypeResponse getClassArchetypeById(
+    ClassArchetypeResponse getClassArchetypeResponseById(
+            UUID classId,
+            UUID classArchetypeId
+    );
+
+    ClassArchetype getClassArchetypeById(
             UUID classId,
             UUID classArchetypeId
     );

@@ -4,6 +4,8 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.CharacterCla
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassArchetypeFeatureResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassArchetypeResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassFeatureResponse;
+import com.helen.dnd_charachter_editor.entity.reference.table.CharacterClass;
+import com.helen.dnd_charachter_editor.entity.reference.table.ClassArchetype;
 import com.helen.dnd_charachter_editor.mapper.reference.table.CharacterClassMapper;
 import com.helen.dnd_charachter_editor.mapper.reference.table.ClassArchetypeFeatureMapper;
 import com.helen.dnd_charachter_editor.mapper.reference.table.ClassArchetypeMapper;
@@ -24,7 +26,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class CharacterClassImpl implements CharacterClassService {
+public class DefaultCharacterClass implements CharacterClassService {
 
     private final CharacterClassRepository characterClassRepository;
     private final ClassFeatureRepository classFeatureRepository;
@@ -40,9 +42,17 @@ public class CharacterClassImpl implements CharacterClassService {
     }
 
     @Override
-    public CharacterClassResponse getClassById(UUID classId) {
+    public CharacterClassResponse getClassResponseById(UUID classId) {
         return characterClassRepository.findById(classId)
                 .map(CharacterClassMapper::toCharacterClassResponse)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Class not found with id: " + classId
+                ));
+    }
+
+    @Override
+    public CharacterClass getClassById(UUID classId) {
+        return characterClassRepository.findById(classId)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Class not found with id: " + classId
                 ));
@@ -101,7 +111,7 @@ public class CharacterClassImpl implements CharacterClassService {
     }
 
     @Override
-    public ClassArchetypeResponse getClassArchetypeById(
+    public ClassArchetypeResponse getClassArchetypeResponseById(
             UUID classId,
             UUID classArchetypeId
     ) {
@@ -117,6 +127,19 @@ public class CharacterClassImpl implements CharacterClassService {
                                 + classId
                 ));
     }
+
+    @Override
+    public ClassArchetype getClassArchetypeById(UUID classId, UUID classArchetypeId) {
+        checkClassExists(classId);
+
+        return classArchetypeRepository
+                .findByIdAndCharacterClassId(classArchetypeId, classId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Class archetype not found with id: "
+                                + classArchetypeId
+                                + " for class id: "
+                                + classId
+                ));    }
 
     @Override
     public List<ClassArchetypeFeatureResponse> getAllFeatures(
