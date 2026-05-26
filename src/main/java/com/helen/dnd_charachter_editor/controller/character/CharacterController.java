@@ -4,9 +4,14 @@ import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequ
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
 import com.helen.dnd_charachter_editor.service.character.CharacterService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/characters")
@@ -16,7 +21,15 @@ public class CharacterController {
     private final CharacterService characterService;
 
     @PostMapping
-    private CharacterResponse createCharacter(CreateCharacterRequest createCharacterRequest) {
+    private CharacterResponse createCharacter(@RequestBody CreateCharacterRequest createCharacterRequest) {
         return characterService.createCharacter(createCharacterRequest);
+    }
+
+    @PutMapping("/{characterId}")
+    private CharacterResponse updateCharacter(
+            @PathVariable UUID characterId,
+            @RequestBody CreateCharacterRequest createCharacterRequest
+    ) {
+        return characterService.updateCharacter(characterId, createCharacterRequest);
     }
 }

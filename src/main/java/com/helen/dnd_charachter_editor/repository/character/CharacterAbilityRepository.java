@@ -24,4 +24,6 @@ public interface CharacterAbilityRepository extends JpaRepository<CharacterAbili
            where a.id in :ids
            """)
     List<Ability> findAllByIds(@Param("ids") Collection<UUID> ids);
+
+    List<CharacterAbility> findAllByCharacterId(UUID characterId);
 }

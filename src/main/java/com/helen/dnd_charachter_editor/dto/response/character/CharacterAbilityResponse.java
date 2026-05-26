@@ -11,6 +11,7 @@ public record CharacterAbilityResponse(
         Integer baseValue,
         Integer raceBonus,
         Integer subraceBonus,
-        Integer totalValue
+        Integer totalValue,
+        Integer modifier
 ) {
 }

@@ -2,6 +2,7 @@ package com.helen.dnd_charachter_editor.dto.response.character;
 
 import java.util.List;
 import java.util.Map;
+import java.time.OffsetDateTime;
 
 public record CharacterResponse(
         String characterName,
@@ -19,6 +20,8 @@ public record CharacterResponse(
         List<String> abilityNames,
         List<String> skillNames,
         List<String> spellNames,
-        int savingThrowsCount
+        int savingThrowsCount,
+        OffsetDateTime createdAt,
+        OffsetDateTime updatedAt
 ) {
 }
