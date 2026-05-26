@@ -3,7 +3,7 @@ package com.helen.dnd_charachter_editor.service.reference.table.impl;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.AbilityResponse;
 import com.helen.dnd_charachter_editor.entity.reference.table.Ability;
 import com.helen.dnd_charachter_editor.mapper.reference.table.AbilityMapper;
-import com.helen.dnd_charachter_editor.repository.refernce.table.AbilityRepository;
+import com.helen.dnd_charachter_editor.repository.referencetable.AbilityRepository;
 import com.helen.dnd_charachter_editor.service.reference.table.AbilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

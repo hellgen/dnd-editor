@@ -3,7 +3,7 @@ package com.helen.dnd_charachter_editor.service.reference.table.impl;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ItemResponse;
 import com.helen.dnd_charachter_editor.entity.reference.table.Item;
 import com.helen.dnd_charachter_editor.mapper.reference.table.ItemMapper;
-import com.helen.dnd_charachter_editor.repository.refernce.table.ItemRepository;
+import com.helen.dnd_charachter_editor.repository.referencetable.ItemRepository;
 import com.helen.dnd_charachter_editor.service.reference.table.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

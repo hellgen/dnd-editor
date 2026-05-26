@@ -11,9 +11,9 @@ import com.helen.dnd_charachter_editor.entity.reference.table.SubraceAbilityBonu
 import com.helen.dnd_charachter_editor.mapper.character.CharacterAbilityMapper;
 import com.helen.dnd_charachter_editor.repository.character.CharacterAbilityRepository;
 import com.helen.dnd_charachter_editor.repository.character.CharacterRepository;
-import com.helen.dnd_charachter_editor.repository.refernce.table.AbilityRepository;
-import com.helen.dnd_charachter_editor.repository.refernce.table.RaceAbilityBonusRepository;
-import com.helen.dnd_charachter_editor.repository.refernce.table.SubraceAbilityBonusRepository;
+import com.helen.dnd_charachter_editor.repository.referencetable.AbilityRepository;
+import com.helen.dnd_charachter_editor.repository.referencetable.RaceAbilityBonusRepository;
+import com.helen.dnd_charachter_editor.repository.referencetable.SubraceAbilityBonusRepository;
 import com.helen.dnd_charachter_editor.service.character.CharacterAbilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

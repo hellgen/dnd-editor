@@ -24,27 +24,33 @@ CREATE TABLE if not exists dnd_editor.subraces
     CONSTRAINT uq_subrace UNIQUE (race_id, name)
 );
 
-CREATE TABLE if not exists dnd_editor.classes
+drop table dnd_editor.classes cascade;
+
+CREATE TABLE IF NOT EXISTS dnd_editor.classes
 (
-    class_id              UUID PRIMARY KEY,
-    name            VARCHAR(100) NOT NULL UNIQUE,
-    hit_die         INT          NOT NULL,
-    primary_ability VARCHAR(10)  NOT NULL
-);
+    class_id                  UUID PRIMARY KEY,
+    class_name                VARCHAR(100) NOT NULL,
+    class_description         VARCHAR(512),
 
-CREATE TABLE if not exists dnd_editor.class_archetypes
-(
-    class_archetype_id          UUID PRIMARY KEY,
-    class_id    UUID         NOT NULL,
-    name        VARCHAR(100) NOT NULL,
-    description VARCHAR(512),
+    is_spellcaster            BOOLEAN      NOT NULL DEFAULT false,
+    spellcasting_start_level  INT,
 
-    CONSTRAINT fk_archetype_class
-        FOREIGN KEY (class_id)
-            REFERENCES dnd_editor.classes(class_id)
-            ON DELETE CASCADE,
+    CONSTRAINT uq_classes_class_name
+        UNIQUE (class_name),
 
-    CONSTRAINT uq_class_archetype UNIQUE (class_id, name)
+    CONSTRAINT chk_classes_spellcasting_start_level
+        CHECK (
+            (
+                is_spellcaster = false
+                    AND spellcasting_start_level IS NULL
+                )
+                OR
+            (
+                is_spellcaster = true
+                    AND spellcasting_start_level IS NOT NULL
+                    AND spellcasting_start_level > 0
+                )
+            )
 );
 
 CREATE TABLE if not exists dnd_editor.skills
