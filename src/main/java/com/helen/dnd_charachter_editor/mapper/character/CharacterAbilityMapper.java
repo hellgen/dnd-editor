@@ -2,10 +2,20 @@ package com.helen.dnd_charachter_editor.mapper.character;
 
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterAbilityResponse;
 import com.helen.dnd_charachter_editor.entity.character.CharacterAbility;
+import com.helen.dnd_charachter_editor.entity.character.UserCharacter;
 import com.helen.dnd_charachter_editor.entity.reference.table.Ability;
-import org.springframework.stereotype.Component;
 
 public class CharacterAbilityMapper {
+
+
+    public static CharacterAbility toEntity(UserCharacter character, Ability ability) {
+        CharacterAbility characterAbility = new CharacterAbility();
+        characterAbility.setCharacter(character);
+        characterAbility.setAbility(ability);
+        characterAbility.setValue(0);
+
+        return characterAbility;
+    }
 
     public static CharacterAbilityResponse toResponse(
             CharacterAbility characterAbility,
