@@ -16,6 +16,7 @@ import java.util.UUID;
 @Table(name = "character_saving_throws", schema = "dnd_editor")
 public class CharacterSavingThrow {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "character_saving_throw_id", nullable = false)
     private UUID id;
 

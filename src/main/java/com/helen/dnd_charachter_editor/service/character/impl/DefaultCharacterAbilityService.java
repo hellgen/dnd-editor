@@ -15,6 +15,7 @@ import com.helen.dnd_charachter_editor.repository.referencetable.AbilityReposito
 import com.helen.dnd_charachter_editor.repository.referencetable.RaceAbilityBonusRepository;
 import com.helen.dnd_charachter_editor.repository.referencetable.SubraceAbilityBonusRepository;
 import com.helen.dnd_charachter_editor.service.character.CharacterAbilityService;
+import com.helen.dnd_charachter_editor.service.character.DndRulesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,7 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
     private final CharacterAbilityRepository characterAbilityRepository;
     private final RaceAbilityBonusRepository raceAbilityBonusRepository;
     private final SubraceAbilityBonusRepository subraceAbilityBonusRepository;
+    private final DndRulesService dndRulesService;
 
     @Override
     @Transactional
@@ -46,12 +48,29 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
         characterAbility.setAbility(ability);
         characterAbility.setValue(request.value());
 
+        validateAbilityBounds(characterAbility.getValue());
+
         CharacterAbility savedCharacterAbility = characterAbilityRepository.save(characterAbility);
 
         Integer raceBonus = getRaceBonus(character, abilityId);
         Integer subraceBonus = getSubraceBonus(character, abilityId);
 
-        return CharacterAbilityMapper.toResponse(savedCharacterAbility, raceBonus, subraceBonus);
+        validateFinalAbilityValue(characterAbility.getValue(), raceBonus, subraceBonus);
+
+        return CharacterAbilityMapper.toResponse(savedCharacterAbility, raceBonus, subraceBonus, dndRulesService);
+    }
+
+    private void validateAbilityBounds(Integer value) {
+        if (value < 1 || value > 20) {
+            throw new RuntimeException("baseValue должен быть в диапазоне 1..20");
+        }
+    }
+
+    private void validateFinalAbilityValue(Integer baseValue, Integer raceBonus, Integer subraceBonus) {
+        int finalValue = baseValue + raceBonus + subraceBonus;
+        if (finalValue > 20) {
+            throw new RuntimeException("finalValue не должен быть больше 20");
+        }
     }
 
     private void validateCharacterRaceAndSubrace(UserCharacter character) {
