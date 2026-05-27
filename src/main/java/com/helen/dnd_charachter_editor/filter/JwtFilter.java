@@ -1,8 +1,8 @@
 package com.helen.dnd_charachter_editor.filter;
 
-import com.helen.dnd_charachter_editor.entity.User;
-import com.helen.dnd_charachter_editor.repository.UserRepository;
-import com.helen.dnd_charachter_editor.service.JwtService;
+import com.helen.dnd_charachter_editor.entity.auth.User;
+import com.helen.dnd_charachter_editor.repository.auth.UserRepository;
+import com.helen.dnd_charachter_editor.service.auth.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,14 +11,11 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.lang.module.Configuration;
 import java.util.Collections;
 import java.util.Optional;
 
