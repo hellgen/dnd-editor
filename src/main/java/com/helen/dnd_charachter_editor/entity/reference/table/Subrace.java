@@ -13,9 +13,10 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "subrace", schema = "dnd_editor")
+@Table(name = "subraces", schema = "dnd_editor")
 public class Subrace {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "subrace_id", nullable = false)
     private UUID id;
 

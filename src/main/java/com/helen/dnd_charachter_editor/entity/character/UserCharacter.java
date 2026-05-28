@@ -5,14 +5,24 @@ import com.helen.dnd_charachter_editor.entity.reference.table.CharacterClass;
 import com.helen.dnd_charachter_editor.entity.reference.table.ClassArchetype;
 import com.helen.dnd_charachter_editor.entity.reference.table.Race;
 import com.helen.dnd_charachter_editor.entity.reference.table.Subrace;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -78,14 +88,45 @@ public class UserCharacter {
     @Column(name = "armor_class", nullable = false)
     private Integer armorClass;
 
-    @NotNull
-    @ColumnDefault("now()")
-    @Column(name = "created_at", nullable = false)
-    private OffsetDateTime createdAt;
+    @Column(name = "inventory", length = Integer.MAX_VALUE)
+    private String inventory;
+
+    @Size(max = 512)
+    @Column(name = "spells", length = 512)
+    private String spells;
 
     @NotNull
-    @ColumnDefault("now()")
+    @ColumnDefault("0")
+    @Column(name = "platinum", nullable = false)
+    private Integer platinum;
+
+    @NotNull
+    @ColumnDefault("0")
+    @Column(name = "gold", nullable = false)
+    private Integer gold;
+
+    @NotNull
+    @ColumnDefault("0")
+    @Column(name = "electrum", nullable = false)
+    private Integer electrum;
+
+    @NotNull
+    @ColumnDefault("0")
+    @Column(name = "silver", nullable = false)
+    private Integer silver;
+
+    @NotNull
+    @ColumnDefault("0")
+    @Column(name = "copper", nullable = false)
+    private Integer copper;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private OffsetDateTime createdAt;
+
+    @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updatedAt;
+
 
 }

@@ -44,22 +44,25 @@ CREATE TABLE IF NOT EXISTS dnd_editor.character_saving_throws
         UNIQUE (character_id, ability_id)
 );
 
-CREATE TABLE IF NOT EXISTS dnd_editor.character_inventory
+CREATE TABLE IF NOT EXISTS dnd_editor.character_skills
 (
-    character_inventory_id UUID PRIMARY KEY,
-    character_id           UUID    NOT NULL,
-    item_id                UUID    NOT NULL,
-    quantity               INT     NOT NULL,
-    is_equipped            BOOLEAN NOT NULL,
-    custom_description     VARCHAR(512),
+    character_skill_id UUID PRIMARY KEY,
 
-    CONSTRAINT fk_character_inventory_character
+    character_id UUID NOT NULL,
+    skill_id     UUID NOT NULL,
+
+    proficiency_level INT NOT NULL,
+
+    CONSTRAINT fk_character_skills_character
         FOREIGN KEY (character_id)
             REFERENCES dnd_editor.characters(character_id)
             ON DELETE CASCADE,
 
-    CONSTRAINT fk_character_inventory_item
-        FOREIGN KEY (item_id)
-            REFERENCES dnd_editor.items(item_id)
-            ON DELETE CASCADE
+    CONSTRAINT fk_character_skills_skill
+        FOREIGN KEY (skill_id)
+            REFERENCES dnd_editor.skills(skill_id)
+            ON DELETE CASCADE,
+
+    CONSTRAINT uq_character_skills_character_skill
+        UNIQUE (character_id, skill_id)
 );

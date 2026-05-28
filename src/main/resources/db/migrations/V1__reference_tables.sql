@@ -24,8 +24,6 @@ CREATE TABLE if not exists dnd_editor.subraces
     CONSTRAINT uq_subrace UNIQUE (race_id, name)
 );
 
-drop table if exists dnd_editor.classes cascade;
-
 CREATE TABLE IF NOT EXISTS dnd_editor.classes
 (
     class_id                  UUID PRIMARY KEY,

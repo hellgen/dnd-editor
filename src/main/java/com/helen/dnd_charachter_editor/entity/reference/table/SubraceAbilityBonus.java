@@ -15,6 +15,7 @@ import java.util.UUID;
 @Table(name = "subrace_ability_bonuses", schema = "dnd_editor")
 public class SubraceAbilityBonus {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "subrace_ability_bonus_id", nullable = false)
     private UUID id;
 

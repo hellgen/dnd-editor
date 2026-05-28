@@ -3,11 +3,11 @@ package com.helen.dnd_charachter_editor.service.character.impl;
 import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequest;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
 import com.helen.dnd_charachter_editor.entity.auth.User;
-import com.helen.dnd_charachter_editor.entity.character.UserCharacter;
 import com.helen.dnd_charachter_editor.entity.character.CharacterAbility;
 import com.helen.dnd_charachter_editor.entity.character.CharacterSavingThrow;
 import com.helen.dnd_charachter_editor.entity.character.CharacterSkill;
 import com.helen.dnd_charachter_editor.entity.character.CharacterSpell;
+import com.helen.dnd_charachter_editor.entity.character.UserCharacter;
 import com.helen.dnd_charachter_editor.entity.reference.table.Ability;
 import com.helen.dnd_charachter_editor.entity.reference.table.CharacterClass;
 import com.helen.dnd_charachter_editor.entity.reference.table.ClassArchetype;
@@ -26,13 +26,12 @@ import com.helen.dnd_charachter_editor.repository.character.CharacterRepository;
 import com.helen.dnd_charachter_editor.repository.character.CharacterSavingThrowRepository;
 import com.helen.dnd_charachter_editor.repository.character.CharacterSkillRepository;
 import com.helen.dnd_charachter_editor.repository.character.CharacterSpellRepository;
-import com.helen.dnd_charachter_editor.repository.refernce.table.SkillRepository;
-import com.helen.dnd_charachter_editor.repository.refernce.table.SpellRepository;
-import com.helen.dnd_charachter_editor.repository.refernce.table.AbilityRepository;
+import com.helen.dnd_charachter_editor.repository.reference.table.AbilityRepository;
+import com.helen.dnd_charachter_editor.repository.reference.table.SkillRepository;
+import com.helen.dnd_charachter_editor.repository.reference.table.SpellRepository;
 import com.helen.dnd_charachter_editor.service.auth.AuthService;
 import com.helen.dnd_charachter_editor.service.character.CharacterAbilityService;
 import com.helen.dnd_charachter_editor.service.character.CharacterService;
-import com.helen.dnd_charachter_editor.service.character.CharacterWalletService;
 import com.helen.dnd_charachter_editor.service.reference.table.CharacterClassService;
 import com.helen.dnd_charachter_editor.service.reference.table.RaceService;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +44,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 
 @Service
@@ -58,8 +58,6 @@ public class DefaultCharacterService implements CharacterService {
     private final CharacterClassService characterClassService;
 
     private final CharacterAbilityService characterAbilityService;
-
-    private final CharacterWalletService characterWalletService;
 
     private final CharacterRepository characterRepository;
 

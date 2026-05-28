@@ -16,6 +16,7 @@ import java.util.UUID;
 @Table(name = "class_archetype_features", schema = "dnd_editor")
 public class ClassArchetypeFeature {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "class_archetype_feature_id", nullable = false)
     private UUID id;
 
