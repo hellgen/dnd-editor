@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -142,8 +143,24 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public CharacterResponse getCharacter(UUID characterId) {
+        User user = authService.getCurrentUser();
+        UserCharacter character = characterRepository.findByIdAndUser_Id(characterId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
+
+        return CharacterResponseMapper.toResponse(
+                character,
+                characterAbilityRepository.findAllByCharacterId(characterId),
+                characterSkillRepository.findAllByCharacterId(characterId),
+                characterSpellRepository.findAllByCharacterId(characterId),
+                characterSavingThrowRepository.findAllByCharacterId(characterId)
+        );
+    }
+
+    @Override
     @Transactional
-    public CharacterResponse updateCharacter(java.util.UUID characterId, CreateCharacterRequest createCharacterRequest) {
+    public CharacterResponse updateCharacter(UUID characterId, CreateCharacterRequest createCharacterRequest) {
         UserCharacter character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
 
@@ -235,5 +252,6 @@ public class DefaultCharacterService implements CharacterService {
         character.setCurrentHealth(request.currentHealth());
         character.setAppearance(request.appearance());
         character.setArmorClass(request.armorClass());
+        character.setInventory(CharacterResponseMapper.serializeInventory(request.inventory()));
     }
 }

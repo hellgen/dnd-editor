@@ -31,6 +31,7 @@ public class CharacterMapper {
         userCharacter.setCurrentHealth(createCharacterRequest.currentHealth());
         userCharacter.setAppearance(createCharacterRequest.appearance());
         userCharacter.setArmorClass(createCharacterRequest.armorClass());
+        userCharacter.setInventory(CharacterResponseMapper.serializeInventory(createCharacterRequest.inventory()));
 
         userCharacter.setPlatinum(createCharacterRequest.platinum());
         userCharacter.setGold(createCharacterRequest.gold());
