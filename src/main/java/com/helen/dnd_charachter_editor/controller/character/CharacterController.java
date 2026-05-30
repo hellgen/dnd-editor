@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,9 +43,9 @@ public class CharacterController {
         return characterService.updateCharacter(characterId, createCharacterRequest);
     }
 
-    @DeleteMapping("/{characterId}")
+    @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    private void deleteCharacter(@PathVariable UUID characterId) {
+    private void deleteCharacter(@RequestParam UUID characterId) {
         characterService.deleteCharacter(characterId);
     }
 }
