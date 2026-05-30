@@ -149,12 +149,15 @@ public class DefaultCharacterService implements CharacterService {
         UserCharacter character = characterRepository.findByIdAndUser_Id(characterId, user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
 
+        List<UUID> abilityIds = CharacterResponseMapper.deserializeIds(character.getAbilities());
+        List<UUID> spellIds = CharacterResponseMapper.deserializeIds(character.getSpells());
+
         return CharacterResponseMapper.toResponse(
                 character,
-                characterAbilityRepository.findAllByCharacterId(characterId),
+                abilityRepository.findAllById(abilityIds),
                 characterSkillRepository.findAllByCharacterId(characterId),
-                characterSpellRepository.findAllByCharacterId(characterId),
-                characterSavingThrowRepository.findAllByCharacterId(characterId)
+                spellRepository.findAllById(spellIds),
+                character.getSavingThrowsCount()
         );
     }
 

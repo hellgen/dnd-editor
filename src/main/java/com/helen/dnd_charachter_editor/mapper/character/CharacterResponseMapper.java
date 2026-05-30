@@ -22,6 +22,8 @@ public class CharacterResponseMapper {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final TypeReference<List<String>> STRING_LIST_TYPE = new TypeReference<>() {
     };
+    private static final TypeReference<List<UUID>> UUID_LIST_TYPE = new TypeReference<>() {
+    };
 
     public static CharacterResponse toResponse(
             UserCharacter character,
@@ -99,6 +101,44 @@ public class CharacterResponseMapper {
         );
     }
 
+    public static CharacterResponse toResponse(
+            UserCharacter character,
+            List<Ability> abilities,
+            List<CharacterSkill> skills,
+            List<Spell> spells,
+            Integer savingThrowsCount
+    ) {
+        return new CharacterResponse(
+                character.getName(),
+                character.getRace().getName(),
+                character.getSubrace() != null ? character.getSubrace().getName() : null,
+                character.getClassField().getClassName(),
+                character.getClassArchetype() != null ? character.getClassArchetype().getName() : null,
+                character.getLevel(),
+                character.getMaxHealth(),
+                character.getCurrentHealth(),
+                character.getAppearance(),
+                character.getArmorClass(),
+                deserializeInventory(character.getInventory()),
+
+                character.getPlatinum(),
+                character.getGold(),
+                character.getElectrum(),
+                character.getSilver(),
+                character.getCopper(),
+
+                abilities.stream().map(Ability::getName).toList(),
+                skills.stream()
+                        .filter(skill -> skill.getProficiencyLevel() > 0)
+                        .map(skill -> skill.getSkill().getName())
+                        .toList(),
+                spells.stream().map(Spell::getSpellName).toList(),
+                savingThrowsCount != null ? savingThrowsCount : 0,
+                character.getCreatedAt(),
+                character.getUpdatedAt()
+        );
+    }
+
     public static String serializeInventory(List<String> inventory) {
         return serializeList(inventory, "Unable to serialize character inventory");
     }
@@ -116,6 +156,18 @@ public class CharacterResponseMapper {
             return OBJECT_MAPPER.writeValueAsString(values);
         } catch (JsonProcessingException e) {
             throw new IllegalArgumentException(errorMessage, e);
+        }
+    }
+
+    public static List<UUID> deserializeIds(String ids) {
+        if (ids == null || ids.isBlank()) {
+            return List.of();
+        }
+
+        try {
+            return OBJECT_MAPPER.readValue(ids, UUID_LIST_TYPE);
+        } catch (JsonProcessingException e) {
+            return List.of();
         }
     }
 
