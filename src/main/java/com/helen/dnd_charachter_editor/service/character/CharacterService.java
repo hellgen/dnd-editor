@@ -11,4 +11,6 @@ public interface CharacterService {
     CharacterResponse getCharacter(UUID characterId);
 
     CharacterResponse updateCharacter(UUID characterId, CreateCharacterRequest createCharacterRequest);
+
+    void deleteCharacter(UUID characterId);
 }

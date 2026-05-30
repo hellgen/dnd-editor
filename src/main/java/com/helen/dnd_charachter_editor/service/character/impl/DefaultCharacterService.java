@@ -241,6 +241,16 @@ public class DefaultCharacterService implements CharacterService {
         );
     }
 
+    @Override
+    @Transactional
+    public void deleteCharacter(UUID characterId) {
+        User user = authService.getCurrentUser();
+        UserCharacter character = characterRepository.findByIdAndUser_Id(characterId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
+
+        characterRepository.delete(character);
+    }
+
     private void applyMainCharacterFields(
             UserCharacter character,
             CreateCharacterRequest request,
