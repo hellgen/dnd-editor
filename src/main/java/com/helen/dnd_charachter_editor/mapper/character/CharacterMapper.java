@@ -32,6 +32,9 @@ public class CharacterMapper {
         userCharacter.setAppearance(createCharacterRequest.appearance());
         userCharacter.setArmorClass(createCharacterRequest.armorClass());
         userCharacter.setInventory(CharacterResponseMapper.serializeInventory(createCharacterRequest.inventory()));
+        userCharacter.setAbilities(CharacterResponseMapper.serializeIds(createCharacterRequest.abilities()));
+        userCharacter.setSpells(CharacterResponseMapper.serializeIds(createCharacterRequest.spells()));
+        userCharacter.setSavingThrowsCount(Math.min(createCharacterRequest.savingThrowsCount(), 2));
 
         userCharacter.setPlatinum(createCharacterRequest.platinum());
         userCharacter.setGold(createCharacterRequest.gold());

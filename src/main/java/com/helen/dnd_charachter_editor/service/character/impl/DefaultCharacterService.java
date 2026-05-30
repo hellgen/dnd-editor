@@ -210,10 +210,14 @@ public class DefaultCharacterService implements CharacterService {
         List<Ability> allAbilities = abilityRepository.findAll();
         Set<java.util.UUID> savingThrowAbilityIds = allAbilities.stream().map(Ability::getId).collect(Collectors.toSet());
         List<CharacterSavingThrow> currentSavingThrows = characterSavingThrowRepository.findAllByCharacterId(characterId);
-        if (!currentSavingThrows.stream().map(st -> st.getAbility().getId()).collect(Collectors.toSet()).equals(savingThrowAbilityIds)) {
+        int proficientSavingThrowsCount = Math.min(createCharacterRequest.savingThrowsCount(), 2);
+        int currentProficientSavingThrowsCount = (int) currentSavingThrows.stream()
+                .filter(savingThrow -> savingThrow.getProficiencyLevel() > 0)
+                .count();
+        if (!currentSavingThrows.stream().map(st -> st.getAbility().getId()).collect(Collectors.toSet()).equals(savingThrowAbilityIds)
+                || currentProficientSavingThrowsCount != proficientSavingThrowsCount) {
             characterSavingThrowRepository.deleteAll(currentSavingThrows);
             List<CharacterSavingThrow> savingThrows = new ArrayList<>();
-            int proficientSavingThrowsCount = Math.min(createCharacterRequest.savingThrowsCount(), 2);
             for (int i = 0; i < allAbilities.size(); i++) {
                 CharacterSavingThrow entity = CharacterSavingThrowMapper.toEntity(savedCharacter, allAbilities.get(i));
                 if (i < proficientSavingThrowsCount) {
@@ -253,5 +257,8 @@ public class DefaultCharacterService implements CharacterService {
         character.setAppearance(request.appearance());
         character.setArmorClass(request.armorClass());
         character.setInventory(CharacterResponseMapper.serializeInventory(request.inventory()));
+        character.setAbilities(CharacterResponseMapper.serializeIds(request.abilities()));
+        character.setSpells(CharacterResponseMapper.serializeIds(request.spells()));
+        character.setSavingThrowsCount(Math.min(request.savingThrowsCount(), 2));
     }
 }

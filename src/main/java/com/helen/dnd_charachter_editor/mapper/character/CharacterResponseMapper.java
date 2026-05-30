@@ -15,6 +15,7 @@ import com.helen.dnd_charachter_editor.entity.reference.table.Skill;
 import com.helen.dnd_charachter_editor.entity.reference.table.Spell;
 
 import java.util.List;
+import java.util.UUID;
 
 public class CharacterResponseMapper {
 
@@ -99,14 +100,22 @@ public class CharacterResponseMapper {
     }
 
     public static String serializeInventory(List<String> inventory) {
-        if (inventory == null) {
+        return serializeList(inventory, "Unable to serialize character inventory");
+    }
+
+    public static String serializeIds(List<UUID> ids) {
+        return serializeList(ids, "Unable to serialize character ids");
+    }
+
+    private static String serializeList(List<?> values, String errorMessage) {
+        if (values == null) {
             return null;
         }
 
         try {
-            return OBJECT_MAPPER.writeValueAsString(inventory);
+            return OBJECT_MAPPER.writeValueAsString(values);
         } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException("Unable to serialize character inventory", e);
+            throw new IllegalArgumentException(errorMessage, e);
         }
     }
 
