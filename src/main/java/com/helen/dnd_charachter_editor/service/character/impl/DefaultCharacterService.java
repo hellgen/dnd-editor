@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -142,8 +143,27 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public CharacterResponse getCharacter(UUID characterId) {
+        User user = authService.getCurrentUser();
+        UserCharacter character = characterRepository.findByIdAndUser_Id(characterId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
+
+        List<UUID> abilityIds = CharacterResponseMapper.deserializeIds(character.getAbilities());
+        List<UUID> spellIds = CharacterResponseMapper.deserializeIds(character.getSpells());
+
+        return CharacterResponseMapper.toResponse(
+                character,
+                abilityRepository.findAllById(abilityIds),
+                characterSkillRepository.findAllByCharacterId(characterId),
+                spellRepository.findAllById(spellIds),
+                character.getSavingThrowsCount()
+        );
+    }
+
+    @Override
     @Transactional
-    public CharacterResponse updateCharacter(java.util.UUID characterId, CreateCharacterRequest createCharacterRequest) {
+    public CharacterResponse updateCharacter(UUID characterId, CreateCharacterRequest createCharacterRequest) {
         UserCharacter character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
 
@@ -193,10 +213,14 @@ public class DefaultCharacterService implements CharacterService {
         List<Ability> allAbilities = abilityRepository.findAll();
         Set<java.util.UUID> savingThrowAbilityIds = allAbilities.stream().map(Ability::getId).collect(Collectors.toSet());
         List<CharacterSavingThrow> currentSavingThrows = characterSavingThrowRepository.findAllByCharacterId(characterId);
-        if (!currentSavingThrows.stream().map(st -> st.getAbility().getId()).collect(Collectors.toSet()).equals(savingThrowAbilityIds)) {
+        int proficientSavingThrowsCount = Math.min(createCharacterRequest.savingThrowsCount(), 2);
+        int currentProficientSavingThrowsCount = (int) currentSavingThrows.stream()
+                .filter(savingThrow -> savingThrow.getProficiencyLevel() > 0)
+                .count();
+        if (!currentSavingThrows.stream().map(st -> st.getAbility().getId()).collect(Collectors.toSet()).equals(savingThrowAbilityIds)
+                || currentProficientSavingThrowsCount != proficientSavingThrowsCount) {
             characterSavingThrowRepository.deleteAll(currentSavingThrows);
             List<CharacterSavingThrow> savingThrows = new ArrayList<>();
-            int proficientSavingThrowsCount = Math.min(createCharacterRequest.savingThrowsCount(), 2);
             for (int i = 0; i < allAbilities.size(); i++) {
                 CharacterSavingThrow entity = CharacterSavingThrowMapper.toEntity(savedCharacter, allAbilities.get(i));
                 if (i < proficientSavingThrowsCount) {
@@ -217,6 +241,16 @@ public class DefaultCharacterService implements CharacterService {
         );
     }
 
+    @Override
+    @Transactional
+    public void deleteCharacter(UUID characterId) {
+        User user = authService.getCurrentUser();
+        UserCharacter character = characterRepository.findByIdAndUser_Id(characterId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
+
+        characterRepository.delete(character);
+    }
+
     private void applyMainCharacterFields(
             UserCharacter character,
             CreateCharacterRequest request,
@@ -235,5 +269,9 @@ public class DefaultCharacterService implements CharacterService {
         character.setCurrentHealth(request.currentHealth());
         character.setAppearance(request.appearance());
         character.setArmorClass(request.armorClass());
+        character.setInventory(CharacterResponseMapper.serializeInventory(request.inventory()));
+        character.setAbilities(CharacterResponseMapper.serializeIds(request.abilities()));
+        character.setSpells(CharacterResponseMapper.serializeIds(request.spells()));
+        character.setSavingThrowsCount(Math.min(request.savingThrowsCount(), 2));
     }
 }

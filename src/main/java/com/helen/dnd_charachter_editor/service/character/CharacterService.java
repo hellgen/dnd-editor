@@ -8,5 +8,9 @@ import java.util.UUID;
 public interface CharacterService {
     CharacterResponse createCharacter(CreateCharacterRequest createCharacterRequest);
 
+    CharacterResponse getCharacter(UUID characterId);
+
     CharacterResponse updateCharacter(UUID characterId, CreateCharacterRequest createCharacterRequest);
+
+    void deleteCharacter(UUID characterId);
 }
