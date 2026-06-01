@@ -91,9 +91,16 @@ public class UserCharacter {
     @Column(name = "inventory", length = Integer.MAX_VALUE)
     private String inventory;
 
-    @Size(max = 512)
-    @Column(name = "spells", length = 512)
+    @Column(name = "abilities", length = Integer.MAX_VALUE)
+    private String abilities;
+
+    @Column(name = "spells", length = Integer.MAX_VALUE)
     private String spells;
+
+    @NotNull
+    @ColumnDefault("0")
+    @Column(name = "saving_throws_count", nullable = false)
+    private Integer savingThrowsCount;
 
     @NotNull
     @ColumnDefault("0")
