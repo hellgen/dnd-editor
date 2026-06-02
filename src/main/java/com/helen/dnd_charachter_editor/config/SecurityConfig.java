@@ -6,6 +6,7 @@ import com.helen.dnd_charachter_editor.handler.CustomLogoutHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -40,6 +41,11 @@ public class SecurityConfig {
                                 "/auth/register",
                                 "/auth/login",
                                 "/auth/refresh"
+                        ).permitAll()
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/abilities",
+                                "/abilities/*"
                         ).permitAll()
                         .requestMatchers("/actuator/**").permitAll()   // <--- обязательно
                         .anyRequest().authenticated()
