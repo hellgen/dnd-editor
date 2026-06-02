@@ -10,10 +10,10 @@ import com.helen.dnd_charachter_editor.mapper.reference.table.CharacterClassMapp
 import com.helen.dnd_charachter_editor.mapper.reference.table.ClassArchetypeFeatureMapper;
 import com.helen.dnd_charachter_editor.mapper.reference.table.ClassArchetypeMapper;
 import com.helen.dnd_charachter_editor.mapper.reference.table.ClassFeatureMapper;
-import com.helen.dnd_charachter_editor.repository.referencetable.CharacterClassRepository;
-import com.helen.dnd_charachter_editor.repository.referencetable.ClassArchetypeFeatureRepository;
-import com.helen.dnd_charachter_editor.repository.referencetable.ClassArchetypeRepository;
-import com.helen.dnd_charachter_editor.repository.referencetable.ClassFeatureRepository;
+import com.helen.dnd_charachter_editor.repository.reference.table.CharacterClassRepository;
+import com.helen.dnd_charachter_editor.repository.reference.table.ClassArchetypeFeatureRepository;
+import com.helen.dnd_charachter_editor.repository.reference.table.ClassArchetypeRepository;
+import com.helen.dnd_charachter_editor.repository.reference.table.ClassFeatureRepository;
 import com.helen.dnd_charachter_editor.service.reference.table.CharacterClassService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

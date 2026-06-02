@@ -1,7 +1,6 @@
 package com.helen.dnd_charachter_editor.dto.request.character;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public record CreateCharacterRequest(
@@ -16,7 +15,13 @@ public record CreateCharacterRequest(
         String appearance,
         int armorClass,
         List<String> inventory,
-        Map<String, Integer> wallet,
+
+        int platinum,
+        int gold,
+        int electrum,
+        int silver,
+        int copper,
+
         List<UUID> abilities,
         List<UUID> skills,
         List<UUID> spells,

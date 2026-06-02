@@ -1,4 +1,4 @@
-package com.helen.dnd_charachter_editor.repository.refernce.table;
+package com.helen.dnd_charachter_editor.repository.reference.table;
 
 import com.helen.dnd_charachter_editor.entity.reference.table.Skill;
 import org.springframework.data.jpa.repository.JpaRepository;

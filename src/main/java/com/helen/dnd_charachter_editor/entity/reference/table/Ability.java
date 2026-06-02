@@ -2,6 +2,8 @@ package com.helen.dnd_charachter_editor.entity.reference.table;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +19,7 @@ import java.util.UUID;
 @Table(name = "abilities", schema = "dnd_editor")
 public class Ability {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ability_id", nullable = false)
     private UUID id;
 

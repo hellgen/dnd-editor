@@ -11,9 +11,9 @@ import com.helen.dnd_charachter_editor.entity.reference.table.SubraceAbilityBonu
 import com.helen.dnd_charachter_editor.mapper.character.CharacterAbilityMapper;
 import com.helen.dnd_charachter_editor.repository.character.CharacterAbilityRepository;
 import com.helen.dnd_charachter_editor.repository.character.CharacterRepository;
-import com.helen.dnd_charachter_editor.repository.referencetable.AbilityRepository;
-import com.helen.dnd_charachter_editor.repository.referencetable.RaceAbilityBonusRepository;
-import com.helen.dnd_charachter_editor.repository.referencetable.SubraceAbilityBonusRepository;
+import com.helen.dnd_charachter_editor.repository.reference.table.AbilityRepository;
+import com.helen.dnd_charachter_editor.repository.reference.table.RaceAbilityBonusRepository;
+import com.helen.dnd_charachter_editor.repository.reference.table.SubraceAbilityBonusRepository;
 import com.helen.dnd_charachter_editor.service.character.CharacterAbilityService;
 import com.helen.dnd_charachter_editor.service.character.DndRulesService;
 import lombok.RequiredArgsConstructor;
@@ -62,20 +62,20 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
 
     private void validateAbilityBounds(Integer value) {
         if (value < 1 || value > 20) {
-            throw new RuntimeException("baseValue должен быть в диапазоне 1..20");
+            throw new IllegalArgumentException("baseValue должен быть в диапазоне 1..20");
         }
     }
 
     private void validateFinalAbilityValue(Integer baseValue, Integer raceBonus, Integer subraceBonus) {
         int finalValue = baseValue + raceBonus + subraceBonus;
         if (finalValue > 20) {
-            throw new RuntimeException("finalValue не должен быть больше 20");
+            throw new IllegalArgumentException("finalValue не должен быть больше 20");
         }
     }
 
     private void validateCharacterRaceAndSubrace(UserCharacter character) {
         if (character.getRace() == null) {
-            throw new RuntimeException("У персонажа не выбрана раса");
+            throw new IllegalArgumentException("У персонажа не выбрана раса");
         }
 
         if (character.getSubrace() == null) {
@@ -83,14 +83,14 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
         }
 
         if (character.getSubrace().getRace() == null) {
-            throw new RuntimeException("У подрасы не указана раса");
+            throw new IllegalArgumentException("У подрасы не указана раса");
         }
 
         UUID characterRaceId = character.getRace().getId();
         UUID subraceRaceId = character.getSubrace().getRace().getId();
 
         if (!characterRaceId.equals(subraceRaceId)) {
-            throw new RuntimeException("Подраса не принадлежит выбранной расе персонажа");
+            throw new IllegalArgumentException("Подраса не принадлежит выбранной расе персонажа");
         }
     }
 

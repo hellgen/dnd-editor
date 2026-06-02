@@ -4,8 +4,9 @@ import java.util.UUID;
 
 public record CharacterClassResponse(
         UUID id,
-        String name,
-        Integer hitDie,
-        String primaryAbility
+        String className,
+        String classDescription,
+        Boolean isSpellcaster,
+        Integer spellcastingStartLevel
 ) {
 }

@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "token", schema = "dnd_editor")
+@Table(name = "tokens", schema = "dnd_editor")
 public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

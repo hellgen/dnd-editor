@@ -42,8 +42,8 @@ public class SecurityConfig {
                                 "/auth/refresh"
                         ).permitAll()
                         .requestMatchers("/actuator/**").permitAll()   // <--- обязательно
-//                        .anyRequest().authenticated()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
+//                        .anyRequest().permitAll()
                 )
 //                .userDetailsService(userDetailsService)
 
@@ -61,9 +61,7 @@ public class SecurityConfig {
                 .logout(log -> log
                         .logoutUrl("/logout")
                         .addLogoutHandler(customLogoutHandler)
-                        .logoutSuccessHandler((req, res, auth) -> {
-                            SecurityContextHolder.clearContext();
-                        })
+                        .logoutSuccessHandler((req, res, auth) -> SecurityContextHolder.clearContext())
                 );
 
         return http.build();

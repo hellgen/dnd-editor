@@ -107,12 +107,3 @@ CREATE TABLE IF NOT EXISTS dnd_editor.spells
     duration          VARCHAR(100) NOT NULL,
     spell_description VARCHAR(2048)
 );
-
-CREATE TABLE IF NOT EXISTS dnd_editor.items
-(
-    item_id          UUID PRIMARY KEY,
-    item_name        VARCHAR(100) NOT NULL,
-    item_type        VARCHAR(50)  NOT NULL,
-    item_description VARCHAR(512),
-    weight           INT
-);

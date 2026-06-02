@@ -8,8 +8,6 @@ import com.helen.dnd_charachter_editor.entity.reference.table.ClassArchetype;
 import com.helen.dnd_charachter_editor.entity.reference.table.Race;
 import com.helen.dnd_charachter_editor.entity.reference.table.Subrace;
 
-import java.util.UUID;
-
 public class CharacterMapper {
 
     public static UserCharacter mapToUserCharacter(
@@ -21,6 +19,7 @@ public class CharacterMapper {
             ClassArchetype classArchetype
     ) {
         UserCharacter userCharacter = new UserCharacter();
+
         userCharacter.setUser(user);
         userCharacter.setName(createCharacterRequest.characterName());
         userCharacter.setRace(race);
@@ -32,6 +31,16 @@ public class CharacterMapper {
         userCharacter.setCurrentHealth(createCharacterRequest.currentHealth());
         userCharacter.setAppearance(createCharacterRequest.appearance());
         userCharacter.setArmorClass(createCharacterRequest.armorClass());
+        userCharacter.setInventory(CharacterResponseMapper.serializeInventory(createCharacterRequest.inventory()));
+        userCharacter.setAbilities(CharacterResponseMapper.serializeIds(createCharacterRequest.abilities()));
+        userCharacter.setSpells(CharacterResponseMapper.serializeIds(createCharacterRequest.spells()));
+        userCharacter.setSavingThrowsCount(Math.min(createCharacterRequest.savingThrowsCount(), 2));
+
+        userCharacter.setPlatinum(createCharacterRequest.platinum());
+        userCharacter.setGold(createCharacterRequest.gold());
+        userCharacter.setElectrum(createCharacterRequest.electrum());
+        userCharacter.setSilver(createCharacterRequest.silver());
+        userCharacter.setCopper(createCharacterRequest.copper());
 
         return userCharacter;
     }

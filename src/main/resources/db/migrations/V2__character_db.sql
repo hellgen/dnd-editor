@@ -1,4 +1,3 @@
-drop table if exists dnd_editor.characters cascade;
 CREATE TABLE IF NOT EXISTS dnd_editor.characters
 (
     character_id       UUID PRIMARY KEY,
