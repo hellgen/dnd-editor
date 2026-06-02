@@ -8,7 +8,12 @@ public class RaceMapper {
     public static RaceResponse toListResponse(Race race) {
         return new RaceResponse(
                 race.getId(),
-                race.getName()
+                race.getName(),
+                race.getAge(),
+                race.getHeight(),
+                race.getSpeed(),
+                race.getLanguages(),
+                race.getDescription()
         );
     }
 

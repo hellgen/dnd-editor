@@ -1,6 +1,8 @@
 package com.helen.dnd_charachter_editor.service.character.impl;
 
 import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
 import com.helen.dnd_charachter_editor.entity.auth.User;
 import com.helen.dnd_charachter_editor.entity.character.CharacterAbility;
@@ -267,12 +269,132 @@ public class DefaultCharacterService implements CharacterService {
 
     @Override
     @Transactional
+    public CharacterResponse applyCharacterClass(UUID characterId, SetCharacterClassRequest request) {
+        return setCharacterClass(characterId, request);
+    }
+
+    @Override
+    @Transactional
+    public CharacterResponse updateCharacterClass(UUID characterId, SetCharacterClassRequest request) {
+        return setCharacterClass(characterId, request);
+    }
+
+    @Override
+    @Transactional
+    public CharacterResponse applyCharacterRace(UUID characterId, SetCharacterRaceRequest request) {
+        return setCharacterRace(characterId, request);
+    }
+
+    @Override
+    @Transactional
+    public CharacterResponse updateCharacterRace(UUID characterId, SetCharacterRaceRequest request) {
+        return setCharacterRace(characterId, request);
+    }
+
+    @Override
+    @Transactional
     public void deleteCharacter(UUID characterId) {
         User user = authService.getCurrentUser();
         UserCharacter character = characterRepository.findByIdAndUser_Id(characterId, user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
 
         characterRepository.delete(character);
+    }
+
+    private CharacterResponse setCharacterClass(UUID characterId, SetCharacterClassRequest request) {
+        if (request.classId() == null) {
+            throw new IllegalArgumentException("classId is required");
+        }
+
+        User user = authService.getCurrentUser();
+        UserCharacter character = characterRepository.findByIdAndUser_Id(characterId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
+
+        CharacterClass characterClass = characterClassService.getClassById(request.classId());
+        ClassArchetype classArchetype = getClassArchetypeOrNull(request.classId(), request.classArchetypeId());
+
+        character.setClassField(characterClass);
+        character.setClassArchetype(classArchetype);
+        updateClassDependentParameters(character, characterClass);
+
+        UserCharacter savedCharacter = characterRepository.save(character);
+
+        return buildCharacterResponse(savedCharacter);
+    }
+
+    private ClassArchetype getClassArchetypeOrNull(UUID classId, UUID classArchetypeId) {
+        if (classArchetypeId == null) {
+            return null;
+        }
+
+        return characterClassService.getClassArchetypeById(classId, classArchetypeId);
+    }
+
+    private void updateClassDependentParameters(UserCharacter character, CharacterClass characterClass) {
+        validateHealth(character.getMaxHealth(), character.getCurrentHealth());
+        resetSavingThrows(character);
+        resetSkills(character);
+        clearUnavailableSpells(character, characterClass);
+    }
+
+    private void resetSavingThrows(UserCharacter character) {
+        List<CharacterSavingThrow> savingThrows = characterSavingThrowRepository.findAllByCharacterId(character.getId());
+        savingThrows.forEach(savingThrow -> savingThrow.setProficiencyLevel(0));
+        characterSavingThrowRepository.saveAll(savingThrows);
+        character.setSavingThrowsCount(0);
+    }
+
+    private void resetSkills(UserCharacter character) {
+        List<CharacterSkill> skills = characterSkillRepository.findAllByCharacterId(character.getId());
+        skills.forEach(skill -> skill.setProficiencyLevel(0));
+        characterSkillRepository.saveAll(skills);
+    }
+
+    private void clearUnavailableSpells(UserCharacter character, CharacterClass characterClass) {
+        if (canUseSpells(character, characterClass)) {
+            return;
+        }
+
+        List<CharacterSpell> spells = characterSpellRepository.findAllByCharacterId(character.getId());
+        characterSpellRepository.deleteAll(spells);
+        character.setSpells(CharacterResponseMapper.serializeIds(List.of()));
+    }
+
+    private boolean canUseSpells(UserCharacter character, CharacterClass characterClass) {
+        if (!Boolean.TRUE.equals(characterClass.getIsSpellcaster())) {
+            return false;
+        }
+
+        Integer spellcastingStartLevel = characterClass.getSpellcastingStartLevel();
+        return spellcastingStartLevel != null && character.getLevel() >= spellcastingStartLevel;
+    }
+
+    private CharacterResponse setCharacterRace(UUID characterId, SetCharacterRaceRequest request) {
+        if (request.raceId() == null) {
+            throw new IllegalArgumentException("raceId is required");
+        }
+
+        User user = authService.getCurrentUser();
+        UserCharacter character = characterRepository.findByIdAndUser_Id(characterId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
+
+        Race race = raceService.getRace(request.raceId());
+        Subrace subrace = getSubraceOrNull(request.raceId(), request.subraceId());
+
+        character.setRace(race);
+        character.setSubrace(subrace);
+
+        UserCharacter savedCharacter = characterRepository.save(character);
+
+        return buildCharacterResponse(savedCharacter);
+    }
+
+    private Subrace getSubraceOrNull(UUID raceId, UUID subraceId) {
+        if (subraceId == null) {
+            return null;
+        }
+
+        return raceService.getSubrace(raceId, subraceId);
     }
 
     private void validateHealth(Integer maxHealth, Integer currentHealth) {

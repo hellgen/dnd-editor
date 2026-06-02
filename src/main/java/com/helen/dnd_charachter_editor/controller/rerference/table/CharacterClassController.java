@@ -35,26 +35,21 @@ public class CharacterClassController {
     }
 
     @GetMapping("/{classId}/features")
-    public List<ClassFeatureResponse> getAllFeaturesByLevel(
+    public List<ClassFeatureResponse> getAllFeatures(
             @PathVariable UUID classId,
-            @RequestParam Integer level
+            @RequestParam(required = false) Integer level
     ) {
-        return characterClassService.getAllFeaturesByLevel(
-                classId,
-                level
-        );
+        return characterClassService.getAllFeatures(classId, level);
     }
 
     @GetMapping("/{classId}/features/{classFeatureId}")
     public ClassFeatureResponse getClassFeatureById(
             @PathVariable UUID classId,
-            @PathVariable UUID classFeatureId,
-            @RequestParam Integer level
+            @PathVariable UUID classFeatureId
     ) {
         return characterClassService.getClassFeatureById(
                 classId,
-                classFeatureId,
-                level
+                classFeatureId
         );
     }
 
