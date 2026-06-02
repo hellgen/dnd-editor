@@ -17,7 +17,7 @@ public interface CharacterClassService {
 
     CharacterClass getClassById(UUID classId);
 
-    List<ClassFeatureResponse> getAllFeatures(UUID classId);
+    List<ClassFeatureResponse> getAllFeatures(UUID classId, Integer level);
 
     ClassFeatureResponse getClassFeatureById(
             UUID classId,

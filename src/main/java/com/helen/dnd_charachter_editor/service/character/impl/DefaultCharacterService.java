@@ -315,6 +315,7 @@ public class DefaultCharacterService implements CharacterService {
 
         character.setClassField(characterClass);
         character.setClassArchetype(classArchetype);
+        updateClassDependentParameters(character, characterClass);
 
         UserCharacter savedCharacter = characterRepository.save(character);
 
@@ -327,6 +328,45 @@ public class DefaultCharacterService implements CharacterService {
         }
 
         return characterClassService.getClassArchetypeById(classId, classArchetypeId);
+    }
+
+    private void updateClassDependentParameters(UserCharacter character, CharacterClass characterClass) {
+        validateHealth(character.getMaxHealth(), character.getCurrentHealth());
+        resetSavingThrows(character);
+        resetSkills(character);
+        clearUnavailableSpells(character, characterClass);
+    }
+
+    private void resetSavingThrows(UserCharacter character) {
+        List<CharacterSavingThrow> savingThrows = characterSavingThrowRepository.findAllByCharacterId(character.getId());
+        savingThrows.forEach(savingThrow -> savingThrow.setProficiencyLevel(0));
+        characterSavingThrowRepository.saveAll(savingThrows);
+        character.setSavingThrowsCount(0);
+    }
+
+    private void resetSkills(UserCharacter character) {
+        List<CharacterSkill> skills = characterSkillRepository.findAllByCharacterId(character.getId());
+        skills.forEach(skill -> skill.setProficiencyLevel(0));
+        characterSkillRepository.saveAll(skills);
+    }
+
+    private void clearUnavailableSpells(UserCharacter character, CharacterClass characterClass) {
+        if (canUseSpells(character, characterClass)) {
+            return;
+        }
+
+        List<CharacterSpell> spells = characterSpellRepository.findAllByCharacterId(character.getId());
+        characterSpellRepository.deleteAll(spells);
+        character.setSpells(CharacterResponseMapper.serializeIds(List.of()));
+    }
+
+    private boolean canUseSpells(UserCharacter character, CharacterClass characterClass) {
+        if (!Boolean.TRUE.equals(characterClass.getIsSpellcaster())) {
+            return false;
+        }
+
+        Integer spellcastingStartLevel = characterClass.getSpellcastingStartLevel();
+        return spellcastingStartLevel != null && character.getLevel() >= spellcastingStartLevel;
     }
 
     private CharacterResponse setCharacterRace(UUID characterId, SetCharacterRaceRequest request) {

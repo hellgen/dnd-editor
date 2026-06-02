@@ -91,9 +91,28 @@ class CharacterClassControllerTest {
                         2
                 )
         );
-        when(characterClassService.getAllFeatures(classId)).thenReturn(features);
+        when(characterClassService.getAllFeatures(classId, null)).thenReturn(features);
 
         mockMvc.perform(get("/classes/{classId}/features", classId))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(features)));
+    }
+
+    @Test
+    void getClassFeaturesCanFilterByLevel() throws Exception {
+        UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        List<ClassFeatureResponse> features = List.of(
+                new ClassFeatureResponse(
+                        UUID.fromString("33333333-3333-3333-3333-333333333333"),
+                        classId,
+                        "Боевой стиль",
+                        "Вы выбираете боевой стиль",
+                        1
+                )
+        );
+        when(characterClassService.getAllFeatures(classId, 1)).thenReturn(features);
+
+        mockMvc.perform(get("/classes/{classId}/features", classId).param("level", "1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(features)));
     }

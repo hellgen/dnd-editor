@@ -11,6 +11,11 @@ public interface ClassFeatureRepository extends JpaRepository<ClassFeature, UUID
 
     List<ClassFeature> findAllByCharacterClassIdOrderByLevelRequiredAsc(UUID classId);
 
+    List<ClassFeature> findAllByCharacterClassIdAndLevelRequiredLessThanEqualOrderByLevelRequiredAsc(
+            UUID classId,
+            Integer level
+    );
+
     Optional<ClassFeature> findByIdAndCharacterClassId(
             UUID id,
             UUID classId

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -35,9 +36,10 @@ public class CharacterClassController {
 
     @GetMapping("/{classId}/features")
     public List<ClassFeatureResponse> getAllFeatures(
-            @PathVariable UUID classId
+            @PathVariable UUID classId,
+            @RequestParam(required = false) Integer level
     ) {
-        return characterClassService.getAllFeatures(classId);
+        return characterClassService.getAllFeatures(classId, level);
     }
 
     @GetMapping("/{classId}/features/{classFeatureId}")

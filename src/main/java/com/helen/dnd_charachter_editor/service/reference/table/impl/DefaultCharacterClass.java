@@ -6,6 +6,7 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassArchety
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassFeatureResponse;
 import com.helen.dnd_charachter_editor.entity.reference.table.CharacterClass;
 import com.helen.dnd_charachter_editor.entity.reference.table.ClassArchetype;
+import com.helen.dnd_charachter_editor.entity.reference.table.ClassFeature;
 import com.helen.dnd_charachter_editor.mapper.reference.table.CharacterClassMapper;
 import com.helen.dnd_charachter_editor.mapper.reference.table.ClassArchetypeFeatureMapper;
 import com.helen.dnd_charachter_editor.mapper.reference.table.ClassArchetypeMapper;
@@ -59,12 +60,14 @@ public class DefaultCharacterClass implements CharacterClassService {
     }
 
     @Override
-    public List<ClassFeatureResponse> getAllFeatures(UUID classId) {
+    public List<ClassFeatureResponse> getAllFeatures(UUID classId, Integer level) {
         checkClassExists(classId);
 
-        return classFeatureRepository
-                .findAllByCharacterClassIdOrderByLevelRequiredAsc(classId)
-                .stream()
+        List<ClassFeature> classFeatures = level == null
+                ? classFeatureRepository.findAllByCharacterClassIdOrderByLevelRequiredAsc(classId)
+                : getAvailableFeaturesByLevel(classId, level);
+
+        return classFeatures.stream()
                 .map(ClassFeatureMapper::toClassFeatureResponse)
                 .toList();
     }
@@ -171,6 +174,16 @@ public class DefaultCharacterClass implements CharacterClassService {
                 ));
     }
 
+    private List<ClassFeature> getAvailableFeaturesByLevel(UUID classId, Integer level) {
+        checkLevelIsValid(level);
+
+        return classFeatureRepository
+                .findAllByCharacterClassIdAndLevelRequiredLessThanEqualOrderByLevelRequiredAsc(
+                        classId,
+                        level
+                );
+    }
+
     private void checkClassExists(UUID classId) {
         if (!characterClassRepository.existsById(classId)) {
             throw new EntityNotFoundException(
@@ -195,6 +208,15 @@ public class DefaultCharacterClass implements CharacterClassService {
                             + classArchetypeId
                             + " for class id: "
                             + classId
+            );
+        }
+    }
+
+
+    private void checkLevelIsValid(Integer level) {
+        if (level == null || level <= 0) {
+            throw new IllegalArgumentException(
+                    "Level must be greater than 0"
             );
         }
     }
