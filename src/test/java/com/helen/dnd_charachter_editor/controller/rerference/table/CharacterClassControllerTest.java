@@ -2,6 +2,7 @@ package com.helen.dnd_charachter_editor.controller.rerference.table;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.CharacterClassResponse;
+import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassArchetypeResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassFeatureResponse;
 import com.helen.dnd_charachter_editor.service.reference.table.CharacterClassService;
 import org.junit.jupiter.api.Test;
@@ -138,4 +139,49 @@ class CharacterClassControllerTest {
                 .andExpect(jsonPath("$.featureDescription").value("Вы выбираете боевой стиль"))
                 .andExpect(jsonPath("$.levelRequired").value(1));
     }
+
+    @Test
+    void getClassArchetypesReturnsArchetypeListForClass() throws Exception {
+        UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        List<ClassArchetypeResponse> archetypes = List.of(
+                new ClassArchetypeResponse(
+                        UUID.fromString("55555555-5555-5555-5555-555555555555"),
+                        classId,
+                        "Чемпион",
+                        "Архетип воина, сосредоточенный на грубой боевой мощи"
+                ),
+                new ClassArchetypeResponse(
+                        UUID.fromString("66666666-6666-6666-6666-666666666666"),
+                        classId,
+                        "Мастер боевых искусств",
+                        "Архетип с боевыми приёмами и превосходством"
+                )
+        );
+        when(characterClassService.getAllArchetypes(classId)).thenReturn(archetypes);
+
+        mockMvc.perform(get("/classes/{classId}/class-archetypes", classId))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(archetypes)));
+    }
+
+    @Test
+    void getClassArchetypeByIdReturnsOneArchetypeForClass() throws Exception {
+        UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        UUID archetypeId = UUID.fromString("55555555-5555-5555-5555-555555555555");
+        when(characterClassService.getClassArchetypeResponseById(classId, archetypeId))
+                .thenReturn(new ClassArchetypeResponse(
+                        archetypeId,
+                        classId,
+                        "Чемпион",
+                        "Архетип воина, сосредоточенный на грубой боевой мощи"
+                ));
+
+        mockMvc.perform(get("/classes/{classId}/class-archetypes/{classArchetypeId}", classId, archetypeId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(archetypeId.toString()))
+                .andExpect(jsonPath("$.classId").value(classId.toString()))
+                .andExpect(jsonPath("$.name").value("Чемпион"))
+                .andExpect(jsonPath("$.description").value("Архетип воина, сосредоточенный на грубой боевой мощи"));
+    }
+
 }

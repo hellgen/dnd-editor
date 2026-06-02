@@ -50,6 +50,8 @@ public class SecurityConfig {
                                 "/classes/*",
                                 "/classes/*/features",
                                 "/classes/*/features/*",
+                                "/classes/*/class-archetypes",
+                                "/classes/*/class-archetypes/*",
                                 "/races",
                                 "/races/*",
                                 "/races/*/subraces",
