@@ -15,6 +15,12 @@ public interface ClassArchetypeFeatureRepository
             UUID classId
     );
 
+    List<ClassArchetypeFeature> findAllByClassArchetypeIdAndClassArchetypeCharacterClassIdAndLevelRequiredLessThanEqualOrderByLevelRequiredAsc(
+            UUID classArchetypeId,
+            UUID classId,
+            Integer level
+    );
+
     Optional<ClassArchetypeFeature> findByIdAndClassArchetypeIdAndClassArchetypeCharacterClassId(
             UUID classArchetypeFeatureId,
             UUID classArchetypeId,

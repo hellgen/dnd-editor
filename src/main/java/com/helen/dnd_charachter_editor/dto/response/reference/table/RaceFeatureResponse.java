@@ -2,13 +2,11 @@ package com.helen.dnd_charachter_editor.dto.response.reference.table;
 
 import java.util.UUID;
 
-public record RaceResponse(
+public record RaceFeatureResponse(
         UUID id,
+        UUID raceId,
+        String raceName,
         String name,
-        Integer age,
-        Integer height,
-        Integer speed,
-        String languages,
         String description
 ) {
 }

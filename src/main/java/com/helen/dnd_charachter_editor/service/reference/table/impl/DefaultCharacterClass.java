@@ -6,6 +6,8 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassArchety
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassFeatureResponse;
 import com.helen.dnd_charachter_editor.entity.reference.table.CharacterClass;
 import com.helen.dnd_charachter_editor.entity.reference.table.ClassArchetype;
+import com.helen.dnd_charachter_editor.entity.reference.table.ClassArchetypeFeature;
+import com.helen.dnd_charachter_editor.entity.reference.table.ClassFeature;
 import com.helen.dnd_charachter_editor.mapper.reference.table.CharacterClassMapper;
 import com.helen.dnd_charachter_editor.mapper.reference.table.ClassArchetypeFeatureMapper;
 import com.helen.dnd_charachter_editor.mapper.reference.table.ClassArchetypeMapper;
@@ -59,16 +61,14 @@ public class DefaultCharacterClass implements CharacterClassService {
     }
 
     @Override
-    public List<ClassFeatureResponse> getAllFeaturesByLevel(
-            UUID classId,
-            Integer level
-    ) {
-        checkLevelIsValid(level);
+    public List<ClassFeatureResponse> getAllFeatures(UUID classId, Integer level) {
         checkClassExists(classId);
 
-        return classFeatureRepository
-                .findAvailableClassFeaturesByClassIdAndLevel(classId, level)
-                .stream()
+        List<ClassFeature> classFeatures = level == null
+                ? classFeatureRepository.findAllByCharacterClassIdOrderByLevelRequiredAsc(classId)
+                : getAvailableFeaturesByLevel(classId, level);
+
+        return classFeatures.stream()
                 .map(ClassFeatureMapper::toClassFeatureResponse)
                 .toList();
     }
@@ -76,26 +76,18 @@ public class DefaultCharacterClass implements CharacterClassService {
     @Override
     public ClassFeatureResponse getClassFeatureById(
             UUID classId,
-            UUID classFeatureId,
-            Integer level
+            UUID classFeatureId
     ) {
-        checkLevelIsValid(level);
         checkClassExists(classId);
 
         return classFeatureRepository
-                .findAvailableClassFeatureByIdAndClassIdAndLevel(
-                        classFeatureId,
-                        classId,
-                        level
-                )
+                .findByIdAndCharacterClassId(classFeatureId, classId)
                 .map(ClassFeatureMapper::toClassFeatureResponse)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Class feature not found with id: "
                                 + classFeatureId
                                 + " for class id: "
                                 + classId
-                                + " and level: "
-                                + level
                 ));
     }
 
@@ -139,21 +131,26 @@ public class DefaultCharacterClass implements CharacterClassService {
                                 + classArchetypeId
                                 + " for class id: "
                                 + classId
-                ));    }
+                ));
+    }
 
     @Override
     public List<ClassArchetypeFeatureResponse> getAllFeatures(
             UUID classId,
-            UUID classArchetypeId
+            UUID classArchetypeId,
+            Integer level
     ) {
         checkArchetypeBelongsToClass(classId, classArchetypeId);
 
-        return classArchetypeFeatureRepository
+        List<ClassArchetypeFeature> features = level == null
+                ? classArchetypeFeatureRepository
                 .findAllByClassArchetypeIdAndClassArchetypeCharacterClassId(
                         classArchetypeId,
                         classId
                 )
-                .stream()
+                : getAvailableArchetypeFeaturesByLevel(classId, classArchetypeId, level);
+
+        return features.stream()
                 .map(ClassArchetypeFeatureMapper::toClassArchetypeFeatureResponse)
                 .toList();
     }
@@ -181,6 +178,31 @@ public class DefaultCharacterClass implements CharacterClassService {
                                 + " and class id: "
                                 + classId
                 ));
+    }
+
+    private List<ClassFeature> getAvailableFeaturesByLevel(UUID classId, Integer level) {
+        checkLevelIsValid(level);
+
+        return classFeatureRepository
+                .findAllByCharacterClassIdAndLevelRequiredLessThanEqualOrderByLevelRequiredAsc(
+                        classId,
+                        level
+                );
+    }
+
+    private List<ClassArchetypeFeature> getAvailableArchetypeFeaturesByLevel(
+            UUID classId,
+            UUID classArchetypeId,
+            Integer level
+    ) {
+        checkLevelIsValid(level);
+
+        return classArchetypeFeatureRepository
+                .findAllByClassArchetypeIdAndClassArchetypeCharacterClassIdAndLevelRequiredLessThanEqualOrderByLevelRequiredAsc(
+                        classArchetypeId,
+                        classId,
+                        level
+                );
     }
 
     private void checkClassExists(UUID classId) {
@@ -211,6 +233,7 @@ public class DefaultCharacterClass implements CharacterClassService {
         }
     }
 
+
     private void checkLevelIsValid(Integer level) {
         if (level == null || level <= 0) {
             throw new IllegalArgumentException(
@@ -218,4 +241,5 @@ public class DefaultCharacterClass implements CharacterClassService {
             );
         }
     }
+
 }

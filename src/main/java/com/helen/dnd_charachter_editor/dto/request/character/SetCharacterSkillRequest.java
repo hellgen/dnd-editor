@@ -1,15 +1,13 @@
 package com.helen.dnd_charachter_editor.dto.request.character;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-public record SetCharacterAbilityRequest(
-        @JsonAlias("value")
+public record SetCharacterSkillRequest(
         @NotNull
-        @Min(1)
-        @Max(20)
-        Integer baseValue
+        @Min(0)
+        @Max(2)
+        Integer proficiencyLevel
 ) {
 }
