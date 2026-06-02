@@ -5,7 +5,11 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-public record SetCharacterAbilityRequest(
+import java.util.UUID;
+
+public record SetCharacterAbilityValueRequest(
+        @NotNull
+        UUID abilityId,
         @JsonAlias("value")
         @NotNull
         @Min(1)

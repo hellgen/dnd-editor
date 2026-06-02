@@ -5,6 +5,7 @@ import com.helen.dnd_charachter_editor.entity.reference.table.Ability;
 import com.helen.dnd_charachter_editor.mapper.reference.table.AbilityMapper;
 import com.helen.dnd_charachter_editor.repository.reference.table.AbilityRepository;
 import com.helen.dnd_charachter_editor.service.reference.table.AbilityService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,7 @@ public class DefaultAbilityService implements AbilityService {
     @Transactional(readOnly = true)
     public AbilityResponse getAbility(UUID abilityId) {
         Ability ability = abilityRepository.findById(abilityId)
-                .orElseThrow(() -> new RuntimeException("Характеристика не найдена"));
+                .orElseThrow(() -> new EntityNotFoundException("Характеристика не найдена"));
 
         return abilityMapper.toResponse(ability);
     }
