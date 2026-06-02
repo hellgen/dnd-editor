@@ -1,8 +1,10 @@
 package com.helen.dnd_charachter_editor.controller.character;
 
 import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
 import com.helen.dnd_charachter_editor.service.character.CharacterService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,6 +60,22 @@ public class CharacterController {
             @RequestParam Integer currentHealth
     ) {
         return characterService.updateCharacterHealth(characterId, maxHealth, currentHealth);
+    }
+
+    @PostMapping("/{characterId}/race")
+    public CharacterResponse applyCharacterRace(
+            @PathVariable UUID characterId,
+            @Valid @RequestBody SetCharacterRaceRequest request
+    ) {
+        return characterService.applyCharacterRace(characterId, request);
+    }
+
+    @PutMapping("/{characterId}/race")
+    public CharacterResponse updateCharacterRace(
+            @PathVariable UUID characterId,
+            @Valid @RequestBody SetCharacterRaceRequest request
+    ) {
+        return characterService.updateCharacterRace(characterId, request);
     }
 
     @DeleteMapping

@@ -59,15 +59,11 @@ public class DefaultCharacterClass implements CharacterClassService {
     }
 
     @Override
-    public List<ClassFeatureResponse> getAllFeaturesByLevel(
-            UUID classId,
-            Integer level
-    ) {
-        checkLevelIsValid(level);
+    public List<ClassFeatureResponse> getAllFeatures(UUID classId) {
         checkClassExists(classId);
 
         return classFeatureRepository
-                .findAvailableClassFeaturesByClassIdAndLevel(classId, level)
+                .findAllByCharacterClassIdOrderByLevelRequiredAsc(classId)
                 .stream()
                 .map(ClassFeatureMapper::toClassFeatureResponse)
                 .toList();
@@ -76,26 +72,18 @@ public class DefaultCharacterClass implements CharacterClassService {
     @Override
     public ClassFeatureResponse getClassFeatureById(
             UUID classId,
-            UUID classFeatureId,
-            Integer level
+            UUID classFeatureId
     ) {
-        checkLevelIsValid(level);
         checkClassExists(classId);
 
         return classFeatureRepository
-                .findAvailableClassFeatureByIdAndClassIdAndLevel(
-                        classFeatureId,
-                        classId,
-                        level
-                )
+                .findByIdAndCharacterClassId(classFeatureId, classId)
                 .map(ClassFeatureMapper::toClassFeatureResponse)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Class feature not found with id: "
                                 + classFeatureId
                                 + " for class id: "
                                 + classId
-                                + " and level: "
-                                + level
                 ));
     }
 
@@ -211,11 +199,4 @@ public class DefaultCharacterClass implements CharacterClassService {
         }
     }
 
-    private void checkLevelIsValid(Integer level) {
-        if (level == null || level <= 0) {
-            throw new IllegalArgumentException(
-                    "Level must be greater than 0"
-            );
-        }
-    }
 }

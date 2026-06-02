@@ -1,6 +1,7 @@
 package com.helen.dnd_charachter_editor.service.character.impl;
 
 import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
 import com.helen.dnd_charachter_editor.entity.auth.User;
 import com.helen.dnd_charachter_editor.entity.character.CharacterAbility;
@@ -267,12 +268,52 @@ public class DefaultCharacterService implements CharacterService {
 
     @Override
     @Transactional
+    public CharacterResponse applyCharacterRace(UUID characterId, SetCharacterRaceRequest request) {
+        return setCharacterRace(characterId, request);
+    }
+
+    @Override
+    @Transactional
+    public CharacterResponse updateCharacterRace(UUID characterId, SetCharacterRaceRequest request) {
+        return setCharacterRace(characterId, request);
+    }
+
+    @Override
+    @Transactional
     public void deleteCharacter(UUID characterId) {
         User user = authService.getCurrentUser();
         UserCharacter character = characterRepository.findByIdAndUser_Id(characterId, user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
 
         characterRepository.delete(character);
+    }
+
+    private CharacterResponse setCharacterRace(UUID characterId, SetCharacterRaceRequest request) {
+        if (request.raceId() == null) {
+            throw new IllegalArgumentException("raceId is required");
+        }
+
+        User user = authService.getCurrentUser();
+        UserCharacter character = characterRepository.findByIdAndUser_Id(characterId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
+
+        Race race = raceService.getRace(request.raceId());
+        Subrace subrace = getSubraceOrNull(request.raceId(), request.subraceId());
+
+        character.setRace(race);
+        character.setSubrace(subrace);
+
+        UserCharacter savedCharacter = characterRepository.save(character);
+
+        return buildCharacterResponse(savedCharacter);
+    }
+
+    private Subrace getSubraceOrNull(UUID raceId, UUID subraceId) {
+        if (subraceId == null) {
+            return null;
+        }
+
+        return raceService.getSubrace(raceId, subraceId);
     }
 
     private void validateHealth(Integer maxHealth, Integer currentHealth) {

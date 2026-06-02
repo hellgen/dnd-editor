@@ -3,6 +3,7 @@ package com.helen.dnd_charachter_editor.repository.reference.table;
 import com.helen.dnd_charachter_editor.entity.reference.table.SubraceAbilityBonus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,4 +13,6 @@ public interface SubraceAbilityBonusRepository extends JpaRepository<SubraceAbil
             UUID subraceId,
             UUID abilityId
     );
+
+    List<SubraceAbilityBonus> findAllBySubraceId(UUID subraceId);
 }
