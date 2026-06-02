@@ -1,6 +1,7 @@
 package com.helen.dnd_charachter_editor.service.character;
 
 import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
 
@@ -20,6 +21,10 @@ public interface CharacterService {
     CharacterResponse applyCharacterRace(UUID characterId, SetCharacterRaceRequest request);
 
     CharacterResponse updateCharacterRace(UUID characterId, SetCharacterRaceRequest request);
+
+    CharacterResponse applyCharacterClass(UUID characterId, SetCharacterClassRequest request);
+
+    CharacterResponse updateCharacterClass(UUID characterId, SetCharacterClassRequest request);
 
     void deleteCharacter(UUID characterId);
 }

@@ -1,6 +1,7 @@
 package com.helen.dnd_charachter_editor.service.character.impl;
 
 import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
 import com.helen.dnd_charachter_editor.entity.auth.User;
@@ -268,6 +269,18 @@ public class DefaultCharacterService implements CharacterService {
 
     @Override
     @Transactional
+    public CharacterResponse applyCharacterClass(UUID characterId, SetCharacterClassRequest request) {
+        return setCharacterClass(characterId, request);
+    }
+
+    @Override
+    @Transactional
+    public CharacterResponse updateCharacterClass(UUID characterId, SetCharacterClassRequest request) {
+        return setCharacterClass(characterId, request);
+    }
+
+    @Override
+    @Transactional
     public CharacterResponse applyCharacterRace(UUID characterId, SetCharacterRaceRequest request) {
         return setCharacterRace(characterId, request);
     }
@@ -286,6 +299,34 @@ public class DefaultCharacterService implements CharacterService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
 
         characterRepository.delete(character);
+    }
+
+    private CharacterResponse setCharacterClass(UUID characterId, SetCharacterClassRequest request) {
+        if (request.classId() == null) {
+            throw new IllegalArgumentException("classId is required");
+        }
+
+        User user = authService.getCurrentUser();
+        UserCharacter character = characterRepository.findByIdAndUser_Id(characterId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
+
+        CharacterClass characterClass = characterClassService.getClassById(request.classId());
+        ClassArchetype classArchetype = getClassArchetypeOrNull(request.classId(), request.classArchetypeId());
+
+        character.setClassField(characterClass);
+        character.setClassArchetype(classArchetype);
+
+        UserCharacter savedCharacter = characterRepository.save(character);
+
+        return buildCharacterResponse(savedCharacter);
+    }
+
+    private ClassArchetype getClassArchetypeOrNull(UUID classId, UUID classArchetypeId) {
+        if (classArchetypeId == null) {
+            return null;
+        }
+
+        return characterClassService.getClassArchetypeById(classId, classArchetypeId);
     }
 
     private CharacterResponse setCharacterRace(UUID characterId, SetCharacterRaceRequest request) {
