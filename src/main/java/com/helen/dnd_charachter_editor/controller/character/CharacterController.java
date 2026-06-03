@@ -232,8 +232,10 @@ public class CharacterController {
      * @return результат выполнения операции
      */
     @GetMapping("/{characterId}/inventory")
-    public List<CharacterInventoryResponse> getCharacterInventory(@PathVariable UUID characterId) {
-        return characterService.getCharacterInventory(characterId);
+    public List<String> getCharacterInventory(@PathVariable UUID characterId) {
+        return characterService.getCharacterInventory(characterId).stream()
+                .map(CharacterInventoryResponse::itemName)
+                .toList();
     }
 
     /**
