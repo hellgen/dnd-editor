@@ -6,7 +6,6 @@ import com.helen.dnd_charachter_editor.dto.request.character.AddCharacterSpellRe
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassArchetypeRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
-import com.helen.dnd_charachter_editor.dto.request.character.UpdateCharacterInventoryRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.WalletUpdateRequest;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterInventoryResponse;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
@@ -289,23 +288,16 @@ class CharacterControllerTest {
     @Test
     void updateCharacterInventoryItemsReturnsUpdatedItems() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
-        List<UpdateCharacterInventoryRequest> request = List.of(new UpdateCharacterInventoryRequest(
-                "Longsword",
-                "Silver Longsword",
-                "Silvered blade",
-                2,
-                false,
-                "Polished"
-        ));
+        List<String> request = List.of("Longsword", "Rope");
         when(characterService.updateCharacterInventoryItems(characterId, request))
-                .thenReturn(List.of(inventoryItem(characterId, "Silver Longsword", 2)));
+                .thenReturn(List.of("Longsword", "Rope"));
 
         mockMvc.perform(put("/characters/{characterId}/inventory/items", characterId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].itemName").value("Silver Longsword"))
-                .andExpect(jsonPath("$[0].quantity").value(2));
+                .andExpect(jsonPath("$[0]").value("Longsword"))
+                .andExpect(jsonPath("$[1]").value("Rope"));
     }
 
     /**

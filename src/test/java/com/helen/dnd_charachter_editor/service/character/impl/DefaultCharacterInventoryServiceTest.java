@@ -4,7 +4,6 @@ import com.helen.dnd_charachter_editor.dto.request.character.AddCharacterInvento
 import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.AddCharacterSpellRequest;
-import com.helen.dnd_charachter_editor.dto.request.character.UpdateCharacterInventoryRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.WalletUpdateRequest;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterInventoryResponse;
 import com.helen.dnd_charachter_editor.dto.response.character.WalletResponse;
@@ -127,23 +126,15 @@ class DefaultCharacterInventoryServiceTest {
      * Обновляет данные для запрошенной операции.
      */
     @Test
-    void updateCharacterInventoryItemsUpdatesExistingItem() {
+    void updateCharacterInventoryItemsReplacesSimpleInventoryList() {
         TestData data = prepareCharacter("[{\"itemName\":\"Longsword\",\"quantity\":1,\"isEquipped\":true}]");
-        UpdateCharacterInventoryRequest request = new UpdateCharacterInventoryRequest(
-                "Longsword",
-                "Silver Longsword",
-                null,
-                2,
-                false,
-                "Polished"
-        );
         when(characterRepository.save(any(UserCharacter.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        List<CharacterInventoryResponse> inventory = service.updateCharacterInventoryItems(data.characterId(), List.of(request));
+        List<String> inventory = service.updateCharacterInventoryItems(data.characterId(), List.of(" Silver Longsword ", "Rope"));
 
-        assertEquals("Silver Longsword", inventory.getFirst().itemName());
-        assertEquals(2, inventory.getFirst().quantity());
-        assertFalse(inventory.getFirst().isEquipped());
+        assertEquals(List.of("Silver Longsword", "Rope"), inventory);
+        assertEquals("[\"Silver Longsword\",\"Rope\"]", data.character().getInventory());
+        verify(characterRepository).save(data.character());
     }
 
     /**
