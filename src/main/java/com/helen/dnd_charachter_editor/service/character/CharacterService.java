@@ -1,11 +1,15 @@
 package com.helen.dnd_charachter_editor.service.character;
 
+import com.helen.dnd_charachter_editor.dto.request.character.AddCharacterInventoryRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassArchetypeRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.UpdateCharacterInventoryRequest;
+import com.helen.dnd_charachter_editor.dto.response.character.CharacterInventoryResponse;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -98,6 +102,47 @@ public interface CharacterService {
      * @return result of the operation
      */
     CharacterResponse updateCharacterClassArchetype(UUID characterId, SetCharacterClassArchetypeRequest request);
+
+    /**
+     * Returns character inventory.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
+    List<CharacterInventoryResponse> getCharacterInventory(UUID characterId);
+
+    /**
+     * Returns one character inventory item by item name.
+     * @param characterId value used by this operation
+     * @param itemName value used by this operation
+     * @return result of the operation
+     */
+    CharacterInventoryResponse getCharacterInventoryItem(UUID characterId, String itemName);
+
+    /**
+     * Adds item to character inventory.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
+    CharacterInventoryResponse addCharacterInventoryItem(UUID characterId, AddCharacterInventoryRequest request);
+
+    /**
+     * Updates character inventory items.
+     * @param characterId value used by this operation
+     * @param requests value used by this operation
+     * @return result of the operation
+     */
+    List<CharacterInventoryResponse> updateCharacterInventoryItems(
+            UUID characterId,
+            List<UpdateCharacterInventoryRequest> requests
+    );
+
+    /**
+     * Deletes one character inventory item by item name.
+     * @param characterId value used by this operation
+     * @param itemName value used by this operation
+     */
+    void deleteCharacterInventoryItem(UUID characterId, String itemName);
 
     /**
      * Deletes character.

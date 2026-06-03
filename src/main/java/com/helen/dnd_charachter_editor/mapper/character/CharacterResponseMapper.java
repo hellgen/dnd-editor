@@ -2,8 +2,10 @@ package com.helen.dnd_charachter_editor.mapper.character;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequest;
+import com.helen.dnd_charachter_editor.dto.response.character.CharacterInventoryResponse;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
 import com.helen.dnd_charachter_editor.entity.character.CharacterAbility;
 import com.helen.dnd_charachter_editor.entity.character.CharacterSavingThrow;
@@ -26,6 +28,8 @@ public class CharacterResponseMapper {
     private static final TypeReference<List<String>> STRING_LIST_TYPE = new TypeReference<>() {
     };
     private static final TypeReference<List<UUID>> UUID_LIST_TYPE = new TypeReference<>() {
+    };
+    private static final TypeReference<List<CharacterInventoryResponse>> INVENTORY_ITEM_LIST_TYPE = new TypeReference<>() {
     };
 
     /**
@@ -180,6 +184,15 @@ public class CharacterResponseMapper {
     }
 
     /**
+     * Executes the serialize inventory items operation.
+     * @param inventoryItems value used by this operation
+     * @return result of the operation
+     */
+    public static String serializeInventoryItems(List<CharacterInventoryResponse> inventoryItems) {
+        return serializeList(inventoryItems, "Unable to serialize character inventory items");
+    }
+
+    /**
      * Executes the serialize ids operation.
      * @param ids value used by this operation
      * @return result of the operation
@@ -228,15 +241,64 @@ public class CharacterResponseMapper {
      * @param inventory value used by this operation
      * @return result of the operation
      */
-    private static List<String> deserializeInventory(String inventory) {
+    public static List<String> deserializeInventory(String inventory) {
         if (inventory == null || inventory.isBlank()) {
             return List.of();
         }
 
         try {
+            JsonNode root = OBJECT_MAPPER.readTree(inventory);
+            if (root.isArray() && root.size() > 0 && root.get(0).isObject()) {
+                return deserializeInventoryItems(inventory).stream()
+                        .map(CharacterInventoryResponse::itemName)
+                        .toList();
+            }
+
             return OBJECT_MAPPER.readValue(inventory, STRING_LIST_TYPE);
         } catch (JsonProcessingException e) {
             return List.of(inventory);
+        }
+    }
+
+    /**
+     * Executes the deserialize inventory items operation.
+     * @param inventory value used by this operation
+     * @return result of the operation
+     */
+    public static List<CharacterInventoryResponse> deserializeInventoryItems(String inventory) {
+        if (inventory == null || inventory.isBlank()) {
+            return List.of();
+        }
+
+        try {
+            JsonNode root = OBJECT_MAPPER.readTree(inventory);
+            if (root.isArray() && (root.size() == 0 || root.get(0).isTextual())) {
+                return OBJECT_MAPPER.readValue(inventory, STRING_LIST_TYPE).stream()
+                        .map(itemName -> new CharacterInventoryResponse(
+                                null,
+                                null,
+                                null,
+                                itemName,
+                                null,
+                                1,
+                                false,
+                                null
+                        ))
+                        .toList();
+            }
+
+            return OBJECT_MAPPER.readValue(inventory, INVENTORY_ITEM_LIST_TYPE);
+        } catch (JsonProcessingException e) {
+            return List.of(new CharacterInventoryResponse(
+                    null,
+                    null,
+                    null,
+                    inventory,
+                    null,
+                    1,
+                    false,
+                    null
+            ));
         }
     }
 }

@@ -1,9 +1,12 @@
 package com.helen.dnd_charachter_editor.controller.character;
 
+import com.helen.dnd_charachter_editor.dto.request.character.AddCharacterInventoryRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassArchetypeRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.UpdateCharacterInventoryRequest;
+import com.helen.dnd_charachter_editor.dto.response.character.CharacterInventoryResponse;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
 import com.helen.dnd_charachter_editor.service.character.CharacterService;
 import jakarta.validation.Valid;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -178,6 +182,72 @@ public class CharacterController {
             @Valid @RequestBody SetCharacterRaceRequest request
     ) {
         return characterService.updateCharacterRace(characterId, request);
+    }
+
+    /**
+     * Returns character inventory.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
+    @GetMapping("/{characterId}/inventory")
+    public List<CharacterInventoryResponse> getCharacterInventory(@PathVariable UUID characterId) {
+        return characterService.getCharacterInventory(characterId);
+    }
+
+    /**
+     * Returns one character inventory item by item name.
+     * @param characterId value used by this operation
+     * @param itemName value used by this operation
+     * @return result of the operation
+     */
+    @GetMapping("/{characterId}/inventory/item")
+    public CharacterInventoryResponse getCharacterInventoryItem(
+            @PathVariable UUID characterId,
+            @RequestParam String itemName
+    ) {
+        return characterService.getCharacterInventoryItem(characterId, itemName);
+    }
+
+    /**
+     * Adds item to character inventory.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
+    @PostMapping("/{characterId}/inventory/item")
+    public CharacterInventoryResponse addCharacterInventoryItem(
+            @PathVariable UUID characterId,
+            @Valid @RequestBody AddCharacterInventoryRequest request
+    ) {
+        return characterService.addCharacterInventoryItem(characterId, request);
+    }
+
+    /**
+     * Updates character inventory items.
+     * @param characterId value used by this operation
+     * @param requests value used by this operation
+     * @return result of the operation
+     */
+    @PutMapping("/{characterId}/inventory/items")
+    public List<CharacterInventoryResponse> updateCharacterInventoryItems(
+            @PathVariable UUID characterId,
+            @Valid @RequestBody List<@Valid UpdateCharacterInventoryRequest> requests
+    ) {
+        return characterService.updateCharacterInventoryItems(characterId, requests);
+    }
+
+    /**
+     * Deletes one character inventory item by item name.
+     * @param characterId value used by this operation
+     * @param itemName value used by this operation
+     */
+    @DeleteMapping("/{characterId}/inventory/item")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCharacterInventoryItem(
+            @PathVariable UUID characterId,
+            @RequestParam String itemName
+    ) {
+        characterService.deleteCharacterInventoryItem(characterId, itemName);
     }
 
     /**

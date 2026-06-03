@@ -1,9 +1,12 @@
 package com.helen.dnd_charachter_editor.controller.character;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.helen.dnd_charachter_editor.dto.request.character.AddCharacterInventoryRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassArchetypeRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.UpdateCharacterInventoryRequest;
+import com.helen.dnd_charachter_editor.dto.response.character.CharacterInventoryResponse;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
 import com.helen.dnd_charachter_editor.service.character.CharacterService;
 import org.junit.jupiter.api.Test;
@@ -15,7 +18,10 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -161,6 +167,126 @@ class CharacterControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.race").value("Человек"))
                 .andExpect(jsonPath("$.subrace").doesNotExist());
+    }
+
+
+    /**
+     * Returns character inventory.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void getCharacterInventoryReturnsItems() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        when(characterService.getCharacterInventory(characterId))
+                .thenReturn(List.of(inventoryItem(characterId, "Longsword", 1)));
+
+        mockMvc.perform(get("/characters/{characterId}/inventory", characterId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].itemName").value("Longsword"))
+                .andExpect(jsonPath("$[0].quantity").value(1));
+    }
+
+    /**
+     * Returns character inventory item by name.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void getCharacterInventoryItemReturnsItemByName() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        when(characterService.getCharacterInventoryItem(characterId, "Longsword"))
+                .thenReturn(inventoryItem(characterId, "Longsword", 1));
+
+        mockMvc.perform(get("/characters/{characterId}/inventory/item", characterId)
+                        .param("itemName", "Longsword"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.itemName").value("Longsword"));
+    }
+
+    /**
+     * Adds character inventory item.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void addCharacterInventoryItemReturnsAddedItem() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        AddCharacterInventoryRequest request = new AddCharacterInventoryRequest(
+                null,
+                "Longsword",
+                "A sharp blade",
+                1,
+                true,
+                "Family heirloom"
+        );
+        when(characterService.addCharacterInventoryItem(characterId, request))
+                .thenReturn(inventoryItem(characterId, "Longsword", 1));
+
+        mockMvc.perform(post("/characters/{characterId}/inventory/item", characterId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.itemName").value("Longsword"));
+    }
+
+    /**
+     * Updates character inventory items.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void updateCharacterInventoryItemsReturnsUpdatedItems() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        List<UpdateCharacterInventoryRequest> request = List.of(new UpdateCharacterInventoryRequest(
+                "Longsword",
+                "Silver Longsword",
+                "Silvered blade",
+                2,
+                false,
+                "Polished"
+        ));
+        when(characterService.updateCharacterInventoryItems(characterId, request))
+                .thenReturn(List.of(inventoryItem(characterId, "Silver Longsword", 2)));
+
+        mockMvc.perform(put("/characters/{characterId}/inventory/items", characterId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].itemName").value("Silver Longsword"))
+                .andExpect(jsonPath("$[0].quantity").value(2));
+    }
+
+    /**
+     * Deletes character inventory item by name.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void deleteCharacterInventoryItemDeletesItemByName() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+
+        mockMvc.perform(delete("/characters/{characterId}/inventory/item", characterId)
+                        .param("itemName", "Longsword"))
+                .andExpect(status().isNoContent());
+
+        verify(characterService).deleteCharacterInventoryItem(characterId, "Longsword");
+    }
+
+
+    /**
+     * Executes the inventory item operation.
+     * @param characterId value used by this operation
+     * @param itemName value used by this operation
+     * @param quantity value used by this operation
+     * @return result of the operation
+     */
+    private CharacterInventoryResponse inventoryItem(UUID characterId, String itemName, Integer quantity) {
+        return new CharacterInventoryResponse(
+                UUID.fromString("99999999-9999-9999-9999-999999999999"),
+                characterId,
+                null,
+                itemName,
+                null,
+                quantity,
+                false,
+                null
+        );
     }
 
     /**

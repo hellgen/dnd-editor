@@ -1,9 +1,12 @@
 package com.helen.dnd_charachter_editor.service.character.impl;
 
+import com.helen.dnd_charachter_editor.dto.request.character.AddCharacterInventoryRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassArchetypeRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.UpdateCharacterInventoryRequest;
+import com.helen.dnd_charachter_editor.dto.response.character.CharacterInventoryResponse;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
 import com.helen.dnd_charachter_editor.entity.auth.User;
 import com.helen.dnd_charachter_editor.entity.character.CharacterAbility;
@@ -379,6 +382,129 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
+     * Returns character inventory.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<CharacterInventoryResponse> getCharacterInventory(UUID characterId) {
+        UserCharacter character = findCharacterForCurrentUser(characterId);
+        return readInventory(character);
+    }
+
+    /**
+     * Returns one character inventory item by item name.
+     * @param characterId value used by this operation
+     * @param itemName value used by this operation
+     * @return result of the operation
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public CharacterInventoryResponse getCharacterInventoryItem(UUID characterId, String itemName) {
+        UserCharacter character = findCharacterForCurrentUser(characterId);
+        return findInventoryItem(readInventory(character), itemName);
+    }
+
+    /**
+     * Adds item to character inventory.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
+    @Override
+    @Transactional
+    public CharacterInventoryResponse addCharacterInventoryItem(UUID characterId, AddCharacterInventoryRequest request) {
+        validateAddInventoryRequest(request);
+        UserCharacter character = findCharacterForCurrentUser(characterId);
+        List<CharacterInventoryResponse> inventory = new ArrayList<>(readInventory(character));
+
+        CharacterInventoryResponse savedItem = findInventoryItemOrNull(inventory, request.itemName());
+        if (savedItem == null) {
+            savedItem = new CharacterInventoryResponse(
+                    UUID.randomUUID(),
+                    character.getId(),
+                    request.itemId(),
+                    normalizedItemName(request.itemName()),
+                    request.itemDescription(),
+                    request.quantity(),
+                    Boolean.TRUE.equals(request.isEquipped()),
+                    request.customDescription()
+            );
+            inventory.add(savedItem);
+        } else {
+            savedItem = new CharacterInventoryResponse(
+                    savedItem.id() != null ? savedItem.id() : UUID.randomUUID(),
+                    character.getId(),
+                    request.itemId() != null ? request.itemId() : savedItem.itemId(),
+                    savedItem.itemName(),
+                    request.itemDescription() != null ? request.itemDescription() : savedItem.itemDescription(),
+                    savedItem.quantity() + request.quantity(),
+                    request.isEquipped() != null ? request.isEquipped() : savedItem.isEquipped(),
+                    request.customDescription() != null ? request.customDescription() : savedItem.customDescription()
+            );
+            replaceInventoryItem(inventory, savedItem);
+        }
+
+        saveInventory(character, inventory);
+        return savedItem;
+    }
+
+    /**
+     * Updates character inventory items.
+     * @param characterId value used by this operation
+     * @param requests value used by this operation
+     * @return result of the operation
+     */
+    @Override
+    @Transactional
+    public List<CharacterInventoryResponse> updateCharacterInventoryItems(
+            UUID characterId,
+            List<UpdateCharacterInventoryRequest> requests
+    ) {
+        if (requests == null || requests.isEmpty()) {
+            throw new IllegalArgumentException("Inventory update requests are required");
+        }
+
+        UserCharacter character = findCharacterForCurrentUser(characterId);
+        List<CharacterInventoryResponse> inventory = new ArrayList<>(readInventory(character));
+
+        for (UpdateCharacterInventoryRequest request : requests) {
+            validateUpdateInventoryRequest(request);
+            CharacterInventoryResponse item = findInventoryItem(inventory, request.itemName());
+            CharacterInventoryResponse updatedItem = new CharacterInventoryResponse(
+                    item.id() != null ? item.id() : UUID.randomUUID(),
+                    character.getId(),
+                    item.itemId(),
+                    hasText(request.newItemName()) ? normalizedItemName(request.newItemName()) : item.itemName(),
+                    request.itemDescription() != null ? request.itemDescription() : item.itemDescription(),
+                    request.quantity() != null ? request.quantity() : item.quantity(),
+                    request.isEquipped() != null ? request.isEquipped() : item.isEquipped(),
+                    request.customDescription() != null ? request.customDescription() : item.customDescription()
+            );
+            replaceInventoryItem(inventory, updatedItem, request.itemName());
+        }
+
+        saveInventory(character, inventory);
+        return inventory;
+    }
+
+    /**
+     * Deletes one character inventory item by item name.
+     * @param characterId value used by this operation
+     * @param itemName value used by this operation
+     */
+    @Override
+    @Transactional
+    public void deleteCharacterInventoryItem(UUID characterId, String itemName) {
+        UserCharacter character = findCharacterForCurrentUser(characterId);
+        List<CharacterInventoryResponse> inventory = new ArrayList<>(readInventory(character));
+        CharacterInventoryResponse item = findInventoryItem(inventory, itemName);
+        inventory.removeIf(inventoryItem -> namesEqual(inventoryItem.itemName(), item.itemName()));
+        saveInventory(character, inventory);
+    }
+
+    /**
      * Deletes character.
      * @param characterId value used by this operation
      */
@@ -587,6 +713,168 @@ public class DefaultCharacterService implements CharacterService {
         if (currentHealth < -(maxHealth / 2)) {
             throw new IllegalArgumentException("currentHealth must be greater than or equal to negative half of maxHealth");
         }
+    }
+
+    /**
+     * Finds character that belongs to current user.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
+    private UserCharacter findCharacterForCurrentUser(UUID characterId) {
+        User user = authService.getCurrentUser();
+        return characterRepository.findByIdAndUser_Id(characterId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
+    }
+
+    /**
+     * Reads character inventory from serialized character field.
+     * @param character value used by this operation
+     * @return result of the operation
+     */
+    private List<CharacterInventoryResponse> readInventory(UserCharacter character) {
+        return CharacterResponseMapper.deserializeInventoryItems(character.getInventory()).stream()
+                .map(item -> new CharacterInventoryResponse(
+                        item.id(),
+                        character.getId(),
+                        item.itemId(),
+                        item.itemName(),
+                        item.itemDescription(),
+                        item.quantity() != null ? item.quantity() : 1,
+                        Boolean.TRUE.equals(item.isEquipped()),
+                        item.customDescription()
+                ))
+                .toList();
+    }
+
+    /**
+     * Saves character inventory to serialized character field.
+     * @param character value used by this operation
+     * @param inventory value used by this operation
+     */
+    private void saveInventory(UserCharacter character, List<CharacterInventoryResponse> inventory) {
+        character.setInventory(CharacterResponseMapper.serializeInventoryItems(inventory));
+        characterRepository.save(character);
+    }
+
+    /**
+     * Finds required inventory item by name.
+     * @param inventory value used by this operation
+     * @param itemName value used by this operation
+     * @return result of the operation
+     */
+    private CharacterInventoryResponse findInventoryItem(
+            List<CharacterInventoryResponse> inventory,
+            String itemName
+    ) {
+        CharacterInventoryResponse item = findInventoryItemOrNull(inventory, itemName);
+        if (item == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Inventory item not found");
+        }
+        return item;
+    }
+
+    /**
+     * Finds optional inventory item by name.
+     * @param inventory value used by this operation
+     * @param itemName value used by this operation
+     * @return result of the operation
+     */
+    private CharacterInventoryResponse findInventoryItemOrNull(
+            List<CharacterInventoryResponse> inventory,
+            String itemName
+    ) {
+        String normalizedName = normalizedItemName(itemName);
+        return inventory.stream()
+                .filter(item -> namesEqual(item.itemName(), normalizedName))
+                .findFirst()
+                .orElse(null);
+    }
+
+    /**
+     * Replaces inventory item by its current name.
+     * @param inventory value used by this operation
+     * @param updatedItem value used by this operation
+     */
+    private void replaceInventoryItem(List<CharacterInventoryResponse> inventory, CharacterInventoryResponse updatedItem) {
+        replaceInventoryItem(inventory, updatedItem, updatedItem.itemName());
+    }
+
+    /**
+     * Replaces inventory item by an original name.
+     * @param inventory value used by this operation
+     * @param updatedItem value used by this operation
+     * @param originalItemName value used by this operation
+     */
+    private void replaceInventoryItem(
+            List<CharacterInventoryResponse> inventory,
+            CharacterInventoryResponse updatedItem,
+            String originalItemName
+    ) {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (namesEqual(inventory.get(i).itemName(), originalItemName)) {
+                inventory.set(i, updatedItem);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Validates add inventory request.
+     * @param request value used by this operation
+     */
+    private void validateAddInventoryRequest(AddCharacterInventoryRequest request) {
+        if (request == null) {
+            throw new IllegalArgumentException("Inventory item request is required");
+        }
+        normalizedItemName(request.itemName());
+        if (request.quantity() == null || request.quantity() < 1) {
+            throw new IllegalArgumentException("quantity must be greater than 0");
+        }
+    }
+
+    /**
+     * Validates update inventory request.
+     * @param request value used by this operation
+     */
+    private void validateUpdateInventoryRequest(UpdateCharacterInventoryRequest request) {
+        if (request == null) {
+            throw new IllegalArgumentException("Inventory update request is required");
+        }
+        normalizedItemName(request.itemName());
+        if (request.quantity() != null && request.quantity() < 1) {
+            throw new IllegalArgumentException("quantity must be greater than 0");
+        }
+    }
+
+    /**
+     * Normalizes item name for comparisons and persistence.
+     * @param itemName value used by this operation
+     * @return result of the operation
+     */
+    private String normalizedItemName(String itemName) {
+        if (!hasText(itemName)) {
+            throw new IllegalArgumentException("itemName is required");
+        }
+        return itemName.trim();
+    }
+
+    /**
+     * Compares item names ignoring case.
+     * @param first value used by this operation
+     * @param second value used by this operation
+     * @return result of the operation
+     */
+    private boolean namesEqual(String first, String second) {
+        return first != null && second != null && first.equalsIgnoreCase(second);
+    }
+
+    /**
+     * Checks that text has visible characters.
+     * @param value value used by this operation
+     * @return result of the operation
+     */
+    private boolean hasText(String value) {
+        return value != null && !value.trim().isEmpty();
     }
 
     /**
