@@ -6,7 +6,6 @@ import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequ
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassArchetypeRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
-import com.helen.dnd_charachter_editor.dto.request.character.UpdateCharacterInventoryRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.WalletUpdateRequest;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterInventoryResponse;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
@@ -541,42 +540,29 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Обновляет данные для запрошенной операции.
+     * Обновляет список предметов в инвентаре персонажа.
      * @param characterId параметр, используемый при выполнении операции
-     * @param requests параметр, используемый при выполнении операции
-     * @return результат выполнения операции
+     * @param items список названий предметов инвентаря
+     * @return обновленный список названий предметов инвентаря
      */
     @Override
     @Transactional
-    public List<CharacterInventoryResponse> updateCharacterInventoryItems(
+    public List<String> updateCharacterInventoryItems(
             UUID characterId,
-            List<UpdateCharacterInventoryRequest> requests
+            List<String> items
     ) {
-        if (requests == null || requests.isEmpty()) {
-            throw new IllegalArgumentException("Inventory update requests are required");
+        if (items == null) {
+            throw new IllegalArgumentException("Inventory items are required");
         }
 
         UserCharacter character = findCharacterForCurrentUser(characterId);
-        List<CharacterInventoryResponse> inventory = new ArrayList<>(readInventory(character));
+        List<String> normalizedItems = items.stream()
+                .map(this::normalizedItemName)
+                .toList();
 
-        for (UpdateCharacterInventoryRequest request : requests) {
-            validateUpdateInventoryRequest(request);
-            CharacterInventoryResponse item = findInventoryItem(inventory, request.itemName());
-            CharacterInventoryResponse updatedItem = new CharacterInventoryResponse(
-                    item.id() != null ? item.id() : UUID.randomUUID(),
-                    character.getId(),
-                    item.itemId(),
-                    hasText(request.newItemName()) ? normalizedItemName(request.newItemName()) : item.itemName(),
-                    request.itemDescription() != null ? request.itemDescription() : item.itemDescription(),
-                    request.quantity() != null ? request.quantity() : item.quantity(),
-                    request.isEquipped() != null ? request.isEquipped() : item.isEquipped(),
-                    request.customDescription() != null ? request.customDescription() : item.customDescription()
-            );
-            replaceInventoryItem(inventory, updatedItem, request.itemName());
-        }
-
-        saveInventory(character, inventory);
-        return inventory;
+        character.setInventory(CharacterResponseMapper.serializeInventory(normalizedItems));
+        characterRepository.save(character);
+        return normalizedItems;
     }
 
     /**
@@ -991,20 +977,6 @@ public class DefaultCharacterService implements CharacterService {
         }
         normalizedItemName(request.itemName());
         if (request.quantity() == null || request.quantity() < 1) {
-            throw new IllegalArgumentException("quantity must be greater than 0");
-        }
-    }
-
-    /**
-     * Проверяет корректность данных для запрошенной операции.
-     * @param request параметр, используемый при выполнении операции
-     */
-    private void validateUpdateInventoryRequest(UpdateCharacterInventoryRequest request) {
-        if (request == null) {
-            throw new IllegalArgumentException("Inventory update request is required");
-        }
-        normalizedItemName(request.itemName());
-        if (request.quantity() != null && request.quantity() < 1) {
             throw new IllegalArgumentException("quantity must be greater than 0");
         }
     }

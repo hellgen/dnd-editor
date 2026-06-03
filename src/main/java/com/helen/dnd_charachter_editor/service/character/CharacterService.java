@@ -6,7 +6,6 @@ import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequ
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassArchetypeRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
-import com.helen.dnd_charachter_editor.dto.request.character.UpdateCharacterInventoryRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.WalletUpdateRequest;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterInventoryResponse;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
@@ -153,14 +152,14 @@ public interface CharacterService {
     CharacterInventoryResponse addCharacterInventoryItem(UUID characterId, AddCharacterInventoryRequest request);
 
     /**
-     * Обновляет данные для запрошенной операции.
+     * Обновляет список предметов в инвентаре персонажа.
      * @param characterId параметр, используемый при выполнении операции
-     * @param requests параметр, используемый при выполнении операции
-     * @return результат выполнения операции
+     * @param items список названий предметов инвентаря
+     * @return обновленный список названий предметов инвентаря
      */
-    List<CharacterInventoryResponse> updateCharacterInventoryItems(
+    List<String> updateCharacterInventoryItems(
             UUID characterId,
-            List<UpdateCharacterInventoryRequest> requests
+            List<String> items
     );
 
     /**
