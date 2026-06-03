@@ -2,11 +2,13 @@ package com.helen.dnd_charachter_editor.dto.response.character;
 
 import java.util.List;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 /**
  * Объект передачи данных `CharacterResponse`.
  */
 public record CharacterResponse(
+        UUID id,
         String characterName,
         String race,
         String subrace,

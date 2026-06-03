@@ -51,6 +51,7 @@ public class CharacterResponseMapper {
             int savingThrowsCount
     ) {
         return new CharacterResponse(
+                character.getId(),
                 character.getName(),
                 character.getRace().getName(),
                 character.getSubrace() != null ? character.getSubrace().getName() : null,
@@ -95,6 +96,7 @@ public class CharacterResponseMapper {
             List<CharacterSavingThrow> savingThrows
     ) {
         return new CharacterResponse(
+                character.getId(),
                 character.getName(),
                 character.getRace().getName(),
                 character.getSubrace() != null ? character.getSubrace().getName() : null,
@@ -144,6 +146,7 @@ public class CharacterResponseMapper {
             Integer savingThrowsCount
     ) {
         return new CharacterResponse(
+                character.getId(),
                 character.getName(),
                 character.getRace().getName(),
                 character.getSubrace() != null ? character.getSubrace().getName() : null,
