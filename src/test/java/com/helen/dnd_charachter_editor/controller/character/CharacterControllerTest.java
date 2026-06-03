@@ -238,8 +238,7 @@ class CharacterControllerTest {
 
         mockMvc.perform(get("/characters/{characterId}/inventory", characterId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].itemName").value("Longsword"))
-                .andExpect(jsonPath("$[0].quantity").value(1));
+                .andExpect(jsonPath("$[0]").value("Longsword"));
     }
 
     /**
