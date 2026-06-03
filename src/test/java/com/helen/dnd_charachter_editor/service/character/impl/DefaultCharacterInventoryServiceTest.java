@@ -1,16 +1,26 @@
 package com.helen.dnd_charachter_editor.service.character.impl;
 
 import com.helen.dnd_charachter_editor.dto.request.character.AddCharacterInventoryRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.CreateCharacterRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.AddCharacterSpellRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.UpdateCharacterInventoryRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.WalletUpdateRequest;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterInventoryResponse;
 import com.helen.dnd_charachter_editor.dto.response.character.WalletResponse;
 import com.helen.dnd_charachter_editor.entity.auth.User;
+import com.helen.dnd_charachter_editor.entity.character.CharacterAbility;
+import com.helen.dnd_charachter_editor.entity.character.CharacterSavingThrow;
+import com.helen.dnd_charachter_editor.entity.character.CharacterSkill;
 import com.helen.dnd_charachter_editor.entity.character.CharacterSpell;
 import com.helen.dnd_charachter_editor.entity.character.UserCharacter;
+import com.helen.dnd_charachter_editor.entity.reference.table.Ability;
 import com.helen.dnd_charachter_editor.entity.reference.table.CharacterClass;
+import com.helen.dnd_charachter_editor.entity.reference.table.ClassArchetype;
+import com.helen.dnd_charachter_editor.entity.reference.table.Race;
+import com.helen.dnd_charachter_editor.entity.reference.table.Skill;
 import com.helen.dnd_charachter_editor.entity.reference.table.Spell;
+import com.helen.dnd_charachter_editor.entity.reference.table.Subrace;
 import com.helen.dnd_charachter_editor.repository.character.CharacterAbilityRepository;
 import com.helen.dnd_charachter_editor.repository.character.CharacterRepository;
 import com.helen.dnd_charachter_editor.repository.character.CharacterSavingThrowRepository;
@@ -25,6 +35,7 @@ import com.helen.dnd_charachter_editor.service.reference.table.CharacterClassSer
 import com.helen.dnd_charachter_editor.service.reference.table.RaceService;
 import com.helen.dnd_charachter_editor.service.reference.table.SpellService;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -36,6 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -162,6 +174,156 @@ class DefaultCharacterInventoryServiceTest {
     }
 
 
+    /**
+     * Создаёт данные для запрошенной операции.
+     */
+    @Test
+    void createCharacterSavesSelectedSpellsToJoinTable() {
+        UUID userId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        UUID characterId = UUID.fromString("22222222-2222-2222-2222-222222222222");
+        UUID raceId = UUID.fromString("33333333-3333-3333-3333-333333333333");
+        UUID subraceId = UUID.fromString("44444444-4444-4444-4444-444444444444");
+        UUID classId = UUID.fromString("55555555-5555-5555-5555-555555555555");
+        UUID classArchetypeId = UUID.fromString("66666666-6666-6666-6666-666666666666");
+        UUID abilityId = UUID.fromString("77777777-7777-7777-7777-777777777777");
+        UUID skillId = UUID.fromString("88888888-8888-8888-8888-888888888888");
+        UUID spellId = UUID.fromString("99999999-9999-9999-9999-999999999999");
+        User user = user(userId);
+        Race race = race(raceId, "Эльф");
+        Subrace subrace = subrace(subraceId, race, "Высший эльф");
+        CharacterClass characterClass = characterClass(classId, "Волшебник", true);
+        ClassArchetype classArchetype = classArchetype(classArchetypeId, characterClass, "Школа воплощения");
+        Ability ability = ability(abilityId, "INT", "Интеллект");
+        Skill skill = skill(skillId, "Магия", "INT");
+        Spell spell = spell(spellId, "Волшебная стрела");
+        CreateCharacterRequest request = new CreateCharacterRequest(
+                "Гейл",
+                raceId,
+                subraceId,
+                classId,
+                classArchetypeId,
+                1,
+                8,
+                8,
+                "",
+                12,
+                List.of(),
+                0,
+                10,
+                0,
+                0,
+                0,
+                List.of(abilityId),
+                List.of(skillId),
+                List.of(spellId),
+                1
+        );
+        when(authService.getCurrentUser()).thenReturn(user);
+        when(raceService.getRace(raceId)).thenReturn(race);
+        when(raceService.getSubrace(raceId, subraceId)).thenReturn(subrace);
+        when(characterClassService.getClassById(classId)).thenReturn(characterClass);
+        when(characterClassService.getClassArchetypeById(classId, classArchetypeId)).thenReturn(classArchetype);
+        when(characterRepository.saveAndFlush(any(UserCharacter.class))).thenAnswer(invocation -> {
+            UserCharacter character = invocation.getArgument(0);
+            character.setId(characterId);
+            return character;
+        });
+        when(characterAbilityRepository.findAllByIds(List.of(abilityId))).thenReturn(List.of(ability));
+        when(skillRepository.findAll()).thenReturn(List.of(skill));
+        when(spellRepository.findAllById(List.of(spellId))).thenReturn(List.of(spell));
+        when(abilityRepository.findAll()).thenReturn(List.of(ability));
+        when(characterAbilityRepository.saveAllAndFlush(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        when(characterSkillRepository.saveAllAndFlush(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        when(characterSpellRepository.saveAllAndFlush(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        when(characterSavingThrowRepository.saveAllAndFlush(any())).thenAnswer(invocation -> invocation.getArgument(0));
+
+        service.createCharacter(request);
+
+        ArgumentCaptor<Iterable<CharacterSpell>> captor = ArgumentCaptor.forClass(Iterable.class);
+        verify(characterSpellRepository).saveAllAndFlush(captor.capture());
+        CharacterSpell savedSpell = captor.getValue().iterator().next();
+        assertEquals(characterId, savedSpell.getCharacter().getId());
+        assertEquals(spellId, savedSpell.getSpell().getId());
+    }
+
+
+    /**
+     * Обновляет данные для запрошенной операции.
+     */
+    @Test
+    void updateCharacterClassDoesNotResetSelectionsWhenClassIsUnchanged() {
+        TestData data = prepareCharacter("[]");
+        UUID classId = UUID.fromString("44444444-4444-4444-4444-444444444444");
+        CharacterClass characterClass = characterClass(classId, "Волшебник", true);
+        Race race = race(UUID.fromString("33333333-3333-3333-3333-333333333333"), "Эльф");
+        data.character().setName("Гейл");
+        data.character().setRace(race);
+        data.character().setClassField(characterClass);
+        data.character().setLevel(1);
+        data.character().setMaxHealth(8);
+        data.character().setCurrentHealth(8);
+        data.character().setArmorClass(12);
+        data.character().setPlatinum(0);
+        data.character().setGold(0);
+        data.character().setElectrum(0);
+        data.character().setSilver(0);
+        data.character().setCopper(0);
+        when(characterClassService.getClassById(classId)).thenReturn(characterClass);
+        when(characterRepository.save(any(UserCharacter.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(characterAbilityRepository.findAllByCharacterId(data.characterId())).thenReturn(List.of());
+        when(characterSkillRepository.findAllByCharacterId(data.characterId())).thenReturn(List.of());
+        when(characterSpellRepository.findAllByCharacterId(data.characterId())).thenReturn(List.of());
+        when(characterSavingThrowRepository.findAllByCharacterId(data.characterId())).thenReturn(List.of());
+
+        service.updateCharacterClass(data.characterId(), new SetCharacterClassRequest(classId, null));
+
+        verify(characterSavingThrowRepository, never()).saveAll(any());
+        verify(characterSkillRepository, never()).saveAll(any());
+        verify(characterSpellRepository, never()).deleteAll(any());
+    }
+
+
+    /**
+     * Возвращает данные для запрошенной операции.
+     */
+    @Test
+    void getCharacterReturnsPersistedJoinTableFields() {
+        TestData data = prepareCharacter("[]");
+        Race race = race(UUID.fromString("33333333-3333-3333-3333-333333333333"), "Эльф");
+        data.character().setName("Гейл");
+        data.character().setRace(race);
+        data.character().setSubrace(subrace(UUID.fromString("44444444-4444-4444-4444-444444444444"), race, "Высший эльф"));
+        data.character().setClassField(characterClass("Волшебник", true));
+        data.character().setLevel(1);
+        data.character().setMaxHealth(8);
+        data.character().setCurrentHealth(8);
+        data.character().setArmorClass(12);
+        data.character().setPlatinum(0);
+        data.character().setGold(0);
+        data.character().setElectrum(0);
+        data.character().setSilver(0);
+        data.character().setCopper(0);
+        Ability ability = ability(UUID.fromString("77777777-7777-7777-7777-777777777777"), "INT", "Интеллект");
+        Skill skill = skill(UUID.fromString("88888888-8888-8888-8888-888888888888"), "Магия", "INT");
+        Spell spell = spell(UUID.fromString("99999999-9999-9999-9999-999999999999"), "Волшебная стрела");
+        when(characterAbilityRepository.findAllByCharacterId(data.characterId()))
+                .thenReturn(List.of(characterAbility(data.character(), ability)));
+        when(characterSkillRepository.findAllByCharacterId(data.characterId()))
+                .thenReturn(List.of(characterSkill(data.character(), skill, 1)));
+        when(characterSpellRepository.findAllByCharacterId(data.characterId()))
+                .thenReturn(List.of(characterSpell(data.character(), spell)));
+        when(characterSavingThrowRepository.findAllByCharacterId(data.characterId()))
+                .thenReturn(List.of(characterSavingThrow(data.character(), ability, 1)));
+
+        var response = service.getCharacter(data.characterId());
+
+        assertEquals(List.of("Интеллект"), response.abilities());
+        assertEquals(List.of("Магия"), response.skills());
+        assertEquals(List.of("Волшебная стрела"), response.spells());
+        assertEquals(1, response.savingThrowsCount());
+    }
+
+
 
     /**
      * Возвращает данные для запрошенной операции.
@@ -178,6 +340,7 @@ class DefaultCharacterInventoryServiceTest {
         assertEquals(1, response.size());
         assertEquals("Волшебная стрела", response.getFirst().spellName());
     }
+
 
     /**
      * Добавляет данные для запрошенной операции.
@@ -303,6 +466,139 @@ class DefaultCharacterInventoryServiceTest {
 
     /**
      * Выполняет запрошенную операцию.
+     * @param userId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
+    private User user(UUID userId) {
+        User user = new User();
+        user.setId(userId);
+        return user;
+    }
+
+    /**
+     * Выполняет запрошенную операцию.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param name параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
+    private Race race(UUID raceId, String name) {
+        Race race = new Race();
+        race.setId(raceId);
+        race.setName(name);
+        race.setAge(100);
+        race.setHeight(170);
+        race.setSpeed(30);
+        return race;
+    }
+
+    /**
+     * Выполняет запрошенную операцию.
+     * @param subraceId параметр, используемый при выполнении операции
+     * @param race параметр, используемый при выполнении операции
+     * @param name параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
+    private Subrace subrace(UUID subraceId, Race race, String name) {
+        Subrace subrace = new Subrace();
+        subrace.setId(subraceId);
+        subrace.setRace(race);
+        subrace.setName(name);
+        return subrace;
+    }
+
+    /**
+     * Выполняет запрошенную операцию.
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @param characterClass параметр, используемый при выполнении операции
+     * @param name параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
+    private ClassArchetype classArchetype(UUID classArchetypeId, CharacterClass characterClass, String name) {
+        ClassArchetype classArchetype = new ClassArchetype();
+        classArchetype.setId(classArchetypeId);
+        classArchetype.setCharacterClass(characterClass);
+        classArchetype.setName(name);
+        return classArchetype;
+    }
+
+    /**
+     * Выполняет запрошенную операцию.
+     * @param abilityId параметр, используемый при выполнении операции
+     * @param code параметр, используемый при выполнении операции
+     * @param name параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
+    private Ability ability(UUID abilityId, String code, String name) {
+        Ability ability = new Ability();
+        ability.setId(abilityId);
+        ability.setCode(code);
+        ability.setName(name);
+        return ability;
+    }
+
+    /**
+     * Выполняет запрошенную операцию.
+     * @param skillId параметр, используемый при выполнении операции
+     * @param name параметр, используемый при выполнении операции
+     * @param abilityCode параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
+    private Skill skill(UUID skillId, String name, String abilityCode) {
+        Skill skill = new Skill();
+        skill.setId(skillId);
+        skill.setName(name);
+        skill.setAbility(abilityCode);
+        return skill;
+    }
+
+
+    /**
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
+    private CharacterAbility characterAbility(UserCharacter character, Ability ability) {
+        CharacterAbility characterAbility = new CharacterAbility();
+        characterAbility.setCharacter(character);
+        characterAbility.setAbility(ability);
+        characterAbility.setValue(10);
+        return characterAbility;
+    }
+
+    /**
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
+     * @param skill параметр, используемый при выполнении операции
+     * @param proficiencyLevel параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
+    private CharacterSkill characterSkill(UserCharacter character, Skill skill, int proficiencyLevel) {
+        CharacterSkill characterSkill = new CharacterSkill();
+        characterSkill.setCharacter(character);
+        characterSkill.setSkill(skill);
+        characterSkill.setProficiencyLevel(proficiencyLevel);
+        return characterSkill;
+    }
+
+    /**
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param proficiencyLevel параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
+    private CharacterSavingThrow characterSavingThrow(UserCharacter character, Ability ability, int proficiencyLevel) {
+        CharacterSavingThrow savingThrow = new CharacterSavingThrow();
+        savingThrow.setCharacter(character);
+        savingThrow.setAbility(ability);
+        savingThrow.setProficiencyLevel(proficiencyLevel);
+        return savingThrow;
+    }
+
+
+    /**
+     * Выполняет запрошенную операцию.
      * @param spellId параметр, используемый при выполнении операции
      * @param spellName параметр, используемый при выполнении операции
      * @return результат выполнения операции
@@ -328,10 +624,22 @@ class DefaultCharacterInventoryServiceTest {
      * @return результат выполнения операции
      */
     private CharacterClass characterClass(String className, Boolean isSpellcaster) {
+        return characterClass(UUID.fromString("44444444-4444-4444-4444-444444444444"), className, isSpellcaster);
+    }
+
+    /**
+     * Выполняет запрошенную операцию.
+     * @param classId параметр, используемый при выполнении операции
+     * @param className параметр, используемый при выполнении операции
+     * @param isSpellcaster параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
+    private CharacterClass characterClass(UUID classId, String className, Boolean isSpellcaster) {
         CharacterClass characterClass = new CharacterClass();
-        characterClass.setId(UUID.fromString("44444444-4444-4444-4444-444444444444"));
+        characterClass.setId(classId);
         characterClass.setClassName(className);
         characterClass.setIsSpellcaster(isSpellcaster);
+        characterClass.setSpellcastingStartLevel(1);
         return characterClass;
     }
 
