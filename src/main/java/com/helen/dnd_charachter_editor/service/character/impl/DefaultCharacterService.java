@@ -51,6 +51,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 
+/**
+ * Default service implementation for default character service operations.
+ */
 @Service
 @RequiredArgsConstructor
 public class DefaultCharacterService implements CharacterService {
@@ -79,6 +82,11 @@ public class DefaultCharacterService implements CharacterService {
 
     private final AbilityRepository abilityRepository;
 
+    /**
+     * Creates character.
+     * @param createCharacterRequest value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterResponse createCharacter(CreateCharacterRequest createCharacterRequest) {
@@ -145,6 +153,11 @@ public class DefaultCharacterService implements CharacterService {
         return CharacterResponseMapper.toResponse(savedCharacter, createCharacterRequest, abilities, allSkills, spells, proficientSavingThrowsCount);
     }
 
+    /**
+     * Returns character.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional(readOnly = true)
     public CharacterResponse getCharacter(UUID characterId) {
@@ -155,6 +168,12 @@ public class DefaultCharacterService implements CharacterService {
         return buildCharacterResponse(character);
     }
 
+    /**
+     * Updates character.
+     * @param characterId value used by this operation
+     * @param createCharacterRequest value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterResponse updateCharacter(UUID characterId, CreateCharacterRequest createCharacterRequest) {
@@ -235,6 +254,12 @@ public class DefaultCharacterService implements CharacterService {
         );
     }
 
+    /**
+     * Updates character level.
+     * @param characterId value used by this operation
+     * @param level value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterResponse updateCharacterLevel(UUID characterId, Integer level) {
@@ -252,6 +277,13 @@ public class DefaultCharacterService implements CharacterService {
         return buildCharacterResponse(savedCharacter);
     }
 
+    /**
+     * Updates character health.
+     * @param characterId value used by this operation
+     * @param maxHealth value used by this operation
+     * @param currentHealth value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterResponse updateCharacterHealth(UUID characterId, Integer maxHealth, Integer currentHealth) {
@@ -268,18 +300,36 @@ public class DefaultCharacterService implements CharacterService {
         return buildCharacterResponse(savedCharacter);
     }
 
+    /**
+     * Applies character class.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterResponse applyCharacterClass(UUID characterId, SetCharacterClassRequest request) {
         return setCharacterClass(characterId, request);
     }
 
+    /**
+     * Updates character class.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterResponse updateCharacterClass(UUID characterId, SetCharacterClassRequest request) {
         return setCharacterClass(characterId, request);
     }
 
+    /**
+     * Applies character class archetype.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterResponse applyCharacterClassArchetype(
@@ -289,6 +339,12 @@ public class DefaultCharacterService implements CharacterService {
         return setCharacterClassArchetype(characterId, request);
     }
 
+    /**
+     * Updates character class archetype.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterResponse updateCharacterClassArchetype(
@@ -298,18 +354,34 @@ public class DefaultCharacterService implements CharacterService {
         return setCharacterClassArchetype(characterId, request);
     }
 
+    /**
+     * Applies character race.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterResponse applyCharacterRace(UUID characterId, SetCharacterRaceRequest request) {
         return setCharacterRace(characterId, request);
     }
 
+    /**
+     * Updates character race.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterResponse updateCharacterRace(UUID characterId, SetCharacterRaceRequest request) {
         return setCharacterRace(characterId, request);
     }
 
+    /**
+     * Deletes character.
+     * @param characterId value used by this operation
+     */
     @Override
     @Transactional
     public void deleteCharacter(UUID characterId) {
@@ -320,6 +392,12 @@ public class DefaultCharacterService implements CharacterService {
         characterRepository.delete(character);
     }
 
+    /**
+     * Sets character class.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     private CharacterResponse setCharacterClass(UUID characterId, SetCharacterClassRequest request) {
         if (request.classId() == null) {
             throw new IllegalArgumentException("classId is required");
@@ -341,6 +419,12 @@ public class DefaultCharacterService implements CharacterService {
         return buildCharacterResponse(savedCharacter);
     }
 
+    /**
+     * Sets character class archetype.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     private CharacterResponse setCharacterClassArchetype(
             UUID characterId,
             SetCharacterClassArchetypeRequest request
@@ -365,6 +449,12 @@ public class DefaultCharacterService implements CharacterService {
         return buildCharacterResponse(savedCharacter);
     }
 
+    /**
+     * Returns class archetype or null.
+     * @param classId value used by this operation
+     * @param classArchetypeId value used by this operation
+     * @return result of the operation
+     */
     private ClassArchetype getClassArchetypeOrNull(UUID classId, UUID classArchetypeId) {
         if (classArchetypeId == null) {
             return null;
@@ -373,6 +463,11 @@ public class DefaultCharacterService implements CharacterService {
         return characterClassService.getClassArchetypeById(classId, classArchetypeId);
     }
 
+    /**
+     * Updates class dependent parameters.
+     * @param character value used by this operation
+     * @param characterClass value used by this operation
+     */
     private void updateClassDependentParameters(UserCharacter character, CharacterClass characterClass) {
         validateHealth(character.getMaxHealth(), character.getCurrentHealth());
         resetSavingThrows(character);
@@ -380,6 +475,10 @@ public class DefaultCharacterService implements CharacterService {
         clearUnavailableSpells(character, characterClass);
     }
 
+    /**
+     * Executes the reset saving throws operation.
+     * @param character value used by this operation
+     */
     private void resetSavingThrows(UserCharacter character) {
         List<CharacterSavingThrow> savingThrows = characterSavingThrowRepository.findAllByCharacterId(character.getId());
         savingThrows.forEach(savingThrow -> savingThrow.setProficiencyLevel(0));
@@ -387,12 +486,21 @@ public class DefaultCharacterService implements CharacterService {
         character.setSavingThrowsCount(0);
     }
 
+    /**
+     * Executes the reset skills operation.
+     * @param character value used by this operation
+     */
     private void resetSkills(UserCharacter character) {
         List<CharacterSkill> skills = characterSkillRepository.findAllByCharacterId(character.getId());
         skills.forEach(skill -> skill.setProficiencyLevel(0));
         characterSkillRepository.saveAll(skills);
     }
 
+    /**
+     * Executes the clear unavailable spells operation.
+     * @param character value used by this operation
+     * @param characterClass value used by this operation
+     */
     private void clearUnavailableSpells(UserCharacter character, CharacterClass characterClass) {
         if (canUseSpells(character, characterClass)) {
             return;
@@ -403,6 +511,12 @@ public class DefaultCharacterService implements CharacterService {
         character.setSpells(CharacterResponseMapper.serializeIds(List.of()));
     }
 
+    /**
+     * Executes the can use spells operation.
+     * @param character value used by this operation
+     * @param characterClass value used by this operation
+     * @return result of the operation
+     */
     private boolean canUseSpells(UserCharacter character, CharacterClass characterClass) {
         if (!Boolean.TRUE.equals(characterClass.getIsSpellcaster())) {
             return false;
@@ -412,6 +526,12 @@ public class DefaultCharacterService implements CharacterService {
         return spellcastingStartLevel != null && character.getLevel() >= spellcastingStartLevel;
     }
 
+    /**
+     * Sets character race.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     private CharacterResponse setCharacterRace(UUID characterId, SetCharacterRaceRequest request) {
         if (request.raceId() == null) {
             throw new IllegalArgumentException("raceId is required");
@@ -432,6 +552,12 @@ public class DefaultCharacterService implements CharacterService {
         return buildCharacterResponse(savedCharacter);
     }
 
+    /**
+     * Returns subrace or null.
+     * @param raceId value used by this operation
+     * @param subraceId value used by this operation
+     * @return result of the operation
+     */
     private Subrace getSubraceOrNull(UUID raceId, UUID subraceId) {
         if (subraceId == null) {
             return null;
@@ -440,6 +566,11 @@ public class DefaultCharacterService implements CharacterService {
         return raceService.getSubrace(raceId, subraceId);
     }
 
+    /**
+     * Validates health.
+     * @param maxHealth value used by this operation
+     * @param currentHealth value used by this operation
+     */
     private void validateHealth(Integer maxHealth, Integer currentHealth) {
         if (maxHealth == null || maxHealth <= 0) {
             throw new IllegalArgumentException("maxHealth must be greater than 0");
@@ -458,6 +589,11 @@ public class DefaultCharacterService implements CharacterService {
         }
     }
 
+    /**
+     * Executes the build character response operation.
+     * @param character value used by this operation
+     * @return result of the operation
+     */
     private CharacterResponse buildCharacterResponse(UserCharacter character) {
         List<UUID> abilityIds = CharacterResponseMapper.deserializeIds(character.getAbilities());
         List<UUID> spellIds = CharacterResponseMapper.deserializeIds(character.getSpells());
@@ -471,6 +607,15 @@ public class DefaultCharacterService implements CharacterService {
         );
     }
 
+    /**
+     * Applies main character fields.
+     * @param character value used by this operation
+     * @param request value used by this operation
+     * @param race value used by this operation
+     * @param subrace value used by this operation
+     * @param characterClass value used by this operation
+     * @param classArchetype value used by this operation
+     */
     private void applyMainCharacterFields(
             UserCharacter character,
             CreateCharacterRequest request,

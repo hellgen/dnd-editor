@@ -20,6 +20,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * REST controller that exposes character class controller test endpoints.
+ */
 class CharacterClassControllerTest {
 
     private final CharacterClassService characterClassService = mock(CharacterClassService.class);
@@ -28,6 +31,10 @@ class CharacterClassControllerTest {
             .build();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Returns all classes returns class list.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getAllClassesReturnsClassList() throws Exception {
         List<CharacterClassResponse> classes = List.of(
@@ -53,6 +60,10 @@ class CharacterClassControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(classes)));
     }
 
+    /**
+     * Returns class by id returns one class.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getClassByIdReturnsOneClass() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -74,6 +85,10 @@ class CharacterClassControllerTest {
                 .andExpect(jsonPath("$.spellcastingStartLevel").doesNotExist());
     }
 
+    /**
+     * Returns class features returns feature list.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getClassFeaturesReturnsFeatureList() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -100,6 +115,10 @@ class CharacterClassControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(features)));
     }
 
+    /**
+     * Returns class features can filter by level.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getClassFeaturesCanFilterByLevel() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -119,6 +138,10 @@ class CharacterClassControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(features)));
     }
 
+    /**
+     * Returns class feature by id returns one feature.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getClassFeatureByIdReturnsOneFeature() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -141,6 +164,10 @@ class CharacterClassControllerTest {
                 .andExpect(jsonPath("$.levelRequired").value(1));
     }
 
+    /**
+     * Returns class archetypes returns archetype list for class.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getClassArchetypesReturnsArchetypeListForClass() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -165,6 +192,10 @@ class CharacterClassControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(archetypes)));
     }
 
+    /**
+     * Returns class archetype by id returns one archetype for class.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getClassArchetypeByIdReturnsOneArchetypeForClass() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -185,6 +216,10 @@ class CharacterClassControllerTest {
                 .andExpect(jsonPath("$.description").value("Архетип воина, сосредоточенный на грубой боевой мощи"));
     }
 
+    /**
+     * Returns class archetype features returns feature list for archetype.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getClassArchetypeFeaturesReturnsFeatureListForArchetype() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -217,6 +252,10 @@ class CharacterClassControllerTest {
     }
 
 
+    /**
+     * Returns class archetype features can filter by level.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getClassArchetypeFeaturesCanFilterByLevel() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -241,6 +280,10 @@ class CharacterClassControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(features)));
     }
 
+    /**
+     * Returns class archetype feature by id returns one feature for archetype.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getClassArchetypeFeatureByIdReturnsOneFeatureForArchetype() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");

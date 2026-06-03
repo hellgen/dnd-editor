@@ -32,6 +32,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Default service implementation for default character skill service test operations.
+ */
 class DefaultCharacterSkillServiceTest {
 
     private final AuthService authService = mock(AuthService.class);
@@ -56,6 +59,9 @@ class DefaultCharacterSkillServiceTest {
             dndRulesService
     );
 
+    /**
+     * Returns character skills adds proficiency bonus when proficiency is active.
+     */
     @Test
     void getCharacterSkillsAddsProficiencyBonusWhenProficiencyIsActive() {
         TestData testData = setupSkillCalculation(1);
@@ -71,6 +77,9 @@ class DefaultCharacterSkillServiceTest {
         assertEquals(7, responses.get(0).totalModifier());
     }
 
+    /**
+     * Updates character skill doubles proficiency bonus for expertise.
+     */
     @Test
     void updateCharacterSkillDoublesProficiencyBonusForExpertise() {
         TestData testData = setupSkillCalculation(0);
@@ -91,6 +100,11 @@ class DefaultCharacterSkillServiceTest {
         assertEquals(10, response.totalModifier());
     }
 
+    /**
+     * Sets up skill calculation.
+     * @param proficiencyLevel value used by this operation
+     * @return result of the operation
+     */
     private TestData setupSkillCalculation(Integer proficiencyLevel) {
         UUID userId = UUID.fromString("11111111-1111-1111-1111-111111111111");
         UUID characterId = UUID.fromString("22222222-2222-2222-2222-222222222222");
@@ -114,12 +128,23 @@ class DefaultCharacterSkillServiceTest {
         return new TestData(character, strength, athletics, characterSkill);
     }
 
+    /**
+     * Executes the user operation.
+     * @param userId value used by this operation
+     * @return result of the operation
+     */
     private User user(UUID userId) {
         User user = new User();
         user.setId(userId);
         return user;
     }
 
+    /**
+     * Executes the character operation.
+     * @param userId value used by this operation
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
     private UserCharacter character(UUID userId, UUID characterId) {
         Race race = new Race();
         race.setId(UUID.fromString("55555555-5555-5555-5555-555555555555"));
@@ -137,6 +162,11 @@ class DefaultCharacterSkillServiceTest {
         return character;
     }
 
+    /**
+     * Executes the ability operation.
+     * @param abilityId value used by this operation
+     * @return result of the operation
+     */
     private Ability ability(UUID abilityId) {
         Ability ability = new Ability();
         ability.setId(abilityId);
@@ -145,6 +175,11 @@ class DefaultCharacterSkillServiceTest {
         return ability;
     }
 
+    /**
+     * Executes the skill operation.
+     * @param skillId value used by this operation
+     * @return result of the operation
+     */
     private Skill skill(UUID skillId) {
         Skill skill = new Skill();
         skill.setId(skillId);
@@ -153,6 +188,13 @@ class DefaultCharacterSkillServiceTest {
         return skill;
     }
 
+    /**
+     * Executes the character ability operation.
+     * @param character value used by this operation
+     * @param ability value used by this operation
+     * @param value value used by this operation
+     * @return result of the operation
+     */
     private CharacterAbility characterAbility(UserCharacter character, Ability ability, Integer value) {
         CharacterAbility characterAbility = new CharacterAbility();
         characterAbility.setCharacter(character);
@@ -161,6 +203,13 @@ class DefaultCharacterSkillServiceTest {
         return characterAbility;
     }
 
+    /**
+     * Executes the character skill operation.
+     * @param character value used by this operation
+     * @param skill value used by this operation
+     * @param proficiencyLevel value used by this operation
+     * @return result of the operation
+     */
     private CharacterSkill characterSkill(UserCharacter character, Skill skill, Integer proficiencyLevel) {
         CharacterSkill characterSkill = new CharacterSkill();
         characterSkill.setCharacter(character);
@@ -169,6 +218,13 @@ class DefaultCharacterSkillServiceTest {
         return characterSkill;
     }
 
+    /**
+     * Executes the race bonus operation.
+     * @param race value used by this operation
+     * @param ability value used by this operation
+     * @param bonusValue value used by this operation
+     * @return result of the operation
+     */
     private RaceAbilityBonus raceBonus(Race race, Ability ability, Integer bonusValue) {
         RaceAbilityBonus raceAbilityBonus = new RaceAbilityBonus();
         raceAbilityBonus.setRace(race);
@@ -177,6 +233,13 @@ class DefaultCharacterSkillServiceTest {
         return raceAbilityBonus;
     }
 
+    /**
+     * Executes the subrace bonus operation.
+     * @param subrace value used by this operation
+     * @param ability value used by this operation
+     * @param bonusValue value used by this operation
+     * @return result of the operation
+     */
     private SubraceAbilityBonus subraceBonus(Subrace subrace, Ability ability, Integer bonusValue) {
         SubraceAbilityBonus subraceAbilityBonus = new SubraceAbilityBonus();
         subraceAbilityBonus.setSubrace(subrace);
@@ -185,6 +248,9 @@ class DefaultCharacterSkillServiceTest {
         return subraceAbilityBonus;
     }
 
+    /**
+     * Default service implementation for test data operations.
+     */
     private record TestData(
             UserCharacter character,
             Ability ability,

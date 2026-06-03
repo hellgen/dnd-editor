@@ -30,6 +30,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Default service implementation for default character saving throw service test operations.
+ */
 class DefaultCharacterSavingThrowServiceTest {
 
     private final AuthService authService = mock(AuthService.class);
@@ -52,6 +55,9 @@ class DefaultCharacterSavingThrowServiceTest {
             dndRulesService
     );
 
+    /**
+     * Returns character saving throws adds proficiency bonus when proficient.
+     */
     @Test
     void getCharacterSavingThrowsAddsProficiencyBonusWhenProficient() {
         TestData testData = setupSavingThrowCalculation(1);
@@ -67,6 +73,9 @@ class DefaultCharacterSavingThrowServiceTest {
         assertEquals(7, responses.get(0).totalModifier());
     }
 
+    /**
+     * Updates character saving throw recalculates modifier from current ability and bonuses.
+     */
     @Test
     void updateCharacterSavingThrowRecalculatesModifierFromCurrentAbilityAndBonuses() {
         TestData testData = setupSavingThrowCalculation(0);
@@ -87,6 +96,11 @@ class DefaultCharacterSavingThrowServiceTest {
         assertEquals(7, response.totalModifier());
     }
 
+    /**
+     * Sets up saving throw calculation.
+     * @param proficiencyLevel value used by this operation
+     * @return result of the operation
+     */
     private TestData setupSavingThrowCalculation(Integer proficiencyLevel) {
         UUID userId = UUID.fromString("11111111-1111-1111-1111-111111111111");
         UUID characterId = UUID.fromString("22222222-2222-2222-2222-222222222222");
@@ -108,12 +122,23 @@ class DefaultCharacterSavingThrowServiceTest {
         return new TestData(character, strength, savingThrow);
     }
 
+    /**
+     * Executes the user operation.
+     * @param userId value used by this operation
+     * @return result of the operation
+     */
     private User user(UUID userId) {
         User user = new User();
         user.setId(userId);
         return user;
     }
 
+    /**
+     * Executes the character operation.
+     * @param userId value used by this operation
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
     private UserCharacter character(UUID userId, UUID characterId) {
         Race race = new Race();
         race.setId(UUID.fromString("44444444-4444-4444-4444-444444444444"));
@@ -131,6 +156,11 @@ class DefaultCharacterSavingThrowServiceTest {
         return character;
     }
 
+    /**
+     * Executes the ability operation.
+     * @param abilityId value used by this operation
+     * @return result of the operation
+     */
     private Ability ability(UUID abilityId) {
         Ability ability = new Ability();
         ability.setId(abilityId);
@@ -139,6 +169,13 @@ class DefaultCharacterSavingThrowServiceTest {
         return ability;
     }
 
+    /**
+     * Executes the character ability operation.
+     * @param character value used by this operation
+     * @param ability value used by this operation
+     * @param value value used by this operation
+     * @return result of the operation
+     */
     private CharacterAbility characterAbility(UserCharacter character, Ability ability, Integer value) {
         CharacterAbility characterAbility = new CharacterAbility();
         characterAbility.setCharacter(character);
@@ -147,6 +184,13 @@ class DefaultCharacterSavingThrowServiceTest {
         return characterAbility;
     }
 
+    /**
+     * Executes the saving throw operation.
+     * @param character value used by this operation
+     * @param ability value used by this operation
+     * @param proficiencyLevel value used by this operation
+     * @return result of the operation
+     */
     private CharacterSavingThrow savingThrow(UserCharacter character, Ability ability, Integer proficiencyLevel) {
         CharacterSavingThrow savingThrow = new CharacterSavingThrow();
         savingThrow.setCharacter(character);
@@ -155,6 +199,13 @@ class DefaultCharacterSavingThrowServiceTest {
         return savingThrow;
     }
 
+    /**
+     * Executes the race bonus operation.
+     * @param race value used by this operation
+     * @param ability value used by this operation
+     * @param bonusValue value used by this operation
+     * @return result of the operation
+     */
     private RaceAbilityBonus raceBonus(Race race, Ability ability, Integer bonusValue) {
         RaceAbilityBonus raceAbilityBonus = new RaceAbilityBonus();
         raceAbilityBonus.setRace(race);
@@ -163,6 +214,13 @@ class DefaultCharacterSavingThrowServiceTest {
         return raceAbilityBonus;
     }
 
+    /**
+     * Executes the subrace bonus operation.
+     * @param subrace value used by this operation
+     * @param ability value used by this operation
+     * @param bonusValue value used by this operation
+     * @return result of the operation
+     */
     private SubraceAbilityBonus subraceBonus(Subrace subrace, Ability ability, Integer bonusValue) {
         SubraceAbilityBonus subraceAbilityBonus = new SubraceAbilityBonus();
         subraceAbilityBonus.setSubrace(subrace);
@@ -171,6 +229,9 @@ class DefaultCharacterSavingThrowServiceTest {
         return subraceAbilityBonus;
     }
 
+    /**
+     * Default service implementation for test data operations.
+     */
     private record TestData(
             UserCharacter character,
             Ability ability,

@@ -21,6 +21,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * REST controller that exposes character ability controller test endpoints.
+ */
 class CharacterAbilityControllerTest {
 
     private final CharacterAbilityService characterAbilityService = mock(CharacterAbilityService.class);
@@ -29,6 +32,10 @@ class CharacterAbilityControllerTest {
             .build();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Returns character abilities returns final values with current race bonuses.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getCharacterAbilitiesReturnsFinalValuesWithCurrentRaceBonuses() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -55,6 +62,10 @@ class CharacterAbilityControllerTest {
                 .andExpect(jsonPath("$[0].totalValue").value(18));
     }
 
+    /**
+     * Updates character ability returns final value with bonuses.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void updateCharacterAbilityReturnsFinalValueWithBonuses() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -85,6 +96,10 @@ class CharacterAbilityControllerTest {
                 .andExpect(jsonPath("$.totalValue").value(18));
     }
 
+    /**
+     * Updates character abilities returns several final values with bonuses.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void updateCharacterAbilitiesReturnsSeveralFinalValuesWithBonuses() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");

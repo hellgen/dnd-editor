@@ -17,6 +17,9 @@ import com.helen.dnd_charachter_editor.entity.reference.table.Spell;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Mapper that converts character response mapper values between layers.
+ */
 public class CharacterResponseMapper {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -25,6 +28,16 @@ public class CharacterResponseMapper {
     private static final TypeReference<List<UUID>> UUID_LIST_TYPE = new TypeReference<>() {
     };
 
+    /**
+     * Converts response.
+     * @param character value used by this operation
+     * @param request value used by this operation
+     * @param abilities value used by this operation
+     * @param skills value used by this operation
+     * @param spells value used by this operation
+     * @param savingThrowsCount value used by this operation
+     * @return result of the operation
+     */
     public static CharacterResponse toResponse(
             UserCharacter character,
             CreateCharacterRequest request,
@@ -61,6 +74,15 @@ public class CharacterResponseMapper {
         );
     }
 
+    /**
+     * Converts response.
+     * @param character value used by this operation
+     * @param abilities value used by this operation
+     * @param skills value used by this operation
+     * @param spells value used by this operation
+     * @param savingThrows value used by this operation
+     * @return result of the operation
+     */
     public static CharacterResponse toResponse(
             UserCharacter character,
             List<CharacterAbility> abilities,
@@ -101,6 +123,15 @@ public class CharacterResponseMapper {
         );
     }
 
+    /**
+     * Converts response.
+     * @param character value used by this operation
+     * @param abilities value used by this operation
+     * @param skills value used by this operation
+     * @param spells value used by this operation
+     * @param savingThrowsCount value used by this operation
+     * @return result of the operation
+     */
     public static CharacterResponse toResponse(
             UserCharacter character,
             List<Ability> abilities,
@@ -139,14 +170,30 @@ public class CharacterResponseMapper {
         );
     }
 
+    /**
+     * Executes the serialize inventory operation.
+     * @param inventory value used by this operation
+     * @return result of the operation
+     */
     public static String serializeInventory(List<String> inventory) {
         return serializeList(inventory, "Unable to serialize character inventory");
     }
 
+    /**
+     * Executes the serialize ids operation.
+     * @param ids value used by this operation
+     * @return result of the operation
+     */
     public static String serializeIds(List<UUID> ids) {
         return serializeList(ids, "Unable to serialize character ids");
     }
 
+    /**
+     * Executes the serialize list operation.
+     * @param values value used by this operation
+     * @param errorMessage value used by this operation
+     * @return result of the operation
+     */
     private static String serializeList(List<?> values, String errorMessage) {
         if (values == null) {
             return null;
@@ -159,6 +206,11 @@ public class CharacterResponseMapper {
         }
     }
 
+    /**
+     * Executes the deserialize ids operation.
+     * @param ids value used by this operation
+     * @return result of the operation
+     */
     public static List<UUID> deserializeIds(String ids) {
         if (ids == null || ids.isBlank()) {
             return List.of();
@@ -171,6 +223,11 @@ public class CharacterResponseMapper {
         }
     }
 
+    /**
+     * Executes the deserialize inventory operation.
+     * @param inventory value used by this operation
+     * @return result of the operation
+     */
     private static List<String> deserializeInventory(String inventory) {
         if (inventory == null || inventory.isBlank()) {
             return List.of();

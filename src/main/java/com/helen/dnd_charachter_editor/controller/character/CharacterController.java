@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+/**
+ * REST controller that exposes character controller endpoints.
+ */
 @RestController
 @RequestMapping("/characters")
 @RequiredArgsConstructor
@@ -29,16 +32,32 @@ public class CharacterController {
 
     private final CharacterService characterService;
 
+    /**
+     * Creates character.
+     * @param createCharacterRequest value used by this operation
+     * @return result of the operation
+     */
     @PostMapping
     private CharacterResponse createCharacter(@RequestBody CreateCharacterRequest createCharacterRequest) {
         return characterService.createCharacter(createCharacterRequest);
     }
 
+    /**
+     * Returns character.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
     @GetMapping("/{characterId}")
     private CharacterResponse getCharacter(@PathVariable UUID characterId) {
         return characterService.getCharacter(characterId);
     }
 
+    /**
+     * Updates character.
+     * @param characterId value used by this operation
+     * @param createCharacterRequest value used by this operation
+     * @return result of the operation
+     */
     @PutMapping("/{characterId}")
     private CharacterResponse updateCharacter(
             @PathVariable UUID characterId,
@@ -47,6 +66,12 @@ public class CharacterController {
         return characterService.updateCharacter(characterId, createCharacterRequest);
     }
 
+    /**
+     * Updates character level.
+     * @param characterId value used by this operation
+     * @param level value used by this operation
+     * @return result of the operation
+     */
     @PutMapping("/{characterId}/level")
     private CharacterResponse updateCharacterLevel(
             @PathVariable UUID characterId,
@@ -55,6 +80,13 @@ public class CharacterController {
         return characterService.updateCharacterLevel(characterId, level);
     }
 
+    /**
+     * Updates character health.
+     * @param characterId value used by this operation
+     * @param maxHealth value used by this operation
+     * @param currentHealth value used by this operation
+     * @return result of the operation
+     */
     @PutMapping("/{characterId}/health")
     private CharacterResponse updateCharacterHealth(
             @PathVariable UUID characterId,
@@ -64,6 +96,12 @@ public class CharacterController {
         return characterService.updateCharacterHealth(characterId, maxHealth, currentHealth);
     }
 
+    /**
+     * Applies character class.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @PostMapping("/{characterId}/class")
     public CharacterResponse applyCharacterClass(
             @PathVariable UUID characterId,
@@ -72,6 +110,12 @@ public class CharacterController {
         return characterService.applyCharacterClass(characterId, request);
     }
 
+    /**
+     * Updates character class.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @PutMapping("/{characterId}/class")
     public CharacterResponse updateCharacterClass(
             @PathVariable UUID characterId,
@@ -80,6 +124,12 @@ public class CharacterController {
         return characterService.updateCharacterClass(characterId, request);
     }
 
+    /**
+     * Applies character class archetype.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @PostMapping("/{characterId}/class-archetype")
     public CharacterResponse applyCharacterClassArchetype(
             @PathVariable UUID characterId,
@@ -88,6 +138,12 @@ public class CharacterController {
         return characterService.applyCharacterClassArchetype(characterId, request);
     }
 
+    /**
+     * Updates character class archetype.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @PutMapping("/{characterId}/class-archetype")
     public CharacterResponse updateCharacterClassArchetype(
             @PathVariable UUID characterId,
@@ -96,6 +152,12 @@ public class CharacterController {
         return characterService.updateCharacterClassArchetype(characterId, request);
     }
 
+    /**
+     * Applies character race.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @PostMapping("/{characterId}/race")
     public CharacterResponse applyCharacterRace(
             @PathVariable UUID characterId,
@@ -104,6 +166,12 @@ public class CharacterController {
         return characterService.applyCharacterRace(characterId, request);
     }
 
+    /**
+     * Updates character race.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @PutMapping("/{characterId}/race")
     public CharacterResponse updateCharacterRace(
             @PathVariable UUID characterId,
@@ -112,6 +180,10 @@ public class CharacterController {
         return characterService.updateCharacterRace(characterId, request);
     }
 
+    /**
+     * Deletes character.
+     * @param characterId value used by this operation
+     */
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     private void deleteCharacter(@RequestParam UUID characterId) {

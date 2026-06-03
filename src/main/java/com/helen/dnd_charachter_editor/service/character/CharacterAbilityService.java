@@ -7,16 +7,37 @@ import com.helen.dnd_charachter_editor.dto.response.character.CharacterAbilityRe
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Service contract for character ability service operations.
+ */
 public interface CharacterAbilityService {
 
+    /**
+     * Returns character abilities.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
     List<CharacterAbilityResponse> getCharacterAbilities(UUID characterId);
 
+    /**
+     * Sets character ability.
+     * @param characterId value used by this operation
+     * @param abilityId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     CharacterAbilityResponse setCharacterAbility(
             UUID characterId,
             UUID abilityId,
             SetCharacterAbilityRequest request
     );
 
+    /**
+     * Sets character abilities.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     List<CharacterAbilityResponse> setCharacterAbilities(
             UUID characterId,
             SetCharacterAbilitiesRequest request

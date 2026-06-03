@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repository for accessing token repository data.
+ */
 @Repository
 public interface TokenRepository extends JpaRepository<Token, Long> {
 
@@ -17,9 +20,24 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
             where t.user.id = :userId and t.loggedOut = false
             """)
 
+    /**
+     * Finds all access token by user.
+     * @param userId value used by this operation
+     * @return result of the operation
+     */
     List<Token> findAllAccessTokenByUser(Long userId);
 
+    /**
+     * Finds by access token.
+     * @param accessToken value used by this operation
+     * @return result of the operation
+     */
     Optional<Token> findByAccessToken(String accessToken);
 
+    /**
+     * Finds by refresh token.
+     * @param refreshToken value used by this operation
+     * @return result of the operation
+     */
     Optional<Token> findByRefreshToken(String refreshToken);
 }

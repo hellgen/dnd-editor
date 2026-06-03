@@ -21,6 +21,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * REST controller that exposes character controller test endpoints.
+ */
 class CharacterControllerTest {
 
     private final CharacterService characterService = mock(CharacterService.class);
@@ -29,6 +32,10 @@ class CharacterControllerTest {
             .build();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Applies character class returns character with selected class and archetype.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void applyCharacterClassReturnsCharacterWithSelectedClassAndArchetype() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -47,6 +54,10 @@ class CharacterControllerTest {
                 .andExpect(jsonPath("$.classArchetype").value("Чемпион"));
     }
 
+    /**
+     * Updates character class returns character with changed class and no archetype.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void updateCharacterClassReturnsCharacterWithChangedClassAndNoArchetype() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -66,6 +77,10 @@ class CharacterControllerTest {
     }
 
 
+    /**
+     * Applies character class archetype returns character with selected archetype.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void applyCharacterClassArchetypeReturnsCharacterWithSelectedArchetype() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -83,6 +98,10 @@ class CharacterControllerTest {
                 .andExpect(jsonPath("$.classArchetype").value("Чемпион"));
     }
 
+    /**
+     * Updates character class archetype returns character with changed archetype.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void updateCharacterClassArchetypeReturnsCharacterWithChangedArchetype() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -100,6 +119,10 @@ class CharacterControllerTest {
                 .andExpect(jsonPath("$.classArchetype").value("Мастер боевых искусств"));
     }
 
+    /**
+     * Applies character race returns character with selected race and subrace.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void applyCharacterRaceReturnsCharacterWithSelectedRaceAndSubrace() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -118,6 +141,10 @@ class CharacterControllerTest {
                 .andExpect(jsonPath("$.subrace").value("Высший эльф"));
     }
 
+    /**
+     * Updates character race returns character with changed race and no subrace.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void updateCharacterRaceReturnsCharacterWithChangedRaceAndNoSubrace() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -136,6 +163,14 @@ class CharacterControllerTest {
                 .andExpect(jsonPath("$.subrace").doesNotExist());
     }
 
+    /**
+     * Executes the character response operation.
+     * @param race value used by this operation
+     * @param subrace value used by this operation
+     * @param characterClass value used by this operation
+     * @param classArchetype value used by this operation
+     * @return result of the operation
+     */
     private CharacterResponse characterResponse(
             String race,
             String subrace,

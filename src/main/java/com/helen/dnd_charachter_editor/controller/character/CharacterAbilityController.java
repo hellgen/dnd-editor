@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * REST controller that exposes character ability controller endpoints.
+ */
 @RestController
 @RequestMapping("/characters/{characterId}/abilities")
 @RequiredArgsConstructor
@@ -18,6 +21,11 @@ public class CharacterAbilityController {
 
     private final CharacterAbilityService characterAbilityService;
 
+    /**
+     * Returns character abilities.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
     @GetMapping
     public List<CharacterAbilityResponse> getCharacterAbilities(
             @PathVariable UUID characterId
@@ -25,6 +33,13 @@ public class CharacterAbilityController {
         return characterAbilityService.getCharacterAbilities(characterId);
     }
 
+    /**
+     * Sets character ability.
+     * @param characterId value used by this operation
+     * @param abilityId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @PostMapping("/{abilityId}")
     public CharacterAbilityResponse setCharacterAbility(
             @PathVariable UUID characterId,
@@ -38,6 +53,13 @@ public class CharacterAbilityController {
         );
     }
 
+    /**
+     * Updates character ability.
+     * @param characterId value used by this operation
+     * @param abilityId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @PutMapping("/{abilityId}")
     public CharacterAbilityResponse updateCharacterAbility(
             @PathVariable UUID characterId,
@@ -51,6 +73,12 @@ public class CharacterAbilityController {
         );
     }
 
+    /**
+     * Updates character abilities.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @PutMapping
     public List<CharacterAbilityResponse> updateCharacterAbilities(
             @PathVariable UUID characterId,
