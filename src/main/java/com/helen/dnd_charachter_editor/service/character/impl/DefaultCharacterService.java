@@ -161,7 +161,13 @@ public class DefaultCharacterService implements CharacterService {
         }
         characterSavingThrowRepository.saveAll(characterSavingThrows);
 
-        return CharacterResponseMapper.toResponse(savedCharacter, createCharacterRequest, abilities, allSkills, spells, proficientSavingThrowsCount);
+        return CharacterResponseMapper.toResponse(
+                savedCharacter,
+                characterAbilities,
+                characterSkills,
+                characterSpells,
+                characterSavingThrows
+        );
     }
 
     /**
@@ -255,14 +261,7 @@ public class DefaultCharacterService implements CharacterService {
             characterSavingThrowRepository.saveAll(savingThrows);
         }
 
-        return CharacterResponseMapper.toResponse(
-                savedCharacter,
-                createCharacterRequest,
-                abilities,
-                skills,
-                spells,
-                Math.min(createCharacterRequest.savingThrowsCount(), 2)
-        );
+        return buildCharacterResponse(savedCharacter);
     }
 
     /**
@@ -648,12 +647,16 @@ public class DefaultCharacterService implements CharacterService {
         UserCharacter character = characterRepository.findByIdAndUser_Id(characterId, user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
 
+        CharacterClass currentClass = character.getClassField();
+        boolean classChanged = currentClass == null || !currentClass.getId().equals(request.classId());
         CharacterClass characterClass = characterClassService.getClassById(request.classId());
         ClassArchetype classArchetype = getClassArchetypeOrNull(request.classId(), request.classArchetypeId());
 
         character.setClassField(characterClass);
         character.setClassArchetype(classArchetype);
-        updateClassDependentParameters(character, characterClass);
+        if (classChanged) {
+            updateClassDependentParameters(character, characterClass);
+        }
 
         UserCharacter savedCharacter = characterRepository.save(character);
 
@@ -1076,15 +1079,12 @@ public class DefaultCharacterService implements CharacterService {
      * @return результат выполнения операции
      */
     private CharacterResponse buildCharacterResponse(UserCharacter character) {
-        List<UUID> abilityIds = CharacterResponseMapper.deserializeIds(character.getAbilities());
-        List<UUID> spellIds = CharacterResponseMapper.deserializeIds(character.getSpells());
-
         return CharacterResponseMapper.toResponse(
                 character,
-                abilityRepository.findAllById(abilityIds),
+                characterAbilityRepository.findAllByCharacterId(character.getId()),
                 characterSkillRepository.findAllByCharacterId(character.getId()),
-                spellRepository.findAllById(spellIds),
-                character.getSavingThrowsCount()
+                characterSpellRepository.findAllByCharacterId(character.getId()),
+                characterSavingThrowRepository.findAllByCharacterId(character.getId())
         );
     }
 
