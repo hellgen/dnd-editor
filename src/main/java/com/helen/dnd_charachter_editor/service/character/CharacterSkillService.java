@@ -7,23 +7,23 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Service contract for character skill service operations.
+ * Контракт сервиса `CharacterSkillService`.
  */
 public interface CharacterSkillService {
 
     /**
-     * Returns character skills.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<CharacterSkillResponse> getCharacterSkills(UUID characterId);
 
     /**
-     * Updates character skill.
-     * @param characterId value used by this operation
-     * @param skillId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param skillId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterSkillResponse updateCharacterSkill(
             UUID characterId,

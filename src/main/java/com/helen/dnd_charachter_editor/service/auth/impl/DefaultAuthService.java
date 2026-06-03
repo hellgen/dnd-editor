@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 
 /**
- * Default service implementation for default auth service operations.
+ * Реализация сервиса `DefaultAuthService`.
  */
 @Service
 @RequiredArgsConstructor
@@ -34,9 +34,9 @@ public class DefaultAuthService implements AuthService {
     private final TokenRepository tokenRepository;
 
     /**
-     * Registers the requested operation.
-     * @param request value used by this operation
-     * @return result of the operation
+     * Регистрирует пользователя.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public AuthResponse register(RegisterRequest request) {
@@ -70,9 +70,9 @@ public class DefaultAuthService implements AuthService {
     }
 
     /**
-     * Authenticates the requested operation.
-     * @param request value used by this operation
-     * @return result of the operation
+     * Выполняет вход пользователя.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public AuthResponse login(LoginRequest request) {
@@ -98,8 +98,8 @@ public class DefaultAuthService implements AuthService {
     }
 
     /**
-     * Logs out the requested operation.
-     * @param refreshToken value used by this operation
+     * Выполняет выход пользователя.
+     * @param refreshToken параметр, используемый при выполнении операции
      */
     @Override
     public void logout(String refreshToken) {
@@ -108,8 +108,8 @@ public class DefaultAuthService implements AuthService {
     }
 
     /**
-     * Returns current user.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     @Override
     public User getCurrentUser() {
@@ -117,9 +117,9 @@ public class DefaultAuthService implements AuthService {
     }
 
     /**
-     * Refreshes the requested operation.
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные аутентификации.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public AuthResponse refresh(RefreshTokenRequest request) {
@@ -136,11 +136,11 @@ public class DefaultAuthService implements AuthService {
     }
 
     /**
-     * Creates token.
-     * @param accessToken value used by this operation
-     * @param refreshToken value used by this operation
-     * @param user value used by this operation
-     * @return result of the operation
+     * Создаёт данные для запрошенной операции.
+     * @param accessToken параметр, используемый при выполнении операции
+     * @param refreshToken параметр, используемый при выполнении операции
+     * @param user параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Token createToken(String accessToken, String refreshToken, User user) {
         Token token = new Token();
@@ -154,10 +154,10 @@ public class DefaultAuthService implements AuthService {
     }
 
     /**
-     * Loads user by username.
-     * @param username value used by this operation
-     * @return result of the operation
-     * @throws UsernameNotFoundException when the operation cannot be completed
+     * Загружает данные для запрошенной операции.
+     * @param username параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     * @throws UsernameNotFoundException если операцию невозможно выполнить
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * REST controller that exposes character skill controller endpoints.
+ * Контроллер REST API для обработки запросов `CharacterSkillController`.
  */
 @RestController
 @RequestMapping("/characters/{characterId}/skills")
@@ -26,9 +26,9 @@ public class CharacterSkillController {
     private final CharacterSkillService characterSkillService;
 
     /**
-     * Returns character skills.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping
     public List<CharacterSkillResponse> getCharacterSkills(
@@ -38,11 +38,11 @@ public class CharacterSkillController {
     }
 
     /**
-     * Updates character skill.
-     * @param characterId value used by this operation
-     * @param skillId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param skillId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PutMapping("/{skillId}")
     public CharacterSkillResponse updateCharacterSkill(

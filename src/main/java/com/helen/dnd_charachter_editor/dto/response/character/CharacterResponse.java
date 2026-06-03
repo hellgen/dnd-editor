@@ -4,7 +4,7 @@ import java.util.List;
 import java.time.OffsetDateTime;
 
 /**
- * Data transfer object for character response.
+ * Объект передачи данных `CharacterResponse`.
  */
 public record CharacterResponse(
         String characterName,

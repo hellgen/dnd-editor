@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Data transfer object for create character request.
+ * Объект передачи данных `CreateCharacterRequest`.
  */
 public record CreateCharacterRequest(
         String characterName,

@@ -8,21 +8,21 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for accessing character saving throw repository data.
+ * Репозиторий `CharacterSavingThrowRepository` для доступа к данным.
  */
 public interface CharacterSavingThrowRepository extends JpaRepository<CharacterSavingThrow, UUID> {
     /**
-     * Finds all by character id.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<CharacterSavingThrow> findAllByCharacterId(UUID characterId);
 
     /**
-     * Finds by character id and ability id.
-     * @param characterId value used by this operation
-     * @param abilityId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<CharacterSavingThrow> findByCharacterIdAndAbilityId(
             UUID characterId,

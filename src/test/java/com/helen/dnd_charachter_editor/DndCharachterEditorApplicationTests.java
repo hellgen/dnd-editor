@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //@SpringBootTest
 /**
- * Test class for dnd charachter editor application tests.
+ * Тестовый класс `DndCharachterEditorApplicationTests`.
  */
 class DndCharachterEditorApplicationTests {
 
 	/**
-	 * Verifies loads.
+	 * Выполняет запрошенную операцию.
 	 */
 	@Test
 	void contextLoads() {

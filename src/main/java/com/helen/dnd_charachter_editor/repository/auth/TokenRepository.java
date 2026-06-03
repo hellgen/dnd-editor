@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Repository for accessing token repository data.
+ * Репозиторий `TokenRepository` для доступа к данным.
  */
 @Repository
 public interface TokenRepository extends JpaRepository<Token, Long> {
@@ -21,23 +21,23 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
             """)
 
     /**
-     * Finds all access token by user.
-     * @param userId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param userId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<Token> findAllAccessTokenByUser(Long userId);
 
     /**
-     * Finds by access token.
-     * @param accessToken value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param accessToken параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<Token> findByAccessToken(String accessToken);
 
     /**
-     * Finds by refresh token.
-     * @param refreshToken value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param refreshToken параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<Token> findByRefreshToken(String refreshToken);
 }

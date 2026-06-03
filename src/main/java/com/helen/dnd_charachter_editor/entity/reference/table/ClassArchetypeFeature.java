@@ -11,7 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.UUID;
 
 /**
- * JPA entity representing class archetype feature.
+ * JPA-сущность `ClassArchetypeFeature`.
  */
 @Getter
 @Setter

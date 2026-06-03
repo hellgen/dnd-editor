@@ -4,13 +4,13 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassArchety
 import com.helen.dnd_charachter_editor.entity.reference.table.ClassArchetype;
 
 /**
- * Mapper that converts class archetype mapper values between layers.
+ * Маппер `ClassArchetypeMapper` для преобразования данных между слоями приложения.
  */
 public class ClassArchetypeMapper {
     /**
-     * Converts class archetype response.
-     * @param classArchetype value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param classArchetype параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static ClassArchetypeResponse toClassArchetypeResponse(ClassArchetype classArchetype){
         return new ClassArchetypeResponse(

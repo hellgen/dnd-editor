@@ -8,42 +8,42 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Service contract for spell reference operations.
+ * Контракт сервиса `SpellService`.
  */
 public interface SpellService {
 
     /**
-     * Returns all spells.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     List<SpellResponse> getAllSpells();
 
     /**
-     * Returns one spell response.
-     * @param spellId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param spellId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     SpellResponse getSpellResponse(UUID spellId);
 
     /**
-     * Returns one spell entity.
-     * @param spellId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param spellId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Spell getSpell(UUID spellId);
 
     /**
-     * Returns spells available for class.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<SpellResponse> getSpellsByClassId(UUID classId);
 
     /**
-     * Checks that spell is available for character class.
-     * @param characterClass value used by this operation
-     * @param spell value used by this operation
-     * @return result of the operation
+     * Проверяет состояние для запрошенной операции.
+     * @param characterClass параметр, используемый при выполнении операции
+     * @param spell параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     boolean isSpellAvailableForClass(CharacterClass characterClass, Spell spell);
 }

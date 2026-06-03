@@ -17,146 +17,146 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Service contract for character service operations.
+ * Контракт сервиса `CharacterService`.
  */
 public interface CharacterService {
     /**
-     * Creates character.
-     * @param createCharacterRequest value used by this operation
-     * @return result of the operation
+     * Создаёт данные для запрошенной операции.
+     * @param createCharacterRequest параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterResponse createCharacter(CreateCharacterRequest createCharacterRequest);
 
     /**
-     * Returns character.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterResponse getCharacter(UUID characterId);
 
     /**
-     * Updates character.
-     * @param characterId value used by this operation
-     * @param createCharacterRequest value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param createCharacterRequest параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterResponse updateCharacter(UUID characterId, CreateCharacterRequest createCharacterRequest);
 
     /**
-     * Updates character level.
-     * @param characterId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterResponse updateCharacterLevel(UUID characterId, Integer level);
 
     /**
-     * Updates character health.
-     * @param characterId value used by this operation
-     * @param maxHealth value used by this operation
-     * @param currentHealth value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param maxHealth параметр, используемый при выполнении операции
+     * @param currentHealth параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterResponse updateCharacterHealth(UUID characterId, Integer maxHealth, Integer currentHealth);
 
     /**
-     * Applies character race.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Применяет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterResponse applyCharacterRace(UUID characterId, SetCharacterRaceRequest request);
 
     /**
-     * Updates character race.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterResponse updateCharacterRace(UUID characterId, SetCharacterRaceRequest request);
 
     /**
-     * Applies character class.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Применяет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterResponse applyCharacterClass(UUID characterId, SetCharacterClassRequest request);
 
     /**
-     * Updates character class.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterResponse updateCharacterClass(UUID characterId, SetCharacterClassRequest request);
 
     /**
-     * Applies character class archetype.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Применяет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterResponse applyCharacterClassArchetype(UUID characterId, SetCharacterClassArchetypeRequest request);
 
     /**
-     * Updates character class archetype.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterResponse updateCharacterClassArchetype(UUID characterId, SetCharacterClassArchetypeRequest request);
 
     /**
-     * Returns character spells.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<SpellResponse> getCharacterSpells(UUID characterId);
 
     /**
-     * Adds spell to character.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Добавляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     SpellResponse addCharacterSpell(UUID characterId, AddCharacterSpellRequest request);
 
     /**
-     * Deletes spell from character.
-     * @param characterId value used by this operation
-     * @param spellId value used by this operation
+     * Удаляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param spellId параметр, используемый при выполнении операции
      */
     void deleteCharacterSpell(UUID characterId, UUID spellId);
 
     /**
-     * Returns character inventory.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<CharacterInventoryResponse> getCharacterInventory(UUID characterId);
 
     /**
-     * Returns one character inventory item by item name.
-     * @param characterId value used by this operation
-     * @param itemName value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param itemName параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterInventoryResponse getCharacterInventoryItem(UUID characterId, String itemName);
 
     /**
-     * Adds item to character inventory.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Добавляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterInventoryResponse addCharacterInventoryItem(UUID characterId, AddCharacterInventoryRequest request);
 
     /**
-     * Updates character inventory items.
-     * @param characterId value used by this operation
-     * @param requests value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param requests параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<CharacterInventoryResponse> updateCharacterInventoryItems(
             UUID characterId,
@@ -164,30 +164,30 @@ public interface CharacterService {
     );
 
     /**
-     * Deletes one character inventory item by item name.
-     * @param characterId value used by this operation
-     * @param itemName value used by this operation
+     * Удаляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param itemName параметр, используемый при выполнении операции
      */
     void deleteCharacterInventoryItem(UUID characterId, String itemName);
 
     /**
-     * Returns character wallet.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     WalletResponse getCharacterWallet(UUID characterId);
 
     /**
-     * Updates character wallet coin amounts.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     WalletResponse updateCharacterWallet(UUID characterId, WalletUpdateRequest request);
 
     /**
-     * Deletes character.
-     * @param characterId value used by this operation
+     * Удаляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
      */
     void deleteCharacter(UUID characterId);
 }

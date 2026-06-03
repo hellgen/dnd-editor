@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * Data transfer object for set character saving throw request.
+ * Объект передачи данных `SetCharacterSavingThrowRequest`.
  */
 public record SetCharacterSavingThrowRequest(
         @NotNull

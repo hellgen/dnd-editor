@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 /**
- * Data transfer object for set character race request.
+ * Объект передачи данных `SetCharacterRaceRequest`.
  */
 public record SetCharacterRaceRequest(
         @NotNull

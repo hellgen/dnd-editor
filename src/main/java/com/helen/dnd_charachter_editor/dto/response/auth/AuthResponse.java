@@ -3,7 +3,7 @@ package com.helen.dnd_charachter_editor.dto.response.auth;
 
 
 /**
- * Data transfer object for auth response.
+ * Объект передачи данных `AuthResponse`.
  */
 public record AuthResponse(
         String accessToken,

@@ -12,7 +12,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.UUID;
 
 /**
- * JPA entity representing character skill.
+ * JPA-сущность `CharacterSkill`.
  */
 @Getter
 @Setter

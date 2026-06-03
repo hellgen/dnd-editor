@@ -1,7 +1,7 @@
 package com.helen.dnd_charachter_editor.dto.request.auth;
 
 /**
- * Data transfer object for login request.
+ * Объект передачи данных `LoginRequest`.
  */
 public record LoginRequest (
         String email,

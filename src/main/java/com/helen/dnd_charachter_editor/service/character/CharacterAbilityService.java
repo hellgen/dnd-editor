@@ -8,23 +8,23 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Service contract for character ability service operations.
+ * Контракт сервиса `CharacterAbilityService`.
  */
 public interface CharacterAbilityService {
 
     /**
-     * Returns character abilities.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<CharacterAbilityResponse> getCharacterAbilities(UUID characterId);
 
     /**
-     * Sets character ability.
-     * @param characterId value used by this operation
-     * @param abilityId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Устанавливает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterAbilityResponse setCharacterAbility(
             UUID characterId,
@@ -33,10 +33,10 @@ public interface CharacterAbilityService {
     );
 
     /**
-     * Sets character abilities.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Устанавливает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<CharacterAbilityResponse> setCharacterAbilities(
             UUID characterId,

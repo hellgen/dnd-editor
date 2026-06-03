@@ -8,29 +8,29 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for accessing character spell repository data.
+ * Репозиторий `CharacterSpellRepository` для доступа к данным.
  */
 public interface CharacterSpellRepository extends JpaRepository<CharacterSpell, UUID> {
     /**
-     * Finds all by character id.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<CharacterSpell> findAllByCharacterId(UUID characterId);
 
     /**
-     * Finds character spell by character and spell identifiers.
-     * @param characterId value used by this operation
-     * @param spellId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param spellId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<CharacterSpell> findByCharacterIdAndSpellId(UUID characterId, UUID spellId);
 
     /**
-     * Checks if character spell exists by character and spell identifiers.
-     * @param characterId value used by this operation
-     * @param spellId value used by this operation
-     * @return result of the operation
+     * Проверяет существование данных для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param spellId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     boolean existsByCharacterIdAndSpellId(UUID characterId, UUID spellId);
 }

@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * Component that handles global exception handler concerns.
+ * Компонент `GlobalExceptionHandler` для обработки исключительных ситуаций.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     /**
-     * Handles entity not found.
-     * @param exception value used by this operation
-     * @return result of the operation
+     * Обрабатывает запрошенную ситуацию.
+     * @param exception параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleEntityNotFound(
@@ -27,9 +27,9 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles illegal argument.
-     * @param exception value used by this operation
-     * @return result of the operation
+     * Обрабатывает запрошенную ситуацию.
+     * @param exception параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgument(

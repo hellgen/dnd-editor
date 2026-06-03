@@ -13,96 +13,96 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Service contract for race service operations.
+ * Контракт сервиса `RaceService`.
  */
 public interface RaceService {
     /**
-     * Returns all races.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     List<RaceResponse> getAllRaces();
 
     /**
-     * Returns race response.
-     * @param raceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     RaceResponse getRaceResponse(UUID raceId);
 
     /**
-     * Returns race.
-     * @param raceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Race getRace(UUID raceId);
 
     /**
-     * Returns race description.
-     * @param raceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     RaceDescriptionResponse getRaceDescription(UUID raceId);
 
     /**
-     * Returns all features by race id.
-     * @param raceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<RaceFeatureResponse> getAllFeaturesByRaceId(UUID raceId);
 
     /**
-     * Returns race feature response.
-     * @param raceId value used by this operation
-     * @param featureId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param featureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     RaceFeatureResponse getRaceFeatureResponse(UUID raceId, UUID featureId);
 
     /**
-     * Returns all subraces by race id.
-     * @param raceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<SubraceResponse> getAllSubracesByRaceId(UUID raceId);
 
     /**
-     * Returns subrace response.
-     * @param raceId value used by this operation
-     * @param subraceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     SubraceResponse getSubraceResponse(UUID raceId, UUID subraceId);
 
     /**
-     * Returns all features by subrace id.
-     * @param raceId value used by this operation
-     * @param subraceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<SubraceFeatureResponse> getAllFeaturesBySubraceId(UUID raceId, UUID subraceId);
 
     /**
-     * Returns subrace feature response.
-     * @param raceId value used by this operation
-     * @param subraceId value used by this operation
-     * @param featureId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @param featureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     SubraceFeatureResponse getSubraceFeatureResponse(UUID raceId, UUID subraceId, UUID featureId);
 
     /**
-     * Returns subrace.
-     * @param raceId value used by this operation
-     * @param subraceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Subrace getSubrace(UUID raceId, UUID subraceId);
 
     /**
-     * Returns subrace description.
-     * @param raceId value used by this operation
-     * @param subraceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     SubraceDescriptionResponse getSubraceDescription(UUID raceId, UUID subraceId);
 }

@@ -6,20 +6,20 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Service contract for ability service operations.
+ * Контракт сервиса `AbilityService`.
  */
 public interface AbilityService {
 
     /**
-     * Returns all abilities.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     List<AbilityResponse> getAllAbilities();
 
     /**
-     * Returns ability.
-     * @param abilityId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param abilityId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     AbilityResponse getAbility(UUID abilityId);
 }

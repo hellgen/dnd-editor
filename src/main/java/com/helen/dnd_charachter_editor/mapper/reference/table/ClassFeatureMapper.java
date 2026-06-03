@@ -4,13 +4,13 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassFeature
 import com.helen.dnd_charachter_editor.entity.reference.table.ClassFeature;
 
 /**
- * Mapper that converts class feature mapper values between layers.
+ * Маппер `ClassFeatureMapper` для преобразования данных между слоями приложения.
  */
 public class ClassFeatureMapper{
     /**
-     * Converts class feature response.
-     * @param classFeature value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param classFeature параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static ClassFeatureResponse toClassFeatureResponse(ClassFeature classFeature){
         return new ClassFeatureResponse(

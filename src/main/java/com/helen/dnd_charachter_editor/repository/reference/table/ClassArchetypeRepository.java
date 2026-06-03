@@ -8,22 +8,22 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for accessing class archetype repository data.
+ * Репозиторий `ClassArchetypeRepository` для доступа к данным.
  */
 public interface ClassArchetypeRepository extends JpaRepository<ClassArchetype, UUID> {
 
     /**
-     * Finds all by character class id.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<ClassArchetype> findAllByCharacterClassId(UUID classId);
 
     /**
-     * Finds by id and character class id.
-     * @param classArchetypeId value used by this operation
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<ClassArchetype> findByIdAndCharacterClassId(
             UUID classArchetypeId,

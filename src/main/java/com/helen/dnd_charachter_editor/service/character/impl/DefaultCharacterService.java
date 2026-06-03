@@ -61,7 +61,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 
 /**
- * Default service implementation for default character service operations.
+ * Реализация сервиса `DefaultCharacterService`.
  */
 @Service
 @RequiredArgsConstructor
@@ -94,9 +94,9 @@ public class DefaultCharacterService implements CharacterService {
     private final AbilityRepository abilityRepository;
 
     /**
-     * Creates character.
-     * @param createCharacterRequest value used by this operation
-     * @return result of the operation
+     * Создаёт данные для запрошенной операции.
+     * @param createCharacterRequest параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -165,9 +165,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Returns character.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional(readOnly = true)
@@ -180,10 +180,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Updates character.
-     * @param characterId value used by this operation
-     * @param createCharacterRequest value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param createCharacterRequest параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -266,10 +266,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Updates character level.
-     * @param characterId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -289,11 +289,11 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Updates character health.
-     * @param characterId value used by this operation
-     * @param maxHealth value used by this operation
-     * @param currentHealth value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param maxHealth параметр, используемый при выполнении операции
+     * @param currentHealth параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -312,10 +312,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Applies character class.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Применяет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -324,10 +324,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Updates character class.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -336,10 +336,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Applies character class archetype.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Применяет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -351,10 +351,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Updates character class archetype.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -366,10 +366,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Applies character race.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Применяет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -378,10 +378,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Updates character race.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -390,9 +390,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Returns character spells.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional(readOnly = true)
@@ -405,10 +405,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Adds spell to character.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Добавляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -437,9 +437,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Deletes spell from character.
-     * @param characterId value used by this operation
-     * @param spellId value used by this operation
+     * Удаляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param spellId параметр, используемый при выполнении операции
      */
     @Override
     @Transactional
@@ -454,9 +454,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Returns character inventory.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional(readOnly = true)
@@ -466,10 +466,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Returns one character inventory item by item name.
-     * @param characterId value used by this operation
-     * @param itemName value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param itemName параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional(readOnly = true)
@@ -479,10 +479,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Adds item to character inventory.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Добавляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -523,10 +523,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Updates character inventory items.
-     * @param characterId value used by this operation
-     * @param requests value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param requests параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -562,9 +562,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Deletes one character inventory item by item name.
-     * @param characterId value used by this operation
-     * @param itemName value used by this operation
+     * Удаляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param itemName параметр, используемый при выполнении операции
      */
     @Override
     @Transactional
@@ -577,9 +577,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Returns character wallet.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional(readOnly = true)
@@ -589,10 +589,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Updates character wallet coin amounts.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -620,8 +620,8 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Deletes character.
-     * @param characterId value used by this operation
+     * Удаляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
      */
     @Override
     @Transactional
@@ -634,10 +634,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Sets character class.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Устанавливает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterResponse setCharacterClass(UUID characterId, SetCharacterClassRequest request) {
         if (request.classId() == null) {
@@ -661,10 +661,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Sets character class archetype.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Устанавливает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterResponse setCharacterClassArchetype(
             UUID characterId,
@@ -691,10 +691,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Returns class archetype or null.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private ClassArchetype getClassArchetypeOrNull(UUID classId, UUID classArchetypeId) {
         if (classArchetypeId == null) {
@@ -705,9 +705,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Updates class dependent parameters.
-     * @param character value used by this operation
-     * @param characterClass value used by this operation
+     * Обновляет данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @param characterClass параметр, используемый при выполнении операции
      */
     private void updateClassDependentParameters(UserCharacter character, CharacterClass characterClass) {
         validateHealth(character.getMaxHealth(), character.getCurrentHealth());
@@ -717,8 +717,8 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Executes the reset saving throws operation.
-     * @param character value used by this operation
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
      */
     private void resetSavingThrows(UserCharacter character) {
         List<CharacterSavingThrow> savingThrows = characterSavingThrowRepository.findAllByCharacterId(character.getId());
@@ -728,8 +728,8 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Executes the reset skills operation.
-     * @param character value used by this operation
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
      */
     private void resetSkills(UserCharacter character) {
         List<CharacterSkill> skills = characterSkillRepository.findAllByCharacterId(character.getId());
@@ -738,9 +738,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Executes the clear unavailable spells operation.
-     * @param character value used by this operation
-     * @param characterClass value used by this operation
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
+     * @param characterClass параметр, используемый при выполнении операции
      */
     private void clearUnavailableSpells(UserCharacter character, CharacterClass characterClass) {
         if (canUseSpells(character, characterClass)) {
@@ -753,10 +753,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Executes the can use spells operation.
-     * @param character value used by this operation
-     * @param characterClass value used by this operation
-     * @return result of the operation
+     * Проверяет возможность выполнения запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @param characterClass параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private boolean canUseSpells(UserCharacter character, CharacterClass characterClass) {
         if (!Boolean.TRUE.equals(characterClass.getIsSpellcaster())) {
@@ -768,10 +768,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Sets character race.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Устанавливает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterResponse setCharacterRace(UUID characterId, SetCharacterRaceRequest request) {
         if (request.raceId() == null) {
@@ -794,10 +794,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Returns subrace or null.
-     * @param raceId value used by this operation
-     * @param subraceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Subrace getSubraceOrNull(UUID raceId, UUID subraceId) {
         if (subraceId == null) {
@@ -808,9 +808,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Validates health.
-     * @param maxHealth value used by this operation
-     * @param currentHealth value used by this operation
+     * Проверяет корректность данных для запрошенной операции.
+     * @param maxHealth параметр, используемый при выполнении операции
+     * @param currentHealth параметр, используемый при выполнении операции
      */
     private void validateHealth(Integer maxHealth, Integer currentHealth) {
         if (maxHealth == null || maxHealth <= 0) {
@@ -831,10 +831,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Adds spell id to serialized spell identifiers.
-     * @param serializedSpellIds value used by this operation
-     * @param spellId value used by this operation
-     * @return result of the operation
+     * Добавляет данные для запрошенной операции.
+     * @param serializedSpellIds параметр, используемый при выполнении операции
+     * @param spellId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private List<UUID> addSpellId(String serializedSpellIds, UUID spellId) {
         List<UUID> spellIds = new ArrayList<>(CharacterResponseMapper.deserializeIds(serializedSpellIds));
@@ -845,10 +845,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Removes spell id from serialized spell identifiers.
-     * @param serializedSpellIds value used by this operation
-     * @param spellId value used by this operation
-     * @return result of the operation
+     * Удаляет данные из запрошенной операции.
+     * @param serializedSpellIds параметр, используемый при выполнении операции
+     * @param spellId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private List<UUID> removeSpellId(String serializedSpellIds, UUID spellId) {
         List<UUID> spellIds = new ArrayList<>(CharacterResponseMapper.deserializeIds(serializedSpellIds));
@@ -857,9 +857,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Finds character that belongs to current user.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private UserCharacter findCharacterForCurrentUser(UUID characterId) {
         User user = authService.getCurrentUser();
@@ -868,9 +868,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Reads character inventory from serialized character field.
-     * @param character value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private List<CharacterInventoryResponse> readInventory(UserCharacter character) {
         return CharacterResponseMapper.deserializeInventoryItems(character.getInventory()).stream()
@@ -888,9 +888,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Saves character inventory to serialized character field.
-     * @param character value used by this operation
-     * @param inventory value used by this operation
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
+     * @param inventory параметр, используемый при выполнении операции
      */
     private void saveInventory(UserCharacter character, List<CharacterInventoryResponse> inventory) {
         character.setInventory(CharacterResponseMapper.serializeInventoryItems(inventory));
@@ -898,10 +898,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Finds required inventory item by name.
-     * @param inventory value used by this operation
-     * @param itemName value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param inventory параметр, используемый при выполнении операции
+     * @param itemName параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterInventoryResponse findInventoryItem(
             List<CharacterInventoryResponse> inventory,
@@ -915,10 +915,10 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Finds optional inventory item by name.
-     * @param inventory value used by this operation
-     * @param itemName value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param inventory параметр, используемый при выполнении операции
+     * @param itemName параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterInventoryResponse findInventoryItemOrNull(
             List<CharacterInventoryResponse> inventory,
@@ -932,19 +932,19 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Replaces inventory item by its current name.
-     * @param inventory value used by this operation
-     * @param updatedItem value used by this operation
+     * Выполняет запрошенную операцию.
+     * @param inventory параметр, используемый при выполнении операции
+     * @param updatedItem параметр, используемый при выполнении операции
      */
     private void replaceInventoryItem(List<CharacterInventoryResponse> inventory, CharacterInventoryResponse updatedItem) {
         replaceInventoryItem(inventory, updatedItem, updatedItem.itemName());
     }
 
     /**
-     * Replaces inventory item by an original name.
-     * @param inventory value used by this operation
-     * @param updatedItem value used by this operation
-     * @param originalItemName value used by this operation
+     * Выполняет запрошенную операцию.
+     * @param inventory параметр, используемый при выполнении операции
+     * @param updatedItem параметр, используемый при выполнении операции
+     * @param originalItemName параметр, используемый при выполнении операции
      */
     private void replaceInventoryItem(
             List<CharacterInventoryResponse> inventory,
@@ -960,8 +960,8 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Validates add inventory request.
-     * @param request value used by this operation
+     * Проверяет корректность данных для запрошенной операции.
+     * @param request параметр, используемый при выполнении операции
      */
     private void validateAddInventoryRequest(AddCharacterInventoryRequest request) {
         if (request == null) {
@@ -974,8 +974,8 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Validates update inventory request.
-     * @param request value used by this operation
+     * Проверяет корректность данных для запрошенной операции.
+     * @param request параметр, используемый при выполнении операции
      */
     private void validateUpdateInventoryRequest(UpdateCharacterInventoryRequest request) {
         if (request == null) {
@@ -988,9 +988,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Normalizes item name for comparisons and persistence.
-     * @param itemName value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param itemName параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private String normalizedItemName(String itemName) {
         if (!hasText(itemName)) {
@@ -1000,28 +1000,28 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Compares item names ignoring case.
-     * @param first value used by this operation
-     * @param second value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param first параметр, используемый при выполнении операции
+     * @param second параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private boolean namesEqual(String first, String second) {
         return first != null && second != null && first.equalsIgnoreCase(second);
     }
 
     /**
-     * Checks that text has visible characters.
-     * @param value value used by this operation
-     * @return result of the operation
+     * Проверяет наличие данных для запрошенной операции.
+     * @param value параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private boolean hasText(String value) {
         return value != null && !value.trim().isEmpty();
     }
 
     /**
-     * Builds character wallet response.
-     * @param character value used by this operation
-     * @return result of the operation
+     * Формирует данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private WalletResponse buildWalletResponse(UserCharacter character) {
         return WalletResponse.builder()
@@ -1036,8 +1036,8 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Validates wallet update request.
-     * @param request value used by this operation
+     * Проверяет корректность данных для запрошенной операции.
+     * @param request параметр, используемый при выполнении операции
      */
     private void validateWalletUpdateRequest(WalletUpdateRequest request) {
         if (request == null) {
@@ -1051,9 +1051,9 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Validates one wallet coin value.
-     * @param coinName value used by this operation
-     * @param value value used by this operation
+     * Проверяет корректность данных для запрошенной операции.
+     * @param coinName параметр, используемый при выполнении операции
+     * @param value параметр, используемый при выполнении операции
      */
     private void validateCoinValue(String coinName, Integer value) {
         if (value != null && value < 0) {
@@ -1062,18 +1062,18 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Returns non-null coin value.
-     * @param value value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param value параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Integer nonNullCoinValue(Integer value) {
         return value != null ? value : 0;
     }
 
     /**
-     * Executes the build character response operation.
-     * @param character value used by this operation
-     * @return result of the operation
+     * Формирует данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterResponse buildCharacterResponse(UserCharacter character) {
         List<UUID> abilityIds = CharacterResponseMapper.deserializeIds(character.getAbilities());
@@ -1089,13 +1089,13 @@ public class DefaultCharacterService implements CharacterService {
     }
 
     /**
-     * Applies main character fields.
-     * @param character value used by this operation
-     * @param request value used by this operation
-     * @param race value used by this operation
-     * @param subrace value used by this operation
-     * @param characterClass value used by this operation
-     * @param classArchetype value used by this operation
+     * Применяет данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @param race параметр, используемый при выполнении операции
+     * @param subrace параметр, используемый при выполнении операции
+     * @param characterClass параметр, используемый при выполнении операции
+     * @param classArchetype параметр, используемый при выполнении операции
      */
     private void applyMainCharacterFields(
             UserCharacter character,

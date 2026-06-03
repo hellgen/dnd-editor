@@ -11,7 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.UUID;
 
 /**
- * JPA entity representing class feature.
+ * JPA-сущность `ClassFeature`.
  */
 @Getter
 @Setter

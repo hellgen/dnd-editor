@@ -28,7 +28,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 /**
- * JPA entity representing user character.
+ * JPA-сущность `UserCharacter`.
  */
 @Getter
 @Setter

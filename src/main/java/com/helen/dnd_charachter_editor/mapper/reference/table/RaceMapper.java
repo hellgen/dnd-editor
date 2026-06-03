@@ -5,13 +5,13 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.RaceResponse
 import com.helen.dnd_charachter_editor.entity.reference.table.Race;
 
 /**
- * Mapper that converts race mapper values between layers.
+ * Маппер `RaceMapper` для преобразования данных между слоями приложения.
  */
 public class RaceMapper {
     /**
-     * Converts list response.
-     * @param race value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param race параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static RaceResponse toListResponse(Race race) {
         return new RaceResponse(
@@ -26,9 +26,9 @@ public class RaceMapper {
     }
 
     /**
-     * Converts race description response.
-     * @param race value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param race параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static RaceDescriptionResponse toRaceDescriptionResponse(Race race) {
         return new RaceDescriptionResponse(

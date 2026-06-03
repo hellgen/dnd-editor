@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * REST controller that exposes spell controller test endpoints.
+ * Контроллер REST API для обработки запросов `SpellControllerTest`.
  */
 class SpellControllerTest {
 
@@ -26,8 +26,8 @@ class SpellControllerTest {
             .build();
 
     /**
-     * Returns all spells.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getAllSpellsReturnsSpellList() throws Exception {
@@ -41,8 +41,8 @@ class SpellControllerTest {
     }
 
     /**
-     * Returns spell by id.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getSpellByIdReturnsSpell() throws Exception {
@@ -56,10 +56,10 @@ class SpellControllerTest {
     }
 
     /**
-     * Executes spell response operation.
-     * @param spellId value used by this operation
-     * @param spellName value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param spellId параметр, используемый при выполнении операции
+     * @param spellName параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private SpellResponse spellResponse(UUID spellId, String spellName) {
         return new SpellResponse(

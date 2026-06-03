@@ -1,21 +1,21 @@
 package com.helen.dnd_charachter_editor.service.character;
 
 /**
- * Service contract for dnd rules service operations.
+ * Контракт сервиса `DndRulesService`.
  */
 public interface DndRulesService {
 
     /**
-     * Calculates ability modifier.
-     * @param finalValue value used by this operation
-     * @return result of the operation
+     * Вычисляет значение для запрошенной операции.
+     * @param finalValue параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     int calculateAbilityModifier(int finalValue);
 
     /**
-     * Calculates proficiency bonus.
-     * @param level value used by this operation
-     * @return result of the operation
+     * Вычисляет значение для запрошенной операции.
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     int calculateProficiencyBonus(int level);
 }

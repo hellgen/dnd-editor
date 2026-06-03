@@ -8,21 +8,21 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for accessing character skill repository data.
+ * Репозиторий `CharacterSkillRepository` для доступа к данным.
  */
 public interface CharacterSkillRepository extends JpaRepository<CharacterSkill, UUID> {
     /**
-     * Finds all by character id.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<CharacterSkill> findAllByCharacterId(UUID characterId);
 
     /**
-     * Finds by character id and skill id.
-     * @param characterId value used by this operation
-     * @param skillId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param skillId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<CharacterSkill> findByCharacterIdAndSkillId(
             UUID characterId,

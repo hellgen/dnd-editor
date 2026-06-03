@@ -10,7 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.UUID;
 
 /**
- * JPA entity representing race ability bonus.
+ * JPA-сущность `RaceAbilityBonus`.
  */
 @Getter
 @Setter

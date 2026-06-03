@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 /**
- * Repository for accessing spell repository data.
+ * Репозиторий `SpellRepository` для доступа к данным.
  */
 public interface SpellRepository extends JpaRepository<Spell, UUID> {
 }

@@ -40,7 +40,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Default service implementation for default character inventory service test operations.
+ * Реализация сервиса `DefaultCharacterInventoryServiceTest`.
  */
 class DefaultCharacterInventoryServiceTest {
 
@@ -75,7 +75,7 @@ class DefaultCharacterInventoryServiceTest {
     );
 
     /**
-     * Returns character inventory from old string list format.
+     * Возвращает данные для запрошенной операции.
      */
     @Test
     void getCharacterInventoryReadsLegacyStringInventory() {
@@ -89,7 +89,7 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Adds character inventory item and persists structured inventory.
+     * Добавляет данные для запрошенной операции.
      */
     @Test
     void addCharacterInventoryItemPersistsNewItem() {
@@ -112,7 +112,7 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Updates existing character inventory item.
+     * Обновляет данные для запрошенной операции.
      */
     @Test
     void updateCharacterInventoryItemsUpdatesExistingItem() {
@@ -135,7 +135,7 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Deletes character inventory item by name.
+     * Удаляет данные для запрошенной операции.
      */
     @Test
     void deleteCharacterInventoryItemRemovesExistingItem() {
@@ -149,7 +149,7 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Throws not found when inventory item is absent.
+     * Возвращает данные для запрошенной операции.
      */
     @Test
     void getCharacterInventoryItemThrowsWhenItemMissing() {
@@ -164,7 +164,7 @@ class DefaultCharacterInventoryServiceTest {
 
 
     /**
-     * Returns character spells.
+     * Возвращает данные для запрошенной операции.
      */
     @Test
     void getCharacterSpellsReturnsCharacterSpellResponses() {
@@ -180,7 +180,7 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Adds available spell to character.
+     * Добавляет данные для запрошенной операции.
      */
     @Test
     void addCharacterSpellAddsAvailableSpell() {
@@ -203,7 +203,7 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Throws validation error when spell is unavailable for class.
+     * Добавляет данные для запрошенной операции.
      */
     @Test
     void addCharacterSpellThrowsWhenSpellUnavailableForClass() {
@@ -221,7 +221,7 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Deletes character spell.
+     * Удаляет данные для запрошенной операции.
      */
     @Test
     void deleteCharacterSpellRemovesCharacterSpell() {
@@ -241,7 +241,7 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Returns character wallet from character coin fields.
+     * Возвращает данные для запрошенной операции.
      */
     @Test
     void getCharacterWalletReturnsCharacterCoins() {
@@ -263,7 +263,7 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Updates only provided character wallet coins.
+     * Обновляет данные для запрошенной операции.
      */
     @Test
     void updateCharacterWalletUpdatesOnlyProvidedCoins() {
@@ -287,7 +287,7 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Throws validation error for negative wallet values.
+     * Обновляет данные для запрошенной операции.
      */
     @Test
     void updateCharacterWalletThrowsWhenCoinValueIsNegative() {
@@ -302,10 +302,10 @@ class DefaultCharacterInventoryServiceTest {
 
 
     /**
-     * Executes spell operation.
-     * @param spellId value used by this operation
-     * @param spellName value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param spellId параметр, используемый при выполнении операции
+     * @param spellName параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Spell spell(UUID spellId, String spellName) {
         Spell spell = new Spell();
@@ -322,10 +322,10 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Executes character class operation.
-     * @param className value used by this operation
-     * @param isSpellcaster value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param className параметр, используемый при выполнении операции
+     * @param isSpellcaster параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterClass characterClass(String className, Boolean isSpellcaster) {
         CharacterClass characterClass = new CharacterClass();
@@ -336,10 +336,10 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Executes character spell operation.
-     * @param character value used by this operation
-     * @param spell value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
+     * @param spell параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterSpell characterSpell(UserCharacter character, Spell spell) {
         CharacterSpell characterSpell = new CharacterSpell();
@@ -351,9 +351,9 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Prepares character test data.
-     * @param inventory value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param inventory параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private TestData prepareCharacter(String inventory) {
         UUID userId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -373,7 +373,7 @@ class DefaultCharacterInventoryServiceTest {
     }
 
     /**
-     * Default service implementation for test data operations.
+     * Реализация сервиса `TestData`.
      */
     private record TestData(
             UUID characterId,

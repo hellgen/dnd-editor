@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * REST controller that exposes race controller endpoints.
+ * Контроллер REST API для обработки запросов `RaceController`.
  */
 @RestController
 @RequestMapping("/races")
@@ -23,8 +23,8 @@ public class RaceController {
     private final RaceService raceService;
 
     /**
-     * Returns all races.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     @GetMapping
     public List<RaceResponse> getAllRaces() {
@@ -32,9 +32,9 @@ public class RaceController {
     }
 
     /**
-     * Returns race.
-     * @param raceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{raceId}")
     public RaceResponse getRace(@PathVariable UUID raceId) {
@@ -42,9 +42,9 @@ public class RaceController {
     }
 
     /**
-     * Returns subraces.
-     * @param raceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{raceId}/subraces")
     public List<SubraceResponse> getSubraces(@PathVariable UUID raceId) {
@@ -52,9 +52,9 @@ public class RaceController {
     }
 
     /**
-     * Returns race features.
-     * @param raceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{raceId}/features")
     public List<RaceFeatureResponse> getRaceFeatures(@PathVariable UUID raceId) {
@@ -62,10 +62,10 @@ public class RaceController {
     }
 
     /**
-     * Returns race feature.
-     * @param raceId value used by this operation
-     * @param featureId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param featureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{raceId}/features/{featureId}")
     public RaceFeatureResponse getRaceFeature(
@@ -76,9 +76,9 @@ public class RaceController {
     }
 
     /**
-     * Returns race description.
-     * @param raceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{raceId}/description")
     public RaceDescriptionResponse getRaceDescription(@PathVariable UUID raceId) {
@@ -86,10 +86,10 @@ public class RaceController {
     }
 
     /**
-     * Returns subrace.
-     * @param raceId value used by this operation
-     * @param subraceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{raceId}/subraces/{subraceId}")
     public SubraceResponse getSubrace(
@@ -100,10 +100,10 @@ public class RaceController {
     }
 
     /**
-     * Returns subrace features.
-     * @param raceId value used by this operation
-     * @param subraceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{raceId}/subraces/{subraceId}/features")
     public List<SubraceFeatureResponse> getSubraceFeatures(
@@ -114,11 +114,11 @@ public class RaceController {
     }
 
     /**
-     * Returns subrace feature.
-     * @param raceId value used by this operation
-     * @param subraceId value used by this operation
-     * @param featureId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @param featureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{raceId}/subraces/{subraceId}/features/{featureId}")
     public SubraceFeatureResponse getSubraceFeature(
@@ -130,10 +130,10 @@ public class RaceController {
     }
 
     /**
-     * Returns subrace description.
-     * @param raceId value used by this operation
-     * @param subraceId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{raceId}/subraces/{subraceId}/description")
     public SubraceDescriptionResponse getSubraceDescription(

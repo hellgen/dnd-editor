@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 /**
- * Repository for accessing ability repository data.
+ * Репозиторий `AbilityRepository` для доступа к данным.
  */
 public interface AbilityRepository extends JpaRepository<Ability, UUID> {
 }

@@ -7,16 +7,16 @@ import com.helen.dnd_charachter_editor.entity.reference.table.Ability;
 import com.helen.dnd_charachter_editor.service.character.DndRulesService;
 
 /**
- * Mapper that converts character ability mapper values between layers.
+ * Маппер `CharacterAbilityMapper` для преобразования данных между слоями приложения.
  */
 public class CharacterAbilityMapper {
 
 
     /**
-     * Converts entity.
-     * @param character value used by this operation
-     * @param ability value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static CharacterAbility toEntity(UserCharacter character, Ability ability) {
         CharacterAbility characterAbility = new CharacterAbility();
@@ -28,12 +28,12 @@ public class CharacterAbilityMapper {
     }
 
     /**
-     * Converts response.
-     * @param characterAbility value used by this operation
-     * @param raceBonus value used by this operation
-     * @param subraceBonus value used by this operation
-     * @param dndRulesService value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param characterAbility параметр, используемый при выполнении операции
+     * @param raceBonus параметр, используемый при выполнении операции
+     * @param subraceBonus параметр, используемый при выполнении операции
+     * @param dndRulesService параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static CharacterAbilityResponse toResponse(
             CharacterAbility characterAbility,

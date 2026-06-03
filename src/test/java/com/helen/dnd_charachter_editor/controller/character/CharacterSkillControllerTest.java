@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * REST controller that exposes character skill controller test endpoints.
+ * Контроллер REST API для обработки запросов `CharacterSkillControllerTest`.
  */
 class CharacterSkillControllerTest {
 
@@ -31,8 +31,8 @@ class CharacterSkillControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * Returns character skills returns skill list.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getCharacterSkillsReturnsSkillList() throws Exception {
@@ -60,8 +60,8 @@ class CharacterSkillControllerTest {
     }
 
     /**
-     * Updates character skill returns double proficiency modifier.
-     * @throws Exception when the operation cannot be completed
+     * Обновляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void updateCharacterSkillReturnsDoubleProficiencyModifier() throws Exception {

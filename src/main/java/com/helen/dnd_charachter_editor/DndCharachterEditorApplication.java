@@ -4,14 +4,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Application class for dnd charachter editor application.
+ * Класс приложения `DndCharachterEditorApplication`.
  */
 @SpringBootApplication
 public class DndCharachterEditorApplication {
 
 	/**
-	 * Starts the DnD character editor application.
-	 * @param args value used by this operation
+	 * Запускает приложение редактора персонажей DnD.
+	 * @param args параметр, используемый при выполнении операции
 	 */
 	public static void main(String[] args) {
 		SpringApplication.run(DndCharachterEditorApplication.class, args);

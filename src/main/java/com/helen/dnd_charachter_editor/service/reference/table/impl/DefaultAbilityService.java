@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Default service implementation for default ability service operations.
+ * Реализация сервиса `DefaultAbilityService`.
  */
 @Service
 @RequiredArgsConstructor
@@ -24,8 +24,8 @@ public class DefaultAbilityService implements AbilityService {
     private final AbilityMapper abilityMapper;
 
     /**
-     * Returns all abilities.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     @Override
     @Transactional(readOnly = true)
@@ -37,9 +37,9 @@ public class DefaultAbilityService implements AbilityService {
     }
 
     /**
-     * Returns ability.
-     * @param abilityId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param abilityId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional(readOnly = true)

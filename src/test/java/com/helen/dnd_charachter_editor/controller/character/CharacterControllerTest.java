@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * REST controller that exposes character controller test endpoints.
+ * Контроллер REST API для обработки запросов `CharacterControllerTest`.
  */
 class CharacterControllerTest {
 
@@ -43,8 +43,8 @@ class CharacterControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * Applies character class returns character with selected class and archetype.
-     * @throws Exception when the operation cannot be completed
+     * Применяет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void applyCharacterClassReturnsCharacterWithSelectedClassAndArchetype() throws Exception {
@@ -65,8 +65,8 @@ class CharacterControllerTest {
     }
 
     /**
-     * Updates character class returns character with changed class and no archetype.
-     * @throws Exception when the operation cannot be completed
+     * Обновляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void updateCharacterClassReturnsCharacterWithChangedClassAndNoArchetype() throws Exception {
@@ -88,8 +88,8 @@ class CharacterControllerTest {
 
 
     /**
-     * Applies character class archetype returns character with selected archetype.
-     * @throws Exception when the operation cannot be completed
+     * Применяет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void applyCharacterClassArchetypeReturnsCharacterWithSelectedArchetype() throws Exception {
@@ -109,8 +109,8 @@ class CharacterControllerTest {
     }
 
     /**
-     * Updates character class archetype returns character with changed archetype.
-     * @throws Exception when the operation cannot be completed
+     * Обновляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void updateCharacterClassArchetypeReturnsCharacterWithChangedArchetype() throws Exception {
@@ -130,8 +130,8 @@ class CharacterControllerTest {
     }
 
     /**
-     * Applies character race returns character with selected race and subrace.
-     * @throws Exception when the operation cannot be completed
+     * Применяет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void applyCharacterRaceReturnsCharacterWithSelectedRaceAndSubrace() throws Exception {
@@ -152,8 +152,8 @@ class CharacterControllerTest {
     }
 
     /**
-     * Updates character race returns character with changed race and no subrace.
-     * @throws Exception when the operation cannot be completed
+     * Обновляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void updateCharacterRaceReturnsCharacterWithChangedRaceAndNoSubrace() throws Exception {
@@ -176,8 +176,8 @@ class CharacterControllerTest {
 
 
     /**
-     * Returns character spells.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getCharacterSpellsReturnsSpellList() throws Exception {
@@ -193,8 +193,8 @@ class CharacterControllerTest {
     }
 
     /**
-     * Adds character spell.
-     * @throws Exception when the operation cannot be completed
+     * Добавляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void addCharacterSpellReturnsAddedSpell() throws Exception {
@@ -212,8 +212,8 @@ class CharacterControllerTest {
     }
 
     /**
-     * Deletes character spell.
-     * @throws Exception when the operation cannot be completed
+     * Удаляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void deleteCharacterSpellDeletesSpell() throws Exception {
@@ -227,8 +227,8 @@ class CharacterControllerTest {
     }
 
     /**
-     * Returns character inventory.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getCharacterInventoryReturnsItems() throws Exception {
@@ -243,8 +243,8 @@ class CharacterControllerTest {
     }
 
     /**
-     * Returns character inventory item by name.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getCharacterInventoryItemReturnsItemByName() throws Exception {
@@ -259,8 +259,8 @@ class CharacterControllerTest {
     }
 
     /**
-     * Adds character inventory item.
-     * @throws Exception when the operation cannot be completed
+     * Добавляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void addCharacterInventoryItemReturnsAddedItem() throws Exception {
@@ -284,8 +284,8 @@ class CharacterControllerTest {
     }
 
     /**
-     * Updates character inventory items.
-     * @throws Exception when the operation cannot be completed
+     * Обновляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void updateCharacterInventoryItemsReturnsUpdatedItems() throws Exception {
@@ -310,8 +310,8 @@ class CharacterControllerTest {
     }
 
     /**
-     * Deletes character inventory item by name.
-     * @throws Exception when the operation cannot be completed
+     * Удаляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void deleteCharacterInventoryItemDeletesItemByName() throws Exception {
@@ -327,8 +327,8 @@ class CharacterControllerTest {
 
 
     /**
-     * Returns character wallet.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getCharacterWalletReturnsWallet() throws Exception {
@@ -343,8 +343,8 @@ class CharacterControllerTest {
     }
 
     /**
-     * Updates character wallet.
-     * @throws Exception when the operation cannot be completed
+     * Обновляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void updateCharacterWalletReturnsUpdatedWallet() throws Exception {
@@ -367,10 +367,10 @@ class CharacterControllerTest {
 
 
     /**
-     * Executes spell response operation.
-     * @param spellId value used by this operation
-     * @param spellName value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param spellId параметр, используемый при выполнении операции
+     * @param spellName параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private SpellResponse spellResponse(UUID spellId, String spellName) {
         return new SpellResponse(
@@ -387,14 +387,14 @@ class CharacterControllerTest {
     }
 
     /**
-     * Executes the wallet response operation.
-     * @param characterId value used by this operation
-     * @param copper value used by this operation
-     * @param silver value used by this operation
-     * @param electrum value used by this operation
-     * @param gold value used by this operation
-     * @param platinum value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param copper параметр, используемый при выполнении операции
+     * @param silver параметр, используемый при выполнении операции
+     * @param electrum параметр, используемый при выполнении операции
+     * @param gold параметр, используемый при выполнении операции
+     * @param platinum параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private WalletResponse walletResponse(
             UUID characterId,
@@ -416,11 +416,11 @@ class CharacterControllerTest {
     }
 
     /**
-     * Executes the inventory item operation.
-     * @param characterId value used by this operation
-     * @param itemName value used by this operation
-     * @param quantity value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param itemName параметр, используемый при выполнении операции
+     * @param quantity параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterInventoryResponse inventoryItem(UUID characterId, String itemName, Integer quantity) {
         return new CharacterInventoryResponse(
@@ -436,12 +436,12 @@ class CharacterControllerTest {
     }
 
     /**
-     * Executes the character response operation.
-     * @param race value used by this operation
-     * @param subrace value used by this operation
-     * @param characterClass value used by this operation
-     * @param classArchetype value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param race параметр, используемый при выполнении операции
+     * @param subrace параметр, используемый при выполнении операции
+     * @param characterClass параметр, используемый при выполнении операции
+     * @param classArchetype параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterResponse characterResponse(
             String race,

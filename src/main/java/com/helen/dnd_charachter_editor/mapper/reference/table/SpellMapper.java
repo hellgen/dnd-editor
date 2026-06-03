@@ -4,14 +4,14 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.SpellRespons
 import com.helen.dnd_charachter_editor.entity.reference.table.Spell;
 
 /**
- * Mapper that converts spell values between layers.
+ * Маппер `SpellMapper` для преобразования данных между слоями приложения.
  */
 public class SpellMapper {
 
     /**
-     * Converts spell entity to spell response.
-     * @param spell value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param spell параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static SpellResponse toSpellResponse(Spell spell) {
         return new SpellResponse(

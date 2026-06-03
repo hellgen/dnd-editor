@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * Data transfer object for set character skill request.
+ * Объект передачи данных `SetCharacterSkillRequest`.
  */
 public record SetCharacterSkillRequest(
         @NotNull

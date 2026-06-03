@@ -3,7 +3,7 @@ package com.helen.dnd_charachter_editor.dto.response.reference.table;
 import java.util.UUID;
 
 /**
- * Data transfer object for class archetype feature response.
+ * Объект передачи данных `ClassArchetypeFeatureResponse`.
  */
 public record ClassArchetypeFeatureResponse(
         UUID id,

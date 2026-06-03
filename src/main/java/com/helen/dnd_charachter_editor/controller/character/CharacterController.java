@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * REST controller that exposes character controller endpoints.
+ * Контроллер REST API для обработки запросов `CharacterController`.
  */
 @RestController
 @RequestMapping("/characters")
@@ -41,9 +41,9 @@ public class CharacterController {
     private final CharacterService characterService;
 
     /**
-     * Creates character.
-     * @param createCharacterRequest value used by this operation
-     * @return result of the operation
+     * Создаёт данные для запрошенной операции.
+     * @param createCharacterRequest параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PostMapping
     private CharacterResponse createCharacter(@RequestBody CreateCharacterRequest createCharacterRequest) {
@@ -51,9 +51,9 @@ public class CharacterController {
     }
 
     /**
-     * Returns character.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{characterId}")
     private CharacterResponse getCharacter(@PathVariable UUID characterId) {
@@ -61,10 +61,10 @@ public class CharacterController {
     }
 
     /**
-     * Updates character.
-     * @param characterId value used by this operation
-     * @param createCharacterRequest value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param createCharacterRequest параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PutMapping("/{characterId}")
     private CharacterResponse updateCharacter(
@@ -75,10 +75,10 @@ public class CharacterController {
     }
 
     /**
-     * Updates character level.
-     * @param characterId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PutMapping("/{characterId}/level")
     private CharacterResponse updateCharacterLevel(
@@ -89,11 +89,11 @@ public class CharacterController {
     }
 
     /**
-     * Updates character health.
-     * @param characterId value used by this operation
-     * @param maxHealth value used by this operation
-     * @param currentHealth value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param maxHealth параметр, используемый при выполнении операции
+     * @param currentHealth параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PutMapping("/{characterId}/health")
     private CharacterResponse updateCharacterHealth(
@@ -105,10 +105,10 @@ public class CharacterController {
     }
 
     /**
-     * Applies character class.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Применяет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PostMapping("/{characterId}/class")
     public CharacterResponse applyCharacterClass(
@@ -119,10 +119,10 @@ public class CharacterController {
     }
 
     /**
-     * Updates character class.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PutMapping("/{characterId}/class")
     public CharacterResponse updateCharacterClass(
@@ -133,10 +133,10 @@ public class CharacterController {
     }
 
     /**
-     * Applies character class archetype.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Применяет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PostMapping("/{characterId}/class-archetype")
     public CharacterResponse applyCharacterClassArchetype(
@@ -147,10 +147,10 @@ public class CharacterController {
     }
 
     /**
-     * Updates character class archetype.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PutMapping("/{characterId}/class-archetype")
     public CharacterResponse updateCharacterClassArchetype(
@@ -161,10 +161,10 @@ public class CharacterController {
     }
 
     /**
-     * Applies character race.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Применяет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PostMapping("/{characterId}/race")
     public CharacterResponse applyCharacterRace(
@@ -175,10 +175,10 @@ public class CharacterController {
     }
 
     /**
-     * Updates character race.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PutMapping("/{characterId}/race")
     public CharacterResponse updateCharacterRace(
@@ -189,9 +189,9 @@ public class CharacterController {
     }
 
     /**
-     * Returns character spells.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{characterId}/spells")
     public List<SpellResponse> getCharacterSpells(@PathVariable UUID characterId) {
@@ -199,10 +199,10 @@ public class CharacterController {
     }
 
     /**
-     * Adds spell to character.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Добавляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PostMapping("/{characterId}/spells")
     public SpellResponse addCharacterSpell(
@@ -213,9 +213,9 @@ public class CharacterController {
     }
 
     /**
-     * Deletes spell from character.
-     * @param characterId value used by this operation
-     * @param spellId value used by this operation
+     * Удаляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param spellId параметр, используемый при выполнении операции
      */
     @DeleteMapping("/{characterId}/spells/{spellId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -227,9 +227,9 @@ public class CharacterController {
     }
 
     /**
-     * Returns character inventory.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{characterId}/inventory")
     public List<CharacterInventoryResponse> getCharacterInventory(@PathVariable UUID characterId) {
@@ -237,10 +237,10 @@ public class CharacterController {
     }
 
     /**
-     * Returns one character inventory item by item name.
-     * @param characterId value used by this operation
-     * @param itemName value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param itemName параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{characterId}/inventory/item")
     public CharacterInventoryResponse getCharacterInventoryItem(
@@ -251,10 +251,10 @@ public class CharacterController {
     }
 
     /**
-     * Adds item to character inventory.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Добавляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PostMapping("/{characterId}/inventory/item")
     public CharacterInventoryResponse addCharacterInventoryItem(
@@ -265,10 +265,10 @@ public class CharacterController {
     }
 
     /**
-     * Updates character inventory items.
-     * @param characterId value used by this operation
-     * @param requests value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param requests параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PutMapping("/{characterId}/inventory/items")
     public List<CharacterInventoryResponse> updateCharacterInventoryItems(
@@ -279,9 +279,9 @@ public class CharacterController {
     }
 
     /**
-     * Deletes one character inventory item by item name.
-     * @param characterId value used by this operation
-     * @param itemName value used by this operation
+     * Удаляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param itemName параметр, используемый при выполнении операции
      */
     @DeleteMapping("/{characterId}/inventory/item")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -293,9 +293,9 @@ public class CharacterController {
     }
 
     /**
-     * Returns character wallet.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{characterId}/wallet")
     public WalletResponse getCharacterWallet(@PathVariable UUID characterId) {
@@ -303,10 +303,10 @@ public class CharacterController {
     }
 
     /**
-     * Updates character wallet coin amounts.
-     * @param characterId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PutMapping("/{characterId}/wallet")
     public WalletResponse updateCharacterWallet(
@@ -317,8 +317,8 @@ public class CharacterController {
     }
 
     /**
-     * Deletes character.
-     * @param characterId value used by this operation
+     * Удаляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
      */
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)

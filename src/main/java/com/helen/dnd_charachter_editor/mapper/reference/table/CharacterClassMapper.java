@@ -4,13 +4,13 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.CharacterCla
 import com.helen.dnd_charachter_editor.entity.reference.table.CharacterClass;
 
 /**
- * Mapper that converts character class mapper values between layers.
+ * Маппер `CharacterClassMapper` для преобразования данных между слоями приложения.
  */
 public class CharacterClassMapper {
     /**
-     * Converts character class response.
-     * @param characterClass value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param characterClass параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static CharacterClassResponse toCharacterClassResponse(CharacterClass characterClass) {
         return new CharacterClassResponse(

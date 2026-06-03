@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * REST controller that exposes character saving throw controller test endpoints.
+ * Контроллер REST API для обработки запросов `CharacterSavingThrowControllerTest`.
  */
 class CharacterSavingThrowControllerTest {
 
@@ -31,8 +31,8 @@ class CharacterSavingThrowControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * Returns character saving throws returns saving throw list.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getCharacterSavingThrowsReturnsSavingThrowList() throws Exception {
@@ -60,8 +60,8 @@ class CharacterSavingThrowControllerTest {
     }
 
     /**
-     * Updates character saving throw returns updated modifier.
-     * @throws Exception when the operation cannot be completed
+     * Обновляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void updateCharacterSavingThrowReturnsUpdatedModifier() throws Exception {

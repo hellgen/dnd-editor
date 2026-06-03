@@ -18,7 +18,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Default service implementation for default spell service test operations.
+ * Реализация сервиса `DefaultSpellServiceTest`.
  */
 class DefaultSpellServiceTest {
 
@@ -27,7 +27,7 @@ class DefaultSpellServiceTest {
     private final DefaultSpellService service = new DefaultSpellService(spellRepository, characterClassService);
 
     /**
-     * Returns all spell responses.
+     * Возвращает данные для запрошенной операции.
      */
     @Test
     void getAllSpellsReturnsSpellResponses() {
@@ -41,7 +41,7 @@ class DefaultSpellServiceTest {
     }
 
     /**
-     * Returns spell response by id.
+     * Возвращает данные для запрошенной операции.
      */
     @Test
     void getSpellResponseReturnsSpellById() {
@@ -55,7 +55,7 @@ class DefaultSpellServiceTest {
     }
 
     /**
-     * Throws when spell does not exist.
+     * Возвращает данные для запрошенной операции.
      */
     @Test
     void getSpellThrowsWhenSpellDoesNotExist() {
@@ -66,7 +66,7 @@ class DefaultSpellServiceTest {
     }
 
     /**
-     * Returns class spell list for spellcaster.
+     * Возвращает данные для запрошенной операции.
      */
     @Test
     void getSpellsByClassIdReturnsAvailableClassSpells() {
@@ -84,7 +84,7 @@ class DefaultSpellServiceTest {
     }
 
     /**
-     * Checks spell availability for class.
+     * Проверяет состояние для запрошенной операции.
      */
     @Test
     void isSpellAvailableForClassChecksClassNameAndSpellcasterFlag() {
@@ -97,10 +97,10 @@ class DefaultSpellServiceTest {
     }
 
     /**
-     * Executes spell operation.
-     * @param spellId value used by this operation
-     * @param spellName value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param spellId параметр, используемый при выполнении операции
+     * @param spellName параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Spell spell(UUID spellId, String spellName) {
         Spell spell = new Spell();
@@ -117,11 +117,11 @@ class DefaultSpellServiceTest {
     }
 
     /**
-     * Executes character class operation.
-     * @param classId value used by this operation
-     * @param className value used by this operation
-     * @param isSpellcaster value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param classId параметр, используемый при выполнении операции
+     * @param className параметр, используемый при выполнении операции
+     * @param isSpellcaster параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterClass characterClass(UUID classId, String className, Boolean isSpellcaster) {
         CharacterClass characterClass = new CharacterClass();

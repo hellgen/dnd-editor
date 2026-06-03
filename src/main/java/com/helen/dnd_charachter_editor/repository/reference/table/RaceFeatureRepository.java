@@ -8,22 +8,22 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for accessing race feature repository data.
+ * Репозиторий `RaceFeatureRepository` для доступа к данным.
  */
 public interface RaceFeatureRepository extends JpaRepository<RaceFeature, UUID> {
 
     /**
-     * Finds all by race id.
-     * @param raceId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<RaceFeature> findAllByRaceId(UUID raceId);
 
     /**
-     * Finds by id and race id.
-     * @param id value used by this operation
-     * @param raceId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param id параметр, используемый при выполнении операции
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<RaceFeature> findByIdAndRaceId(
             UUID id,

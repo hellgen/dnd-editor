@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * JPA entity representing user.
+ * JPA-сущность `User`.
  */
 @Getter
 @Setter
@@ -51,8 +51,8 @@ public class User implements UserDetails {
     private Instant updatedAt;
 
     /**
-     * Returns authorities.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

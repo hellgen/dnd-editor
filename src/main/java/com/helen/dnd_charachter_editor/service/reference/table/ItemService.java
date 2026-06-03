@@ -6,20 +6,20 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Service contract for item service operations.
+ * Контракт сервиса `ItemService`.
  */
 public interface ItemService {
 
     /**
-     * Returns all items.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     List<ItemResponse> getAllItems();
 
     /**
-     * Returns item.
-     * @param itemId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param itemId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     ItemResponse getItem(UUID itemId);
 }

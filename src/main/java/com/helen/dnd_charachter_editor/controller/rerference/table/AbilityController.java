@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * REST controller that exposes ability controller endpoints.
+ * Контроллер REST API для обработки запросов `AbilityController`.
  */
 @RestController
 @RequestMapping("/abilities")
@@ -19,8 +19,8 @@ public class AbilityController {
     private final AbilityService abilityService;
 
     /**
-     * Returns all abilities.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     @GetMapping
     public List<AbilityResponse> getAllAbilities() {
@@ -28,9 +28,9 @@ public class AbilityController {
     }
 
     /**
-     * Returns ability.
-     * @param abilityId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param abilityId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{abilityId}")
     public AbilityResponse getAbility(@PathVariable UUID abilityId) {

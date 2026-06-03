@@ -3,7 +3,7 @@ package com.helen.dnd_charachter_editor.dto.response.reference.table;
 import java.util.UUID;
 
 /**
- * Data transfer object for race description response.
+ * Объект передачи данных `RaceDescriptionResponse`.
  */
 public record RaceDescriptionResponse(
         UUID id,

@@ -33,7 +33,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Default service implementation for default character skill service test operations.
+ * Реализация сервиса `DefaultCharacterSkillServiceTest`.
  */
 class DefaultCharacterSkillServiceTest {
 
@@ -60,7 +60,7 @@ class DefaultCharacterSkillServiceTest {
     );
 
     /**
-     * Returns character skills adds proficiency bonus when proficiency is active.
+     * Возвращает данные для запрошенной операции.
      */
     @Test
     void getCharacterSkillsAddsProficiencyBonusWhenProficiencyIsActive() {
@@ -78,7 +78,7 @@ class DefaultCharacterSkillServiceTest {
     }
 
     /**
-     * Updates character skill doubles proficiency bonus for expertise.
+     * Обновляет данные для запрошенной операции.
      */
     @Test
     void updateCharacterSkillDoublesProficiencyBonusForExpertise() {
@@ -101,9 +101,9 @@ class DefaultCharacterSkillServiceTest {
     }
 
     /**
-     * Sets up skill calculation.
-     * @param proficiencyLevel value used by this operation
-     * @return result of the operation
+     * Устанавливает данные для запрошенной операции.
+     * @param proficiencyLevel параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private TestData setupSkillCalculation(Integer proficiencyLevel) {
         UUID userId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -129,9 +129,9 @@ class DefaultCharacterSkillServiceTest {
     }
 
     /**
-     * Executes the user operation.
-     * @param userId value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param userId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private User user(UUID userId) {
         User user = new User();
@@ -140,10 +140,10 @@ class DefaultCharacterSkillServiceTest {
     }
 
     /**
-     * Executes the character operation.
-     * @param userId value used by this operation
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param userId параметр, используемый при выполнении операции
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private UserCharacter character(UUID userId, UUID characterId) {
         Race race = new Race();
@@ -163,9 +163,9 @@ class DefaultCharacterSkillServiceTest {
     }
 
     /**
-     * Executes the ability operation.
-     * @param abilityId value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param abilityId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Ability ability(UUID abilityId) {
         Ability ability = new Ability();
@@ -176,9 +176,9 @@ class DefaultCharacterSkillServiceTest {
     }
 
     /**
-     * Executes the skill operation.
-     * @param skillId value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param skillId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Skill skill(UUID skillId) {
         Skill skill = new Skill();
@@ -189,11 +189,11 @@ class DefaultCharacterSkillServiceTest {
     }
 
     /**
-     * Executes the character ability operation.
-     * @param character value used by this operation
-     * @param ability value used by this operation
-     * @param value value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param value параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterAbility characterAbility(UserCharacter character, Ability ability, Integer value) {
         CharacterAbility characterAbility = new CharacterAbility();
@@ -204,11 +204,11 @@ class DefaultCharacterSkillServiceTest {
     }
 
     /**
-     * Executes the character skill operation.
-     * @param character value used by this operation
-     * @param skill value used by this operation
-     * @param proficiencyLevel value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
+     * @param skill параметр, используемый при выполнении операции
+     * @param proficiencyLevel параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterSkill characterSkill(UserCharacter character, Skill skill, Integer proficiencyLevel) {
         CharacterSkill characterSkill = new CharacterSkill();
@@ -219,11 +219,11 @@ class DefaultCharacterSkillServiceTest {
     }
 
     /**
-     * Executes the race bonus operation.
-     * @param race value used by this operation
-     * @param ability value used by this operation
-     * @param bonusValue value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param race параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param bonusValue параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private RaceAbilityBonus raceBonus(Race race, Ability ability, Integer bonusValue) {
         RaceAbilityBonus raceAbilityBonus = new RaceAbilityBonus();
@@ -234,11 +234,11 @@ class DefaultCharacterSkillServiceTest {
     }
 
     /**
-     * Executes the subrace bonus operation.
-     * @param subrace value used by this operation
-     * @param ability value used by this operation
-     * @param bonusValue value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param subrace параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param bonusValue параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private SubraceAbilityBonus subraceBonus(Subrace subrace, Ability ability, Integer bonusValue) {
         SubraceAbilityBonus subraceAbilityBonus = new SubraceAbilityBonus();
@@ -249,7 +249,7 @@ class DefaultCharacterSkillServiceTest {
     }
 
     /**
-     * Default service implementation for test data operations.
+     * Реализация сервиса `TestData`.
      */
     private record TestData(
             UserCharacter character,

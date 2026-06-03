@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Mapper that converts character response mapper values between layers.
+ * Маппер `CharacterResponseMapper` для преобразования данных между слоями приложения.
  */
 public class CharacterResponseMapper {
 
@@ -33,14 +33,14 @@ public class CharacterResponseMapper {
     };
 
     /**
-     * Converts response.
-     * @param character value used by this operation
-     * @param request value used by this operation
-     * @param abilities value used by this operation
-     * @param skills value used by this operation
-     * @param spells value used by this operation
-     * @param savingThrowsCount value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @param abilities параметр, используемый при выполнении операции
+     * @param skills параметр, используемый при выполнении операции
+     * @param spells параметр, используемый при выполнении операции
+     * @param savingThrowsCount параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static CharacterResponse toResponse(
             UserCharacter character,
@@ -79,13 +79,13 @@ public class CharacterResponseMapper {
     }
 
     /**
-     * Converts response.
-     * @param character value used by this operation
-     * @param abilities value used by this operation
-     * @param skills value used by this operation
-     * @param spells value used by this operation
-     * @param savingThrows value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @param abilities параметр, используемый при выполнении операции
+     * @param skills параметр, используемый при выполнении операции
+     * @param spells параметр, используемый при выполнении операции
+     * @param savingThrows параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static CharacterResponse toResponse(
             UserCharacter character,
@@ -128,13 +128,13 @@ public class CharacterResponseMapper {
     }
 
     /**
-     * Converts response.
-     * @param character value used by this operation
-     * @param abilities value used by this operation
-     * @param skills value used by this operation
-     * @param spells value used by this operation
-     * @param savingThrowsCount value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @param abilities параметр, используемый при выполнении операции
+     * @param skills параметр, используемый при выполнении операции
+     * @param spells параметр, используемый при выполнении операции
+     * @param savingThrowsCount параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static CharacterResponse toResponse(
             UserCharacter character,
@@ -175,37 +175,37 @@ public class CharacterResponseMapper {
     }
 
     /**
-     * Executes the serialize inventory operation.
-     * @param inventory value used by this operation
-     * @return result of the operation
+     * Сериализует данные для запрошенной операции.
+     * @param inventory параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static String serializeInventory(List<String> inventory) {
         return serializeList(inventory, "Unable to serialize character inventory");
     }
 
     /**
-     * Executes the serialize inventory items operation.
-     * @param inventoryItems value used by this operation
-     * @return result of the operation
+     * Сериализует данные для запрошенной операции.
+     * @param inventoryItems параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static String serializeInventoryItems(List<CharacterInventoryResponse> inventoryItems) {
         return serializeList(inventoryItems, "Unable to serialize character inventory items");
     }
 
     /**
-     * Executes the serialize ids operation.
-     * @param ids value used by this operation
-     * @return result of the operation
+     * Сериализует данные для запрошенной операции.
+     * @param ids параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static String serializeIds(List<UUID> ids) {
         return serializeList(ids, "Unable to serialize character ids");
     }
 
     /**
-     * Executes the serialize list operation.
-     * @param values value used by this operation
-     * @param errorMessage value used by this operation
-     * @return result of the operation
+     * Сериализует данные для запрошенной операции.
+     * @param values параметр, используемый при выполнении операции
+     * @param errorMessage параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private static String serializeList(List<?> values, String errorMessage) {
         if (values == null) {
@@ -220,9 +220,9 @@ public class CharacterResponseMapper {
     }
 
     /**
-     * Executes the deserialize ids operation.
-     * @param ids value used by this operation
-     * @return result of the operation
+     * Десериализует данные для запрошенной операции.
+     * @param ids параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static List<UUID> deserializeIds(String ids) {
         if (ids == null || ids.isBlank()) {
@@ -237,9 +237,9 @@ public class CharacterResponseMapper {
     }
 
     /**
-     * Executes the deserialize inventory operation.
-     * @param inventory value used by this operation
-     * @return result of the operation
+     * Десериализует данные для запрошенной операции.
+     * @param inventory параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static List<String> deserializeInventory(String inventory) {
         if (inventory == null || inventory.isBlank()) {
@@ -261,9 +261,9 @@ public class CharacterResponseMapper {
     }
 
     /**
-     * Executes the deserialize inventory items operation.
-     * @param inventory value used by this operation
-     * @return result of the operation
+     * Десериализует данные для запрошенной операции.
+     * @param inventory параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static List<CharacterInventoryResponse> deserializeInventoryItems(String inventory) {
         if (inventory == null || inventory.isBlank()) {

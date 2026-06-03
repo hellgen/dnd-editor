@@ -4,14 +4,14 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.RaceFeatureR
 import com.helen.dnd_charachter_editor.entity.reference.table.RaceFeature;
 
 /**
- * Mapper that converts race feature mapper values between layers.
+ * Маппер `RaceFeatureMapper` для преобразования данных между слоями приложения.
  */
 public class RaceFeatureMapper {
 
     /**
-     * Converts response.
-     * @param raceFeature value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param raceFeature параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static RaceFeatureResponse toResponse(RaceFeature raceFeature) {
         return new RaceFeatureResponse(

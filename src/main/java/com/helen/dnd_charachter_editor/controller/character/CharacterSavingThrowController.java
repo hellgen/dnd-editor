@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * REST controller that exposes character saving throw controller endpoints.
+ * Контроллер REST API для обработки запросов `CharacterSavingThrowController`.
  */
 @RestController
 @RequestMapping("/characters/{characterId}/saving-throws")
@@ -26,9 +26,9 @@ public class CharacterSavingThrowController {
     private final CharacterSavingThrowService characterSavingThrowService;
 
     /**
-     * Returns character saving throws.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping
     public List<CharacterSavingThrowResponse> getCharacterSavingThrows(
@@ -38,11 +38,11 @@ public class CharacterSavingThrowController {
     }
 
     /**
-     * Updates character saving throw.
-     * @param characterId value used by this operation
-     * @param abilityId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PatchMapping("/{abilityId}")
     public CharacterSavingThrowResponse updateCharacterSavingThrow(

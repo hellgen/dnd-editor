@@ -8,22 +8,22 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for accessing subrace feature repository data.
+ * Репозиторий `SubraceFeatureRepository` для доступа к данным.
  */
 public interface SubraceFeatureRepository extends JpaRepository<SubraceFeature, UUID> {
 
     /**
-     * Finds all by subrace id.
-     * @param subraceId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<SubraceFeature> findAllBySubraceId(UUID subraceId);
 
     /**
-     * Finds by id and subrace id.
-     * @param id value used by this operation
-     * @param subraceId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param id параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<SubraceFeature> findByIdAndSubraceId(
             UUID id,

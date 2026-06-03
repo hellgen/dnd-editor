@@ -8,40 +8,40 @@ import com.helen.dnd_charachter_editor.entity.auth.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
- * Service contract for auth service operations.
+ * Контракт сервиса `AuthService`.
  */
 public interface AuthService extends UserDetailsService {
 
     /**
-     * Registers the requested operation.
-     * @param request value used by this operation
-     * @return result of the operation
+     * Регистрирует пользователя.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     AuthResponse register(RegisterRequest request);
 
     /**
-     * Authenticates the requested operation.
-     * @param request value used by this operation
-     * @return result of the operation
+     * Выполняет вход пользователя.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     AuthResponse login(LoginRequest request);
 
     /**
-     * Logs out the requested operation.
-     * @param refreshToken value used by this operation
+     * Выполняет выход пользователя.
+     * @param refreshToken параметр, используемый при выполнении операции
      */
     void logout(String refreshToken);
 
     /**
-     * Returns current user.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     User getCurrentUser();
 
     /**
-     * Refreshes the requested operation.
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные аутентификации.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     AuthResponse refresh(RefreshTokenRequest request);
 }

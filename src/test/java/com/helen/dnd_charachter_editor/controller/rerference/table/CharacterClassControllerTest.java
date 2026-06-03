@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * REST controller that exposes character class controller test endpoints.
+ * Контроллер REST API для обработки запросов `CharacterClassControllerTest`.
  */
 class CharacterClassControllerTest {
 
@@ -35,8 +35,8 @@ class CharacterClassControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * Returns all classes returns class list.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getAllClassesReturnsClassList() throws Exception {
@@ -64,8 +64,8 @@ class CharacterClassControllerTest {
     }
 
     /**
-     * Returns class by id returns one class.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getClassByIdReturnsOneClass() throws Exception {
@@ -89,8 +89,8 @@ class CharacterClassControllerTest {
     }
 
     /**
-     * Returns class features returns feature list.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getClassFeaturesReturnsFeatureList() throws Exception {
@@ -119,8 +119,8 @@ class CharacterClassControllerTest {
     }
 
     /**
-     * Returns class features can filter by level.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getClassFeaturesCanFilterByLevel() throws Exception {
@@ -142,8 +142,8 @@ class CharacterClassControllerTest {
     }
 
     /**
-     * Returns class feature by id returns one feature.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getClassFeatureByIdReturnsOneFeature() throws Exception {
@@ -169,8 +169,8 @@ class CharacterClassControllerTest {
 
 
     /**
-     * Returns class spells returns spell list.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getClassSpellsReturnsSpellList() throws Exception {
@@ -186,8 +186,8 @@ class CharacterClassControllerTest {
     }
 
     /**
-     * Returns class archetypes returns archetype list for class.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getClassArchetypesReturnsArchetypeListForClass() throws Exception {
@@ -214,8 +214,8 @@ class CharacterClassControllerTest {
     }
 
     /**
-     * Returns class archetype by id returns one archetype for class.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getClassArchetypeByIdReturnsOneArchetypeForClass() throws Exception {
@@ -238,8 +238,8 @@ class CharacterClassControllerTest {
     }
 
     /**
-     * Returns class archetype features returns feature list for archetype.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getClassArchetypeFeaturesReturnsFeatureListForArchetype() throws Exception {
@@ -274,8 +274,8 @@ class CharacterClassControllerTest {
 
 
     /**
-     * Returns class archetype features can filter by level.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getClassArchetypeFeaturesCanFilterByLevel() throws Exception {
@@ -302,8 +302,8 @@ class CharacterClassControllerTest {
     }
 
     /**
-     * Returns class archetype feature by id returns one feature for archetype.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getClassArchetypeFeatureByIdReturnsOneFeatureForArchetype() throws Exception {
@@ -335,10 +335,10 @@ class CharacterClassControllerTest {
 
 
     /**
-     * Executes spell response operation.
-     * @param spellId value used by this operation
-     * @param spellName value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param spellId параметр, используемый при выполнении операции
+     * @param spellName параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private SpellResponse spellResponse(UUID spellId, String spellName) {
         return new SpellResponse(

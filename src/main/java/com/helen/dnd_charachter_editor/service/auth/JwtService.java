@@ -21,7 +21,7 @@ import java.util.function.Function;
 
 
 /**
- * Default service implementation for jwt service operations.
+ * Реализация сервиса `JwtService`.
  */
 @Service
 @RequiredArgsConstructor
@@ -39,10 +39,10 @@ public class JwtService {
     private final TokenRepository tokenRepository;
 
     /**
-     * Executes the is valid operation.
-     * @param token value used by this operation
-     * @param user value used by this operation
-     * @return result of the operation
+     * Проверяет состояние для запрошенной операции.
+     * @param token параметр, используемый при выполнении операции
+     * @param user параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public boolean isValid(String token, UserDetails user) {
         String username = extractUsername(token);
@@ -56,10 +56,10 @@ public class JwtService {
     }
 
     /**
-     * Executes the is valid refresh operation.
-     * @param token value used by this operation
-     * @param user value used by this operation
-     * @return result of the operation
+     * Проверяет состояние для запрошенной операции.
+     * @param token параметр, используемый при выполнении операции
+     * @param user параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public boolean isValidRefresh(String token, User user) {
         String username = extractUsername(token);
@@ -73,46 +73,46 @@ public class JwtService {
     }
 
     /**
-     * Executes the is token expired operation.
-     * @param token value used by this operation
-     * @return result of the operation
+     * Проверяет состояние для запрошенной операции.
+     * @param token параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
     /**
-     * Extracts expiration.
-     * @param token value used by this operation
-     * @return result of the operation
+     * Извлекает данные для запрошенной операции.
+     * @param token параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
     /**
-     * Extracts username.
-     * @param token value used by this operation
-     * @return result of the operation
+     * Извлекает данные для запрошенной операции.
+     * @param token параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
     /**
-     * Extracts claim.
-     * @param token value used by this operation
-     * @param resolver value used by this operation
-     * @return result of the operation
+     * Извлекает данные для запрошенной операции.
+     * @param token параметр, используемый при выполнении операции
+     * @param resolver параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public <T> T extractClaim(String token, Function<Claims, T> resolver) {
         return resolver.apply(extractAllClaims(token));
     }
 
     /**
-     * Extracts all claims.
-     * @param token value used by this operation
-     * @return result of the operation
+     * Извлекает данные для запрошенной операции.
+     * @param token параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Claims extractAllClaims(String token) {
         return Jwts
@@ -124,28 +124,28 @@ public class JwtService {
     }
 
     /**
-     * Generates access token.
-     * @param user value used by this operation
-     * @return result of the operation
+     * Генерирует данные для запрошенной операции.
+     * @param user параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public String generateAccessToken(User user) {
         return generateToken(user, accessTokenExpiration);
     }
 
     /**
-     * Generates refresh token.
-     * @param user value used by this operation
-     * @return result of the operation
+     * Генерирует данные для запрошенной операции.
+     * @param user параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public String generateRefreshToken(User user) {
         return generateToken(user, refreshTokenExpiration);
     }
 
     /**
-     * Generates token.
-     * @param user value used by this operation
-     * @param expiryTime value used by this operation
-     * @return result of the operation
+     * Генерирует данные для запрошенной операции.
+     * @param user параметр, используемый при выполнении операции
+     * @param expiryTime параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private String generateToken(User user, Duration expiryTime) {
         return Jwts.builder()
@@ -157,8 +157,8 @@ public class JwtService {
     }
 
     /**
-     * Returns signing key.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -166,8 +166,8 @@ public class JwtService {
     }
 
     /**
-     * Invalidates refresh token.
-     * @param refreshToken value used by this operation
+     * Делает данные недействительными для запрошенной операции.
+     * @param refreshToken параметр, используемый при выполнении операции
      */
     public void invalidateRefreshToken(String refreshToken) {
         tokenRepository.findByRefreshToken(refreshToken).ifPresent(token -> {
@@ -177,9 +177,9 @@ public class JwtService {
     }
 
     /**
-     * Validates refresh token.
-     * @param refreshToken value used by this operation
-     * @return result of the operation
+     * Проверяет корректность данных для запрошенной операции.
+     * @param refreshToken параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public User validateRefreshToken(String refreshToken) {
         return tokenRepository.findByRefreshToken(refreshToken)
@@ -189,8 +189,8 @@ public class JwtService {
     }
 
     /**
-     * Returns current user.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

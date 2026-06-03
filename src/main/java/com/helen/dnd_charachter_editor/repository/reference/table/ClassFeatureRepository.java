@@ -8,22 +8,22 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for accessing class feature repository data.
+ * Репозиторий `ClassFeatureRepository` для доступа к данным.
  */
 public interface ClassFeatureRepository extends JpaRepository<ClassFeature, UUID> {
 
     /**
-     * Finds all by character class id order by level required asc.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<ClassFeature> findAllByCharacterClassIdOrderByLevelRequiredAsc(UUID classId);
 
     /**
-     * Finds all by character class id and level required less than equal order by level required asc.
-     * @param classId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<ClassFeature> findAllByCharacterClassIdAndLevelRequiredLessThanEqualOrderByLevelRequiredAsc(
             UUID classId,
@@ -31,10 +31,10 @@ public interface ClassFeatureRepository extends JpaRepository<ClassFeature, UUID
     );
 
     /**
-     * Finds by id and character class id.
-     * @param id value used by this operation
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param id параметр, используемый при выполнении операции
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<ClassFeature> findByIdAndCharacterClassId(
             UUID id,

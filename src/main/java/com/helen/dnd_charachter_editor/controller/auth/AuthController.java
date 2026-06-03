@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * REST controller that exposes auth controller endpoints.
+ * Контроллер REST API для обработки запросов `AuthController`.
  */
 @RestController
 @RequestMapping("auth")
@@ -22,9 +22,9 @@ public class AuthController {
     private final AuthService authService;
 
     /**
-     * Registers the requested operation.
-     * @param request value used by this operation
-     * @return result of the operation
+     * Регистрирует пользователя.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PostMapping("/register")
     public AuthResponse register(@RequestBody RegisterRequest request) {
@@ -32,9 +32,9 @@ public class AuthController {
     }
 
     /**
-     * Authenticates the requested operation.
-     * @param request value used by this operation
-     * @return result of the operation
+     * Выполняет вход пользователя.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PostMapping("/login")
     public AuthResponse login(@RequestBody LoginRequest request) {
@@ -42,8 +42,8 @@ public class AuthController {
     }
 
     /**
-     * Executes the logiut operation.
-     * @param refreshToken value used by this operation
+     * Выполняет запрошенную операцию.
+     * @param refreshToken параметр, используемый при выполнении операции
      */
     @PostMapping("/logout/{refreshToken}")
     public void logiut(@PathVariable String refreshToken) {
@@ -51,9 +51,9 @@ public class AuthController {
     }
 
     /**
-     * Refreshes token.
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные аутентификации.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @PostMapping("/refresh")
     public AuthResponse refreshToken(@RequestBody RefreshTokenRequest request) {

@@ -5,15 +5,15 @@ import com.helen.dnd_charachter_editor.entity.character.UserCharacter;
 import com.helen.dnd_charachter_editor.entity.reference.table.Spell;
 
 /**
- * Mapper that converts character spell mapper values between layers.
+ * Маппер `CharacterSpellMapper` для преобразования данных между слоями приложения.
  */
 public class CharacterSpellMapper {
 
     /**
-     * Converts entity.
-     * @param character value used by this operation
-     * @param spell value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @param spell параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static CharacterSpell toEntity(UserCharacter character, Spell spell) {
         CharacterSpell characterSpell = new CharacterSpell();

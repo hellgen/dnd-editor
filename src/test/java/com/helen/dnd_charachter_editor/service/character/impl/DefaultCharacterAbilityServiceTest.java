@@ -32,7 +32,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Default service implementation for default character ability service test operations.
+ * Реализация сервиса `DefaultCharacterAbilityServiceTest`.
  */
 class DefaultCharacterAbilityServiceTest {
 
@@ -55,7 +55,7 @@ class DefaultCharacterAbilityServiceTest {
     );
 
     /**
-     * Sets character ability calculates final value from base and bonuses.
+     * Устанавливает данные для запрошенной операции.
      */
     @Test
     void setCharacterAbilityCalculatesFinalValueFromBaseAndBonuses() {
@@ -89,7 +89,7 @@ class DefaultCharacterAbilityServiceTest {
     }
 
     /**
-     * Sets character abilities rejects duplicate abilities.
+     * Устанавливает данные для запрошенной операции.
      */
     @Test
     void setCharacterAbilitiesRejectsDuplicateAbilities() {
@@ -110,9 +110,9 @@ class DefaultCharacterAbilityServiceTest {
     }
 
     /**
-     * Executes the user operation.
-     * @param userId value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param userId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private User user(UUID userId) {
         User user = new User();
@@ -121,10 +121,10 @@ class DefaultCharacterAbilityServiceTest {
     }
 
     /**
-     * Executes the character operation.
-     * @param userId value used by this operation
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param userId параметр, используемый при выполнении операции
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private UserCharacter character(UUID userId, UUID characterId) {
         Race race = new Race();
@@ -143,11 +143,11 @@ class DefaultCharacterAbilityServiceTest {
     }
 
     /**
-     * Executes the ability operation.
-     * @param abilityId value used by this operation
-     * @param code value used by this operation
-     * @param name value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param abilityId параметр, используемый при выполнении операции
+     * @param code параметр, используемый при выполнении операции
+     * @param name параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Ability ability(UUID abilityId, String code, String name) {
         Ability ability = new Ability();
@@ -158,11 +158,11 @@ class DefaultCharacterAbilityServiceTest {
     }
 
     /**
-     * Executes the race bonus operation.
-     * @param race value used by this operation
-     * @param ability value used by this operation
-     * @param bonusValue value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param race параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param bonusValue параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private RaceAbilityBonus raceBonus(Race race, Ability ability, Integer bonusValue) {
         RaceAbilityBonus raceAbilityBonus = new RaceAbilityBonus();
@@ -173,11 +173,11 @@ class DefaultCharacterAbilityServiceTest {
     }
 
     /**
-     * Executes the subrace bonus operation.
-     * @param subrace value used by this operation
-     * @param ability value used by this operation
-     * @param bonusValue value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param subrace параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param bonusValue параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private SubraceAbilityBonus subraceBonus(Subrace subrace, Ability ability, Integer bonusValue) {
         SubraceAbilityBonus subraceAbilityBonus = new SubraceAbilityBonus();

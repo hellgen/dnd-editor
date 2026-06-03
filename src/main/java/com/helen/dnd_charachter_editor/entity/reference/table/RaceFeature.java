@@ -11,7 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.UUID;
 
 /**
- * JPA entity representing race feature.
+ * JPA-сущность `RaceFeature`.
  */
 @Getter
 @Setter

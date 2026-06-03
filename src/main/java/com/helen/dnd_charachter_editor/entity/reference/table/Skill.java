@@ -14,7 +14,7 @@ import lombok.Setter;
 import java.util.UUID;
 
 /**
- * JPA entity representing skill.
+ * JPA-сущность `Skill`.
  */
 @Getter
 @Setter

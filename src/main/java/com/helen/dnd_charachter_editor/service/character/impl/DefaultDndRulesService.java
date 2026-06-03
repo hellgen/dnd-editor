@@ -4,15 +4,15 @@ import com.helen.dnd_charachter_editor.service.character.DndRulesService;
 import org.springframework.stereotype.Service;
 
 /**
- * Default service implementation for default dnd rules service operations.
+ * Реализация сервиса `DefaultDndRulesService`.
  */
 @Service
 public class DefaultDndRulesService implements DndRulesService {
 
     /**
-     * Calculates ability modifier.
-     * @param finalValue value used by this operation
-     * @return result of the operation
+     * Вычисляет значение для запрошенной операции.
+     * @param finalValue параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public int calculateAbilityModifier(int finalValue) {
@@ -20,9 +20,9 @@ public class DefaultDndRulesService implements DndRulesService {
     }
 
     /**
-     * Calculates proficiency bonus.
-     * @param level value used by this operation
-     * @return result of the operation
+     * Вычисляет значение для запрошенной операции.
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public int calculateProficiencyBonus(int level) {

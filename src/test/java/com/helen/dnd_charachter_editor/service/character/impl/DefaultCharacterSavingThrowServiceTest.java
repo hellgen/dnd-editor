@@ -31,7 +31,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Default service implementation for default character saving throw service test operations.
+ * Реализация сервиса `DefaultCharacterSavingThrowServiceTest`.
  */
 class DefaultCharacterSavingThrowServiceTest {
 
@@ -56,7 +56,7 @@ class DefaultCharacterSavingThrowServiceTest {
     );
 
     /**
-     * Returns character saving throws adds proficiency bonus when proficient.
+     * Возвращает данные для запрошенной операции.
      */
     @Test
     void getCharacterSavingThrowsAddsProficiencyBonusWhenProficient() {
@@ -74,7 +74,7 @@ class DefaultCharacterSavingThrowServiceTest {
     }
 
     /**
-     * Updates character saving throw recalculates modifier from current ability and bonuses.
+     * Обновляет данные для запрошенной операции.
      */
     @Test
     void updateCharacterSavingThrowRecalculatesModifierFromCurrentAbilityAndBonuses() {
@@ -97,9 +97,9 @@ class DefaultCharacterSavingThrowServiceTest {
     }
 
     /**
-     * Sets up saving throw calculation.
-     * @param proficiencyLevel value used by this operation
-     * @return result of the operation
+     * Устанавливает данные для запрошенной операции.
+     * @param proficiencyLevel параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private TestData setupSavingThrowCalculation(Integer proficiencyLevel) {
         UUID userId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -123,9 +123,9 @@ class DefaultCharacterSavingThrowServiceTest {
     }
 
     /**
-     * Executes the user operation.
-     * @param userId value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param userId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private User user(UUID userId) {
         User user = new User();
@@ -134,10 +134,10 @@ class DefaultCharacterSavingThrowServiceTest {
     }
 
     /**
-     * Executes the character operation.
-     * @param userId value used by this operation
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param userId параметр, используемый при выполнении операции
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private UserCharacter character(UUID userId, UUID characterId) {
         Race race = new Race();
@@ -157,9 +157,9 @@ class DefaultCharacterSavingThrowServiceTest {
     }
 
     /**
-     * Executes the ability operation.
-     * @param abilityId value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param abilityId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Ability ability(UUID abilityId) {
         Ability ability = new Ability();
@@ -170,11 +170,11 @@ class DefaultCharacterSavingThrowServiceTest {
     }
 
     /**
-     * Executes the character ability operation.
-     * @param character value used by this operation
-     * @param ability value used by this operation
-     * @param value value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param value параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterAbility characterAbility(UserCharacter character, Ability ability, Integer value) {
         CharacterAbility characterAbility = new CharacterAbility();
@@ -185,11 +185,11 @@ class DefaultCharacterSavingThrowServiceTest {
     }
 
     /**
-     * Executes the saving throw operation.
-     * @param character value used by this operation
-     * @param ability value used by this operation
-     * @param proficiencyLevel value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param character параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param proficiencyLevel параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterSavingThrow savingThrow(UserCharacter character, Ability ability, Integer proficiencyLevel) {
         CharacterSavingThrow savingThrow = new CharacterSavingThrow();
@@ -200,11 +200,11 @@ class DefaultCharacterSavingThrowServiceTest {
     }
 
     /**
-     * Executes the race bonus operation.
-     * @param race value used by this operation
-     * @param ability value used by this operation
-     * @param bonusValue value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param race параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param bonusValue параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private RaceAbilityBonus raceBonus(Race race, Ability ability, Integer bonusValue) {
         RaceAbilityBonus raceAbilityBonus = new RaceAbilityBonus();
@@ -215,11 +215,11 @@ class DefaultCharacterSavingThrowServiceTest {
     }
 
     /**
-     * Executes the subrace bonus operation.
-     * @param subrace value used by this operation
-     * @param ability value used by this operation
-     * @param bonusValue value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param subrace параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param bonusValue параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private SubraceAbilityBonus subraceBonus(Subrace subrace, Ability ability, Integer bonusValue) {
         SubraceAbilityBonus subraceAbilityBonus = new SubraceAbilityBonus();
@@ -230,7 +230,7 @@ class DefaultCharacterSavingThrowServiceTest {
     }
 
     /**
-     * Default service implementation for test data operations.
+     * Реализация сервиса `TestData`.
      */
     private record TestData(
             UserCharacter character,

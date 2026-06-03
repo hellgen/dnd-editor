@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Default service implementation for default character class operations.
+ * Реализация сервиса `DefaultCharacterClass`.
  */
 @Service
 @RequiredArgsConstructor
@@ -39,8 +39,8 @@ public class DefaultCharacterClass implements CharacterClassService {
     private final ClassArchetypeFeatureRepository classArchetypeFeatureRepository;
 
     /**
-     * Returns all classes.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     @Override
     public List<CharacterClassResponse> getAllClasses() {
@@ -51,9 +51,9 @@ public class DefaultCharacterClass implements CharacterClassService {
     }
 
     /**
-     * Returns class response by id.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public CharacterClassResponse getClassResponseById(UUID classId) {
@@ -65,9 +65,9 @@ public class DefaultCharacterClass implements CharacterClassService {
     }
 
     /**
-     * Returns class by id.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public CharacterClass getClassById(UUID classId) {
@@ -78,10 +78,10 @@ public class DefaultCharacterClass implements CharacterClassService {
     }
 
     /**
-     * Returns all features.
-     * @param classId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public List<ClassFeatureResponse> getAllFeatures(UUID classId, Integer level) {
@@ -97,10 +97,10 @@ public class DefaultCharacterClass implements CharacterClassService {
     }
 
     /**
-     * Returns class feature by id.
-     * @param classId value used by this operation
-     * @param classFeatureId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classFeatureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public ClassFeatureResponse getClassFeatureById(
@@ -110,32 +110,20 @@ public class DefaultCharacterClass implements CharacterClassService {
         checkClassExists(classId);
 
         return classFeatureRepository
-                /**
-                 * Default service implementation for id operations.
-                 */
                 .findByIdAndCharacterClassId(classFeatureId, classId)
-                /**
-                 * Default service implementation for id operations.
-                 */
                 .map(ClassFeatureMapper::toClassFeatureResponse)
-                /**
-                 * Default service implementation for id operations.
-                 */
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Class feature not found with id: "
                                 + classFeatureId
-                                /**
-                                 * Default service implementation for id operations.
-                                 */
                                 + " for class id: "
                                 + classId
                 ));
     }
 
     /**
-     * Returns all archetypes.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public List<ClassArchetypeResponse> getAllArchetypes(UUID classId) {
@@ -149,10 +137,10 @@ public class DefaultCharacterClass implements CharacterClassService {
     }
 
     /**
-     * Returns class archetype response by id.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public ClassArchetypeResponse getClassArchetypeResponseById(
@@ -162,63 +150,42 @@ public class DefaultCharacterClass implements CharacterClassService {
         checkClassExists(classId);
 
         return classArchetypeRepository
-                /**
-                 * Default service implementation for id operations.
-                 */
                 .findByIdAndCharacterClassId(classArchetypeId, classId)
-                /**
-                 * Default service implementation for id operations.
-                 */
                 .map(ClassArchetypeMapper::toClassArchetypeResponse)
-                /**
-                 * Default service implementation for id operations.
-                 */
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Class archetype not found with id: "
                                 + classArchetypeId
-                                /**
-                                 * Default service implementation for id operations.
-                                 */
                                 + " for class id: "
                                 + classId
                 ));
     }
 
     /**
-     * Returns class archetype by id.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public ClassArchetype getClassArchetypeById(UUID classId, UUID classArchetypeId) {
         checkClassExists(classId);
 
         return classArchetypeRepository
-                /**
-                 * Default service implementation for id operations.
-                 */
                 .findByIdAndCharacterClassId(classArchetypeId, classId)
-                /**
-                 * Default service implementation for id operations.
-                 */
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Class archetype not found with id: "
                                 + classArchetypeId
-                                /**
-                                 * Default service implementation for id operations.
-                                 */
                                 + " for class id: "
                                 + classId
                 ));
     }
 
     /**
-     * Returns all features.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public List<ClassArchetypeFeatureResponse> getAllFeatures(
@@ -242,11 +209,11 @@ public class DefaultCharacterClass implements CharacterClassService {
     }
 
     /**
-     * Returns archetype feature by id.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @param classArchetypeFeatureId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @param classArchetypeFeatureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public ClassArchetypeFeatureResponse getArchetypeFeatureById(
@@ -257,39 +224,27 @@ public class DefaultCharacterClass implements CharacterClassService {
         checkArchetypeBelongsToClass(classId, classArchetypeId);
 
         return classArchetypeFeatureRepository
-                /**
-                 * Default service implementation for id operations.
-                 */
                 .findByIdAndClassArchetypeIdAndClassArchetypeCharacterClassId(
                         classArchetypeFeatureId,
                         classArchetypeId,
                         classId
                 )
-                /**
-                 * Default service implementation for id operations.
-                 */
                 .map(ClassArchetypeFeatureMapper::toClassArchetypeFeatureResponse)
-                /**
-                 * Default service implementation for id operations.
-                 */
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Class archetype feature not found with id: "
                                 + classArchetypeFeatureId
                                 + " for archetype id: "
                                 + classArchetypeId
-                                /**
-                                 * Default service implementation for id operations.
-                                 */
                                 + " and class id: "
                                 + classId
                 ));
     }
 
     /**
-     * Returns available features by level.
-     * @param classId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private List<ClassFeature> getAvailableFeaturesByLevel(UUID classId, Integer level) {
         checkLevelIsValid(level);
@@ -302,11 +257,11 @@ public class DefaultCharacterClass implements CharacterClassService {
     }
 
     /**
-     * Returns available archetype features by level.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private List<ClassArchetypeFeature> getAvailableArchetypeFeaturesByLevel(
             UUID classId,
@@ -324,8 +279,8 @@ public class DefaultCharacterClass implements CharacterClassService {
     }
 
     /**
-     * Executes the check class exists operation.
-     * @param classId value used by this operation
+     * Проверяет условие для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
      */
     private void checkClassExists(UUID classId) {
         if (!characterClassRepository.existsById(classId)) {
@@ -336,9 +291,9 @@ public class DefaultCharacterClass implements CharacterClassService {
     }
 
     /**
-     * Executes the check archetype belongs to class operation.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
+     * Проверяет условие для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
      */
     private void checkArchetypeBelongsToClass(
             UUID classId,
@@ -362,8 +317,8 @@ public class DefaultCharacterClass implements CharacterClassService {
 
 
     /**
-     * Executes the check level is valid operation.
-     * @param level value used by this operation
+     * Проверяет условие для запрошенной операции.
+     * @param level параметр, используемый при выполнении операции
      */
     private void checkLevelIsValid(Integer level) {
         if (level == null || level <= 0) {

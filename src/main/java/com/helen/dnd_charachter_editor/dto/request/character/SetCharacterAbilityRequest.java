@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * Data transfer object for set character ability request.
+ * Объект передачи данных `SetCharacterAbilityRequest`.
  */
 public record SetCharacterAbilityRequest(
         @JsonAlias("value")

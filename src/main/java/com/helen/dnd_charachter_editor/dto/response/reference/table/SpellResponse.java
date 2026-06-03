@@ -3,7 +3,7 @@ package com.helen.dnd_charachter_editor.dto.response.reference.table;
 import java.util.UUID;
 
 /**
- * Data transfer object for spell response.
+ * Объект передачи данных `SpellResponse`.
  */
 public record SpellResponse(
         UUID id,

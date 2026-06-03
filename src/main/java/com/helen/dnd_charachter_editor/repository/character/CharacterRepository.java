@@ -8,22 +8,22 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for accessing character repository data.
+ * Репозиторий `CharacterRepository` для доступа к данным.
  */
 public interface CharacterRepository extends JpaRepository<UserCharacter, UUID> {
 
     /**
-     * Executes the exists by id operation.
-     * @param id value used by this operation
-     * @return result of the operation
+     * Проверяет существование данных для запрошенной операции.
+     * @param id параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     boolean existsById(@NonNull UUID id);
 
     /**
-     * Finds by id and user id.
-     * @param id value used by this operation
-     * @param userId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param id параметр, используемый при выполнении операции
+     * @param userId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<UserCharacter> findByIdAndUser_Id(UUID id, UUID userId);
 }

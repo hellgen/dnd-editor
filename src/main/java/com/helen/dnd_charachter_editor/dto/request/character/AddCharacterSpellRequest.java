@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 /**
- * Data transfer object for add character spell request.
+ * Объект передачи данных `AddCharacterSpellRequest`.
  */
 public record AddCharacterSpellRequest(
         @NotNull

@@ -7,23 +7,23 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Service contract for character saving throw service operations.
+ * Контракт сервиса `CharacterSavingThrowService`.
  */
 public interface CharacterSavingThrowService {
 
     /**
-     * Returns character saving throws.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<CharacterSavingThrowResponse> getCharacterSavingThrows(UUID characterId);
 
     /**
-     * Updates character saving throw.
-     * @param characterId value used by this operation
-     * @param abilityId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterSavingThrowResponse updateCharacterSavingThrow(
             UUID characterId,

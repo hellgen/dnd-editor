@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 /**
- * Data transfer object for add character inventory request.
+ * Объект передачи данных `AddCharacterInventoryRequest`.
  */
 public record AddCharacterInventoryRequest(
         UUID itemId,

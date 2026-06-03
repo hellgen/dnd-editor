@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * REST controller that exposes character class controller endpoints.
+ * Контроллер REST API для обработки запросов `CharacterClassController`.
  */
 @RestController
 @RequiredArgsConstructor
@@ -29,8 +29,8 @@ public class CharacterClassController {
     private final SpellService spellService;
 
     /**
-     * Returns all classes.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     @GetMapping
     public List<CharacterClassResponse> getAllClasses() {
@@ -38,9 +38,9 @@ public class CharacterClassController {
     }
 
     /**
-     * Returns class by id.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{classId}")
     public CharacterClassResponse getClassById(
@@ -50,10 +50,10 @@ public class CharacterClassController {
     }
 
     /**
-     * Returns all features.
-     * @param classId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{classId}/features")
     public List<ClassFeatureResponse> getAllFeatures(
@@ -64,10 +64,10 @@ public class CharacterClassController {
     }
 
     /**
-     * Returns class feature by id.
-     * @param classId value used by this operation
-     * @param classFeatureId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classFeatureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{classId}/features/{classFeatureId}")
     public ClassFeatureResponse getClassFeatureById(
@@ -81,9 +81,9 @@ public class CharacterClassController {
     }
 
     /**
-     * Returns spells available for class.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{classId}/spells")
     public List<SpellResponse> getSpellsByClassId(@PathVariable UUID classId) {
@@ -91,9 +91,9 @@ public class CharacterClassController {
     }
 
     /**
-     * Returns all archetypes.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{classId}/class-archetypes")
     public List<ClassArchetypeResponse> getAllArchetypes(
@@ -103,10 +103,10 @@ public class CharacterClassController {
     }
 
     /**
-     * Returns class archetype by id.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{classId}/class-archetypes/{classArchetypeId}")
     public ClassArchetypeResponse getClassArchetypeById(
@@ -120,11 +120,11 @@ public class CharacterClassController {
     }
 
     /**
-     * Returns all features.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{classId}/class-archetypes/{classArchetypeId}/features")
     public List<ClassArchetypeFeatureResponse> getAllFeatures(
@@ -140,11 +140,11 @@ public class CharacterClassController {
     }
 
     /**
-     * Returns archetype feature by id.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @param classArchetypeFeatureId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @param classArchetypeFeatureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{classId}/class-archetypes/{classArchetypeId}/features/{classArchetypeFeatureId}")
     public ClassArchetypeFeatureResponse getArchetypeFeatureById(

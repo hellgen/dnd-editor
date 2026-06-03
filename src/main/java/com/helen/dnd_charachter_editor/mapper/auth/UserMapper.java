@@ -6,16 +6,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * Mapper that converts user mapper values between layers.
+ * Маппер `UserMapper` для преобразования данных между слоями приложения.
  */
 public class UserMapper {
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     /**
-     * Returns user from dto.
-     * @param request value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static User getUserFromDto(RegisterRequest request) {
         User user = new User();

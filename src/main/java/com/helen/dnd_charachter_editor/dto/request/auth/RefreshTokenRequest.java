@@ -1,7 +1,7 @@
 package com.helen.dnd_charachter_editor.dto.request.auth;
 
 /**
- * Data transfer object for refresh token request.
+ * Объект передачи данных `RefreshTokenRequest`.
  */
 public record RefreshTokenRequest (
         String refreshToken

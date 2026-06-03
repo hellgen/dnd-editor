@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * REST controller that exposes spell reference endpoints.
+ * Контроллер REST API для обработки запросов `SpellController`.
  */
 @RestController
 @RequiredArgsConstructor
@@ -22,8 +22,8 @@ public class SpellController {
     private final SpellService spellService;
 
     /**
-     * Returns all spells.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     @GetMapping
     public List<SpellResponse> getAllSpells() {
@@ -31,9 +31,9 @@ public class SpellController {
     }
 
     /**
-     * Returns spell by id.
-     * @param spellId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param spellId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @GetMapping("/{spellId}")
     public SpellResponse getSpellById(@PathVariable UUID spellId) {

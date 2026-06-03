@@ -9,18 +9,18 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * Component that handles custom access denied handler concerns.
+ * Компонент `CustomAccessDeniedHandler` для обработки исключительных ситуаций.
  */
 @Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
     /**
-     * Handles the requested operation.
-     * @param request value used by this operation
-     * @param response value used by this operation
-     * @param accessDeniedException value used by this operation
-     * @throws IOException when the operation cannot be completed
-     * @throws ServletException when the operation cannot be completed
+     * Обрабатывает запрошенную ситуацию.
+     * @param request параметр, используемый при выполнении операции
+     * @param response параметр, используемый при выполнении операции
+     * @param accessDeniedException параметр, используемый при выполнении операции
+     * @throws IOException если операцию невозможно выполнить
+     * @throws ServletException если операцию невозможно выполнить
      */
     @Override
     public void handle(HttpServletRequest request,

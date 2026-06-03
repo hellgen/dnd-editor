@@ -3,7 +3,7 @@ package com.helen.dnd_charachter_editor.dto.response.character;
 import java.util.UUID;
 
 /**
- * Data transfer object for character skill response.
+ * Объект передачи данных `CharacterSkillResponse`.
  */
 public record CharacterSkillResponse(
         UUID id,

@@ -5,15 +5,15 @@ import com.helen.dnd_charachter_editor.entity.character.UserCharacter;
 import com.helen.dnd_charachter_editor.entity.reference.table.Ability;
 
 /**
- * Mapper that converts character saving throw mapper values between layers.
+ * Маппер `CharacterSavingThrowMapper` для преобразования данных между слоями приложения.
  */
 public class CharacterSavingThrowMapper {
 
     /**
-     * Converts entity.
-     * @param character value used by this operation
-     * @param ability value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static CharacterSavingThrow toEntity(UserCharacter character, Ability ability) {
         CharacterSavingThrow characterSavingThrow = new CharacterSavingThrow();

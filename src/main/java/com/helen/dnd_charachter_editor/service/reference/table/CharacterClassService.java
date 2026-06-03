@@ -11,42 +11,42 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Service contract for character class service operations.
+ * Контракт сервиса `CharacterClassService`.
  */
 public interface CharacterClassService {
     /**
-     * Returns all classes.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     List<CharacterClassResponse> getAllClasses();
 
     /**
-     * Returns class response by id.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterClassResponse getClassResponseById(UUID classId);
 
     /**
-     * Returns class by id.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     CharacterClass getClassById(UUID classId);
 
     /**
-     * Returns all features.
-     * @param classId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<ClassFeatureResponse> getAllFeatures(UUID classId, Integer level);
 
     /**
-     * Returns class feature by id.
-     * @param classId value used by this operation
-     * @param classFeatureId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classFeatureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     ClassFeatureResponse getClassFeatureById(
             UUID classId,
@@ -54,17 +54,17 @@ public interface CharacterClassService {
     );
 
     /**
-     * Returns all archetypes.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<ClassArchetypeResponse> getAllArchetypes(UUID classId);
 
     /**
-     * Returns class archetype response by id.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     ClassArchetypeResponse getClassArchetypeResponseById(
             UUID classId,
@@ -72,10 +72,10 @@ public interface CharacterClassService {
     );
 
     /**
-     * Returns class archetype by id.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     ClassArchetype getClassArchetypeById(
             UUID classId,
@@ -83,11 +83,11 @@ public interface CharacterClassService {
     );
 
     /**
-     * Returns all features.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<ClassArchetypeFeatureResponse> getAllFeatures(
             UUID classId,
@@ -96,11 +96,11 @@ public interface CharacterClassService {
     );
 
     /**
-     * Returns archetype feature by id.
-     * @param classId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @param classArchetypeFeatureId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @param classArchetypeFeatureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     ClassArchetypeFeatureResponse getArchetypeFeatureById(
             UUID classId,

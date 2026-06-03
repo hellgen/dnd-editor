@@ -8,16 +8,16 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for accessing class archetype feature repository data.
+ * Репозиторий `ClassArchetypeFeatureRepository` для доступа к данным.
  */
 public interface ClassArchetypeFeatureRepository
         extends JpaRepository<ClassArchetypeFeature, UUID> {
 
     /**
-     * Finds all by class archetype id and class archetype character class id.
-     * @param classArchetypeId value used by this operation
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<ClassArchetypeFeature> findAllByClassArchetypeIdAndClassArchetypeCharacterClassId(
             UUID classArchetypeId,
@@ -25,11 +25,11 @@ public interface ClassArchetypeFeatureRepository
     );
 
     /**
-     * Finds all by class archetype id and class archetype character class id and level required less than equal order by level required asc.
-     * @param classArchetypeId value used by this operation
-     * @param classId value used by this operation
-     * @param level value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @param classId параметр, используемый при выполнении операции
+     * @param level параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<ClassArchetypeFeature> findAllByClassArchetypeIdAndClassArchetypeCharacterClassIdAndLevelRequiredLessThanEqualOrderByLevelRequiredAsc(
             UUID classArchetypeId,
@@ -38,11 +38,11 @@ public interface ClassArchetypeFeatureRepository
     );
 
     /**
-     * Finds by id and class archetype id and class archetype character class id.
-     * @param classArchetypeFeatureId value used by this operation
-     * @param classArchetypeId value used by this operation
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param classArchetypeFeatureId параметр, используемый при выполнении операции
+     * @param classArchetypeId параметр, используемый при выполнении операции
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<ClassArchetypeFeature> findByIdAndClassArchetypeIdAndClassArchetypeCharacterClassId(
             UUID classArchetypeFeatureId,

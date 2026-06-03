@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
- * Data transfer object for set character abilities request.
+ * Объект передачи данных `SetCharacterAbilitiesRequest`.
  */
 public record SetCharacterAbilitiesRequest(
         @NotEmpty

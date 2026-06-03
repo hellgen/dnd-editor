@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * Configuration class for security config.
+ * Конфигурационный класс `SecurityConfig`.
  */
 @Configuration
 @EnableWebSecurity
@@ -35,10 +35,10 @@ public class SecurityConfig {
 //    private final AuthService userDetailsService;
 
     /**
-     * Filters chain.
-     * @param http value used by this operation
-     * @return result of the operation
-     * @throws Exception when the operation cannot be completed
+     * Фильтрует данные для запрошенной операции.
+     * @param http параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     * @throws Exception если операцию невозможно выполнить
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -102,8 +102,8 @@ public class SecurityConfig {
     }
 
     /**
-     * Executes the password encoder operation.
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @return результат выполнения операции
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -111,10 +111,10 @@ public class SecurityConfig {
     }
 
     /**
-     * Executes the authentication manager operation.
-     * @param config value used by this operation
-     * @return result of the operation
-     * @throws Exception when the operation cannot be completed
+     * Выполняет запрошенную операцию.
+     * @param config параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     * @throws Exception если операцию невозможно выполнить
      */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

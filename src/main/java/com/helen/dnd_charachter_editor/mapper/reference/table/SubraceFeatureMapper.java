@@ -4,14 +4,14 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.SubraceFeatu
 import com.helen.dnd_charachter_editor.entity.reference.table.SubraceFeature;
 
 /**
- * Mapper that converts subrace feature mapper values between layers.
+ * Маппер `SubraceFeatureMapper` для преобразования данных между слоями приложения.
  */
 public class SubraceFeatureMapper {
 
     /**
-     * Converts response.
-     * @param subraceFeature value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param subraceFeature параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     public static SubraceFeatureResponse toResponse(SubraceFeature subraceFeature) {
         return new SubraceFeatureResponse(

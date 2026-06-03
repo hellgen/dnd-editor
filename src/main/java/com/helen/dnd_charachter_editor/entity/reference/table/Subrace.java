@@ -11,7 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.UUID;
 
 /**
- * JPA entity representing subrace.
+ * JPA-сущность `Subrace`.
  */
 @Getter
 @Setter

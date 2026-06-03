@@ -12,15 +12,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for accessing character ability repository data.
+ * Репозиторий `CharacterAbilityRepository` для доступа к данным.
  */
 public interface CharacterAbilityRepository extends JpaRepository<CharacterAbility, UUID> {
 
     /**
-     * Finds by character id and ability id.
-     * @param characterId value used by this operation
-     * @param abilityId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<CharacterAbility> findByCharacterIdAndAbilityId(
             UUID characterId,
@@ -33,16 +33,16 @@ public interface CharacterAbilityRepository extends JpaRepository<CharacterAbili
            where a.id in :ids
            """)
     /**
-     * Finds all by ids.
-     * @param ids value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param ids параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<Ability> findAllByIds(@Param("ids") Collection<UUID> ids);
 
     /**
-     * Finds all by character id.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<CharacterAbility> findAllByCharacterId(UUID characterId);
 }

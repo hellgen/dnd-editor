@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * REST controller that exposes ability controller test endpoints.
+ * Контроллер REST API для обработки запросов `AbilityControllerTest`.
  */
 class AbilityControllerTest {
 
@@ -29,8 +29,8 @@ class AbilityControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * Returns all abilities returns base abilities.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getAllAbilitiesReturnsBaseAbilities() throws Exception {
@@ -54,8 +54,8 @@ class AbilityControllerTest {
     }
 
     /**
-     * Returns ability returns one base ability.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getAbilityReturnsOneBaseAbility() throws Exception {

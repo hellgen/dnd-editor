@@ -34,7 +34,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Default service implementation for default character saving throw service operations.
+ * Реализация сервиса `DefaultCharacterSavingThrowService`.
  */
 @Service
 @RequiredArgsConstructor
@@ -50,9 +50,9 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
     private final DndRulesService dndRulesService;
 
     /**
-     * Returns character saving throws.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional(readOnly = true)
@@ -68,11 +68,11 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
     }
 
     /**
-     * Updates character saving throw.
-     * @param characterId value used by this operation
-     * @param abilityId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -102,9 +102,9 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
     }
 
     /**
-     * Returns current user character.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private UserCharacter getCurrentUserCharacter(UUID characterId) {
         User user = authService.getCurrentUser();
@@ -113,8 +113,8 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
     }
 
     /**
-     * Validates proficiency level.
-     * @param proficiencyLevel value used by this operation
+     * Проверяет корректность данных для запрошенной операции.
+     * @param proficiencyLevel параметр, используемый при выполнении операции
      */
     private void validateProficiencyLevel(Integer proficiencyLevel) {
         if (proficiencyLevel == null || proficiencyLevel < 0 || proficiencyLevel > 1) {
@@ -123,10 +123,10 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
     }
 
     /**
-     * Converts response.
-     * @param savingThrow value used by this operation
-     * @param context value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param savingThrow параметр, используемый при выполнении операции
+     * @param context параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterSavingThrowResponse toResponse(
             CharacterSavingThrow savingThrow,
@@ -152,10 +152,10 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
     }
 
     /**
-     * Calculates ability modifier.
-     * @param ability value used by this operation
-     * @param context value used by this operation
-     * @return result of the operation
+     * Вычисляет значение для запрошенной операции.
+     * @param ability параметр, используемый при выполнении операции
+     * @param context параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Integer calculateAbilityModifier(
             Ability ability,
@@ -171,9 +171,9 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
     }
 
     /**
-     * Executes the build calculation context operation.
-     * @param character value used by this operation
-     * @return result of the operation
+     * Формирует данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private SavingThrowCalculationContext buildCalculationContext(UserCharacter character) {
         Map<UUID, CharacterAbility> characterAbilitiesByAbilityId = characterAbilityRepository
@@ -196,9 +196,9 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
     }
 
     /**
-     * Returns race bonuses.
-     * @param character value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Map<UUID, Integer> getRaceBonuses(UserCharacter character) {
         UUID raceId = character.getRace().getId();
@@ -212,9 +212,9 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
     }
 
     /**
-     * Returns subrace bonuses.
-     * @param character value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Map<UUID, Integer> getSubraceBonuses(UserCharacter character) {
         if (character.getSubrace() == null) {
@@ -232,7 +232,7 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
     }
 
     /**
-     * Default service implementation for saving throw calculation context operations.
+     * Реализация сервиса `SavingThrowCalculationContext`.
      */
     private record SavingThrowCalculationContext(
             Map<UUID, CharacterAbility> characterAbilitiesByAbilityId,

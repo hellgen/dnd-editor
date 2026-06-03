@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * REST controller that exposes character ability controller test endpoints.
+ * Контроллер REST API для обработки запросов `CharacterAbilityControllerTest`.
  */
 class CharacterAbilityControllerTest {
 
@@ -33,8 +33,8 @@ class CharacterAbilityControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * Returns character abilities returns final values with current race bonuses.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getCharacterAbilitiesReturnsFinalValuesWithCurrentRaceBonuses() throws Exception {
@@ -63,8 +63,8 @@ class CharacterAbilityControllerTest {
     }
 
     /**
-     * Updates character ability returns final value with bonuses.
-     * @throws Exception when the operation cannot be completed
+     * Обновляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void updateCharacterAbilityReturnsFinalValueWithBonuses() throws Exception {
@@ -97,8 +97,8 @@ class CharacterAbilityControllerTest {
     }
 
     /**
-     * Updates character abilities returns several final values with bonuses.
-     * @throws Exception when the operation cannot be completed
+     * Обновляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void updateCharacterAbilitiesReturnsSeveralFinalValuesWithBonuses() throws Exception {

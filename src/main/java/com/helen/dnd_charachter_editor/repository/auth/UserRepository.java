@@ -8,36 +8,36 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for accessing user repository data.
+ * Репозиторий `UserRepository` для доступа к данным.
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
 
     /**
-     * Finds by username.
-     * @param username value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param username параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<User> findByUsername(String username);
 
     /**
-     * Finds by email.
-     * @param email value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param email параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<User> findByEmail(String email);
 
     /**
-     * Executes the exists by username operation.
-     * @param username value used by this operation
-     * @return result of the operation
+     * Проверяет существование данных для запрошенной операции.
+     * @param username параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     boolean existsByUsername(String username);
 
     /**
-     * Executes the exists by email operation.
-     * @param email value used by this operation
-     * @return result of the operation
+     * Проверяет существование данных для запрошенной операции.
+     * @param email параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     boolean existsByEmail(String email);
 }

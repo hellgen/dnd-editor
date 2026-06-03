@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * REST controller that exposes race controller test endpoints.
+ * Контроллер REST API для обработки запросов `RaceControllerTest`.
  */
 class RaceControllerTest {
 
@@ -32,8 +32,8 @@ class RaceControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * Returns all races returns race list.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getAllRacesReturnsRaceList() throws Exception {
@@ -65,8 +65,8 @@ class RaceControllerTest {
     }
 
     /**
-     * Returns race returns one race.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getRaceReturnsOneRace() throws Exception {
@@ -94,8 +94,8 @@ class RaceControllerTest {
     }
 
     /**
-     * Returns race features returns feature list for race.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getRaceFeaturesReturnsFeatureListForRace() throws Exception {
@@ -124,8 +124,8 @@ class RaceControllerTest {
     }
 
     /**
-     * Returns race feature returns one feature for race.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getRaceFeatureReturnsOneFeatureForRace() throws Exception {
@@ -150,8 +150,8 @@ class RaceControllerTest {
     }
 
     /**
-     * Returns subraces returns subrace list for race.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getSubracesReturnsSubraceListForRace() throws Exception {
@@ -180,8 +180,8 @@ class RaceControllerTest {
     }
 
     /**
-     * Returns subrace features returns feature list for subrace.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getSubraceFeaturesReturnsFeatureListForSubrace() throws Exception {
@@ -215,8 +215,8 @@ class RaceControllerTest {
     }
 
     /**
-     * Returns subrace feature returns one feature for subrace.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getSubraceFeatureReturnsOneFeatureForSubrace() throws Exception {
@@ -246,8 +246,8 @@ class RaceControllerTest {
     }
 
     /**
-     * Returns subrace returns one subrace for race.
-     * @throws Exception when the operation cannot be completed
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
      */
     @Test
     void getSubraceReturnsOneSubraceForRace() throws Exception {

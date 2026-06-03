@@ -8,15 +8,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for accessing race ability bonus repository data.
+ * Репозиторий `RaceAbilityBonusRepository` для доступа к данным.
  */
 public interface RaceAbilityBonusRepository extends JpaRepository<RaceAbilityBonus, UUID> {
 
     /**
-     * Finds by race id and ability id.
-     * @param raceId value used by this operation
-     * @param abilityId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     Optional<RaceAbilityBonus> findByRaceIdAndAbilityId(
             UUID raceId,
@@ -24,9 +24,9 @@ public interface RaceAbilityBonusRepository extends JpaRepository<RaceAbilityBon
     );
 
     /**
-     * Finds all by race id.
-     * @param raceId value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     List<RaceAbilityBonus> findAllByRaceId(UUID raceId);
 }

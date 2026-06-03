@@ -37,7 +37,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Default service implementation for default character skill service operations.
+ * Реализация сервиса `DefaultCharacterSkillService`.
  */
 @Service
 @RequiredArgsConstructor
@@ -54,9 +54,9 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     private final DndRulesService dndRulesService;
 
     /**
-     * Returns character skills.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional(readOnly = true)
@@ -72,11 +72,11 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     }
 
     /**
-     * Updates character skill.
-     * @param characterId value used by this operation
-     * @param skillId value used by this operation
-     * @param request value used by this operation
-     * @return result of the operation
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param skillId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     @Transactional
@@ -106,9 +106,9 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     }
 
     /**
-     * Returns current user character.
-     * @param characterId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private UserCharacter getCurrentUserCharacter(UUID characterId) {
         User user = authService.getCurrentUser();
@@ -117,8 +117,8 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     }
 
     /**
-     * Validates proficiency level.
-     * @param proficiencyLevel value used by this operation
+     * Проверяет корректность данных для запрошенной операции.
+     * @param proficiencyLevel параметр, используемый при выполнении операции
      */
     private void validateProficiencyLevel(Integer proficiencyLevel) {
         if (proficiencyLevel == null || proficiencyLevel < 0 || proficiencyLevel > 2) {
@@ -127,10 +127,10 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     }
 
     /**
-     * Converts response.
-     * @param characterSkill value used by this operation
-     * @param context value used by this operation
-     * @return result of the operation
+     * Преобразует данные для запрошенной операции.
+     * @param characterSkill параметр, используемый при выполнении операции
+     * @param context параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterSkillResponse toResponse(
             CharacterSkill characterSkill,
@@ -156,10 +156,10 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     }
 
     /**
-     * Calculates ability modifier.
-     * @param skill value used by this operation
-     * @param context value used by this operation
-     * @return result of the operation
+     * Вычисляет значение для запрошенной операции.
+     * @param skill параметр, используемый при выполнении операции
+     * @param context параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Integer calculateAbilityModifier(
             Skill skill,
@@ -177,10 +177,10 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     }
 
     /**
-     * Finds ability for skill.
-     * @param skill value used by this operation
-     * @param abilitiesByNormalizedCode value used by this operation
-     * @return result of the operation
+     * Находит данные для запрошенной операции.
+     * @param skill параметр, используемый при выполнении операции
+     * @param abilitiesByNormalizedCode параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Optional<Ability> findAbilityForSkill(
             Skill skill,
@@ -190,9 +190,9 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     }
 
     /**
-     * Executes the build calculation context operation.
-     * @param character value used by this operation
-     * @return result of the operation
+     * Формирует данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private CharacterSkillCalculationContext buildCalculationContext(UserCharacter character) {
         Map<String, Ability> abilitiesByNormalizedCode = abilityRepository.findAll()
@@ -222,9 +222,9 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     }
 
     /**
-     * Returns race bonuses.
-     * @param character value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Map<UUID, Integer> getRaceBonuses(UserCharacter character) {
         UUID raceId = character.getRace().getId();
@@ -238,9 +238,9 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     }
 
     /**
-     * Returns subrace bonuses.
-     * @param character value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private Map<UUID, Integer> getSubraceBonuses(UserCharacter character) {
         if (character.getSubrace() == null) {
@@ -258,9 +258,9 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     }
 
     /**
-     * Executes the normalize ability code operation.
-     * @param abilityCode value used by this operation
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @param abilityCode параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     private String normalizeAbilityCode(String abilityCode) {
         if (abilityCode == null) {
@@ -281,7 +281,7 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     }
 
     /**
-     * Default service implementation for character skill calculation context operations.
+     * Реализация сервиса `CharacterSkillCalculationContext`.
      */
     private record CharacterSkillCalculationContext(
             Map<String, Ability> abilitiesByNormalizedCode,

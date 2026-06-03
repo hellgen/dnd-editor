@@ -18,7 +18,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * Default service implementation for spell reference operations.
+ * Реализация сервиса `DefaultSpellService`.
  */
 @Service
 @RequiredArgsConstructor
@@ -63,8 +63,8 @@ public class DefaultSpellService implements SpellService {
     private final CharacterClassService characterClassService;
 
     /**
-     * Returns all spells.
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
      */
     @Override
     public List<SpellResponse> getAllSpells() {
@@ -75,9 +75,9 @@ public class DefaultSpellService implements SpellService {
     }
 
     /**
-     * Returns one spell response.
-     * @param spellId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param spellId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public SpellResponse getSpellResponse(UUID spellId) {
@@ -85,9 +85,9 @@ public class DefaultSpellService implements SpellService {
     }
 
     /**
-     * Returns one spell entity.
-     * @param spellId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param spellId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public Spell getSpell(UUID spellId) {
@@ -96,9 +96,9 @@ public class DefaultSpellService implements SpellService {
     }
 
     /**
-     * Returns spells available for class.
-     * @param classId value used by this operation
-     * @return result of the operation
+     * Возвращает данные для запрошенной операции.
+     * @param classId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public List<SpellResponse> getSpellsByClassId(UUID classId) {
@@ -111,10 +111,10 @@ public class DefaultSpellService implements SpellService {
     }
 
     /**
-     * Checks that spell is available for character class.
-     * @param characterClass value used by this operation
-     * @param spell value used by this operation
-     * @return result of the operation
+     * Проверяет состояние для запрошенной операции.
+     * @param characterClass параметр, используемый при выполнении операции
+     * @param spell параметр, используемый при выполнении операции
+     * @return результат выполнения операции
      */
     @Override
     public boolean isSpellAvailableForClass(CharacterClass characterClass, Spell spell) {
@@ -125,8 +125,8 @@ public class DefaultSpellService implements SpellService {
     }
 
     /**
-     * Returns spell comparator by level and name.
-     * @return result of the operation
+     * Выполняет запрошенную операцию.
+     * @return результат выполнения операции
      */
     private Comparator<Spell> spellComparator() {
         return Comparator.comparing(Spell::getSpellLevel)

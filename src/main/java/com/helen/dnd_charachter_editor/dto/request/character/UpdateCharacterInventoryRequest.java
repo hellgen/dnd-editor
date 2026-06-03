@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 /**
- * Data transfer object for update character inventory request.
+ * Объект передачи данных `UpdateCharacterInventoryRequest`.
  */
 public record UpdateCharacterInventoryRequest(
         @NotBlank
