@@ -31,6 +31,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Реализация сервиса `DefaultCharacterAbilityServiceTest`.
+ */
 class DefaultCharacterAbilityServiceTest {
 
     private final AuthService authService = mock(AuthService.class);
@@ -51,6 +54,9 @@ class DefaultCharacterAbilityServiceTest {
             dndRulesService
     );
 
+    /**
+     * Устанавливает данные для запрошенной операции.
+     */
     @Test
     void setCharacterAbilityCalculatesFinalValueFromBaseAndBonuses() {
         UUID userId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -82,6 +88,9 @@ class DefaultCharacterAbilityServiceTest {
         assertEquals(4, response.modifier());
     }
 
+    /**
+     * Устанавливает данные для запрошенной операции.
+     */
     @Test
     void setCharacterAbilitiesRejectsDuplicateAbilities() {
         UUID userId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -100,12 +109,23 @@ class DefaultCharacterAbilityServiceTest {
         assertThrows(IllegalArgumentException.class, () -> service.setCharacterAbilities(characterId, request));
     }
 
+    /**
+     * Выполняет запрошенную операцию.
+     * @param userId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private User user(UUID userId) {
         User user = new User();
         user.setId(userId);
         return user;
     }
 
+    /**
+     * Выполняет запрошенную операцию.
+     * @param userId параметр, используемый при выполнении операции
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private UserCharacter character(UUID userId, UUID characterId) {
         Race race = new Race();
         race.setId(UUID.fromString("44444444-4444-4444-4444-444444444444"));
@@ -122,6 +142,13 @@ class DefaultCharacterAbilityServiceTest {
         return character;
     }
 
+    /**
+     * Выполняет запрошенную операцию.
+     * @param abilityId параметр, используемый при выполнении операции
+     * @param code параметр, используемый при выполнении операции
+     * @param name параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private Ability ability(UUID abilityId, String code, String name) {
         Ability ability = new Ability();
         ability.setId(abilityId);
@@ -130,6 +157,13 @@ class DefaultCharacterAbilityServiceTest {
         return ability;
     }
 
+    /**
+     * Выполняет запрошенную операцию.
+     * @param race параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param bonusValue параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private RaceAbilityBonus raceBonus(Race race, Ability ability, Integer bonusValue) {
         RaceAbilityBonus raceAbilityBonus = new RaceAbilityBonus();
         raceAbilityBonus.setRace(race);
@@ -138,6 +172,13 @@ class DefaultCharacterAbilityServiceTest {
         return raceAbilityBonus;
     }
 
+    /**
+     * Выполняет запрошенную операцию.
+     * @param subrace параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param bonusValue параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private SubraceAbilityBonus subraceBonus(Subrace subrace, Ability ability, Integer bonusValue) {
         SubraceAbilityBonus subraceAbilityBonus = new SubraceAbilityBonus();
         subraceAbilityBonus.setSubrace(subrace);

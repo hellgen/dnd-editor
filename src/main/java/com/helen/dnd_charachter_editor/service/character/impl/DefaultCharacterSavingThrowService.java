@@ -33,6 +33,9 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Реализация сервиса `DefaultCharacterSavingThrowService`.
+ */
 @Service
 @RequiredArgsConstructor
 public class DefaultCharacterSavingThrowService implements CharacterSavingThrowService {
@@ -46,6 +49,11 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
     private final SubraceAbilityBonusRepository subraceAbilityBonusRepository;
     private final DndRulesService dndRulesService;
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     @Transactional(readOnly = true)
     public List<CharacterSavingThrowResponse> getCharacterSavingThrows(UUID characterId) {
@@ -59,6 +67,13 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
                 .toList();
     }
 
+    /**
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     @Transactional
     public CharacterSavingThrowResponse updateCharacterSavingThrow(
@@ -86,18 +101,33 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
         return toResponse(savedSavingThrow, context);
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private UserCharacter getCurrentUserCharacter(UUID characterId) {
         User user = authService.getCurrentUser();
         return characterRepository.findByIdAndUser_Id(characterId, user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Персонаж не найден"));
     }
 
+    /**
+     * Проверяет корректность данных для запрошенной операции.
+     * @param proficiencyLevel параметр, используемый при выполнении операции
+     */
     private void validateProficiencyLevel(Integer proficiencyLevel) {
         if (proficiencyLevel == null || proficiencyLevel < 0 || proficiencyLevel > 1) {
             throw new IllegalArgumentException("proficiencyLevel должен быть в диапазоне 0..1");
         }
     }
 
+    /**
+     * Преобразует данные для запрошенной операции.
+     * @param savingThrow параметр, используемый при выполнении операции
+     * @param context параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private CharacterSavingThrowResponse toResponse(
             CharacterSavingThrow savingThrow,
             SavingThrowCalculationContext context
@@ -121,6 +151,12 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
         );
     }
 
+    /**
+     * Вычисляет значение для запрошенной операции.
+     * @param ability параметр, используемый при выполнении операции
+     * @param context параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private Integer calculateAbilityModifier(
             Ability ability,
             SavingThrowCalculationContext context
@@ -134,6 +170,11 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
         return dndRulesService.calculateAbilityModifier(finalValue);
     }
 
+    /**
+     * Формирует данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private SavingThrowCalculationContext buildCalculationContext(UserCharacter character) {
         Map<UUID, CharacterAbility> characterAbilitiesByAbilityId = characterAbilityRepository
                 .findAllByCharacterId(character.getId())
@@ -154,6 +195,11 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
         );
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private Map<UUID, Integer> getRaceBonuses(UserCharacter character) {
         UUID raceId = character.getRace().getId();
 
@@ -165,6 +211,11 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
                 ));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private Map<UUID, Integer> getSubraceBonuses(UserCharacter character) {
         if (character.getSubrace() == null) {
             return Map.of();
@@ -180,6 +231,9 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
                 ));
     }
 
+    /**
+     * Реализация сервиса `SavingThrowCalculationContext`.
+     */
     private record SavingThrowCalculationContext(
             Map<UUID, CharacterAbility> characterAbilitiesByAbilityId,
             Map<UUID, Integer> raceBonusesByAbilityId,

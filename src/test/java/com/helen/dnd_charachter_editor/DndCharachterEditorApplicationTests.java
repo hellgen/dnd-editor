@@ -6,8 +6,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //@SpringBootTest
+/**
+ * Тестовый класс `DndCharachterEditorApplicationTests`.
+ */
 class DndCharachterEditorApplicationTests {
 
+	/**
+	 * Выполняет запрошенную операцию.
+	 */
 	@Test
 	void contextLoads() {
 		assertTrue(true);

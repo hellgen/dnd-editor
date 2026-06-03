@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Реализация сервиса `DefaultAbilityService`.
+ */
 @Service
 @RequiredArgsConstructor
 public class DefaultAbilityService implements AbilityService {
@@ -20,6 +23,10 @@ public class DefaultAbilityService implements AbilityService {
     private final AbilityRepository abilityRepository;
     private final AbilityMapper abilityMapper;
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
+     */
     @Override
     @Transactional(readOnly = true)
     public List<AbilityResponse> getAllAbilities() {
@@ -29,6 +36,11 @@ public class DefaultAbilityService implements AbilityService {
                 .toList();
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param abilityId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     @Transactional(readOnly = true)
     public AbilityResponse getAbility(UUID abilityId) {

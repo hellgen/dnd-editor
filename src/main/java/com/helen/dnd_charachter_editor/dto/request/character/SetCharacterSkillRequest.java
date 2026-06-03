@@ -4,6 +4,9 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * Объект передачи данных `SetCharacterSkillRequest`.
+ */
 public record SetCharacterSkillRequest(
         @NotNull
         @Min(0)

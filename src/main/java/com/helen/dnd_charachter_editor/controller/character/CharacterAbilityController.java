@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Контроллер REST API для обработки запросов `CharacterAbilityController`.
+ */
 @RestController
 @RequestMapping("/characters/{characterId}/abilities")
 @RequiredArgsConstructor
@@ -18,6 +21,11 @@ public class CharacterAbilityController {
 
     private final CharacterAbilityService characterAbilityService;
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @GetMapping
     public List<CharacterAbilityResponse> getCharacterAbilities(
             @PathVariable UUID characterId
@@ -25,6 +33,13 @@ public class CharacterAbilityController {
         return characterAbilityService.getCharacterAbilities(characterId);
     }
 
+    /**
+     * Устанавливает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @PostMapping("/{abilityId}")
     public CharacterAbilityResponse setCharacterAbility(
             @PathVariable UUID characterId,
@@ -38,6 +53,13 @@ public class CharacterAbilityController {
         );
     }
 
+    /**
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @PutMapping("/{abilityId}")
     public CharacterAbilityResponse updateCharacterAbility(
             @PathVariable UUID characterId,
@@ -51,6 +73,12 @@ public class CharacterAbilityController {
         );
     }
 
+    /**
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @PutMapping
     public List<CharacterAbilityResponse> updateCharacterAbilities(
             @PathVariable UUID characterId,

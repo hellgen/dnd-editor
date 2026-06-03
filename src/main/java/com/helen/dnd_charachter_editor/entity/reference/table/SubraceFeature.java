@@ -10,6 +10,9 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.UUID;
 
+/**
+ * JPA-сущность `SubraceFeature`.
+ */
 @Getter
 @Setter
 @Entity

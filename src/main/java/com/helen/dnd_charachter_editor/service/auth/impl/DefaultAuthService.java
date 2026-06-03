@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
+/**
+ * Реализация сервиса `DefaultAuthService`.
+ */
 @Service
 @RequiredArgsConstructor
 public class DefaultAuthService implements AuthService {
@@ -30,6 +33,11 @@ public class DefaultAuthService implements AuthService {
 //    private final AuthenticationManager authenticationManager;
     private final TokenRepository tokenRepository;
 
+    /**
+     * Регистрирует пользователя.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public AuthResponse register(RegisterRequest request) {
         User user = UserMapper.getUserFromDto(request);
@@ -61,6 +69,11 @@ public class DefaultAuthService implements AuthService {
         return new AuthResponse(accessToken, refreshToken, "Bearer");
     }
 
+    /**
+     * Выполняет вход пользователя.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public AuthResponse login(LoginRequest request) {
 
@@ -84,17 +97,30 @@ public class DefaultAuthService implements AuthService {
         return new AuthResponse(accessToken, refreshToken, "Bearer");
     }
 
+    /**
+     * Выполняет выход пользователя.
+     * @param refreshToken параметр, используемый при выполнении операции
+     */
     @Override
     public void logout(String refreshToken) {
         // При твоём подходе — просто инвалидируем токен, не трогая базу
         jwtService.invalidateRefreshToken(refreshToken);
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
+     */
     @Override
     public User getCurrentUser() {
         return jwtService.getCurrentUser();
     }
 
+    /**
+     * Обновляет данные аутентификации.
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public AuthResponse refresh(RefreshTokenRequest request) {
         User user = jwtService.validateRefreshToken(request.refreshToken());
@@ -109,6 +135,13 @@ public class DefaultAuthService implements AuthService {
         return new AuthResponse(accessToken, refreshToken, "Bearer");
     }
 
+    /**
+     * Создаёт данные для запрошенной операции.
+     * @param accessToken параметр, используемый при выполнении операции
+     * @param refreshToken параметр, используемый при выполнении операции
+     * @param user параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private Token createToken(String accessToken, String refreshToken, User user) {
         Token token = new Token();
 
@@ -120,6 +153,12 @@ public class DefaultAuthService implements AuthService {
         return token;
     }
 
+    /**
+     * Загружает данные для запрошенной операции.
+     * @param username параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     * @throws UsernameNotFoundException если операцию невозможно выполнить
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;

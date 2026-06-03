@@ -4,7 +4,15 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.RaceDescript
 import com.helen.dnd_charachter_editor.dto.response.reference.table.RaceResponse;
 import com.helen.dnd_charachter_editor.entity.reference.table.Race;
 
+/**
+ * Маппер `RaceMapper` для преобразования данных между слоями приложения.
+ */
 public class RaceMapper {
+    /**
+     * Преобразует данные для запрошенной операции.
+     * @param race параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     public static RaceResponse toListResponse(Race race) {
         return new RaceResponse(
                 race.getId(),
@@ -17,6 +25,11 @@ public class RaceMapper {
         );
     }
 
+    /**
+     * Преобразует данные для запрошенной операции.
+     * @param race параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     public static RaceDescriptionResponse toRaceDescriptionResponse(Race race) {
         return new RaceDescriptionResponse(
                 race.getId(),

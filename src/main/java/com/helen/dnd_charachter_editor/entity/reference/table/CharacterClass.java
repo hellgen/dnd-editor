@@ -14,6 +14,9 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.util.UUID;
 
+/**
+ * JPA-сущность `CharacterClass`.
+ */
 @Getter
 @Setter
 @Entity

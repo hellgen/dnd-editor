@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
+/**
+ * Объект передачи данных `SetCharacterClassArchetypeRequest`.
+ */
 public record SetCharacterClassArchetypeRequest(
         @NotNull
         UUID classArchetypeId

@@ -7,9 +7,23 @@ import org.springframework.lang.NonNull;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Репозиторий `CharacterRepository` для доступа к данным.
+ */
 public interface CharacterRepository extends JpaRepository<UserCharacter, UUID> {
 
+    /**
+     * Проверяет существование данных для запрошенной операции.
+     * @param id параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     boolean existsById(@NonNull UUID id);
 
+    /**
+     * Находит данные для запрошенной операции.
+     * @param id параметр, используемый при выполнении операции
+     * @param userId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     Optional<UserCharacter> findByIdAndUser_Id(UUID id, UUID userId);
 }

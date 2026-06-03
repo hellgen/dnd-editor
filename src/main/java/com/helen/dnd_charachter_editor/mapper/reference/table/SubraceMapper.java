@@ -4,7 +4,15 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.SubraceDescr
 import com.helen.dnd_charachter_editor.dto.response.reference.table.SubraceResponse;
 import com.helen.dnd_charachter_editor.entity.reference.table.Subrace;
 
+/**
+ * Маппер `SubraceMapper` для преобразования данных между слоями приложения.
+ */
 public class SubraceMapper {
+    /**
+     * Преобразует данные для запрошенной операции.
+     * @param subrace параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     public static SubraceResponse toListResponse(Subrace subrace) {
         return new SubraceResponse(
                 subrace.getId(),
@@ -15,6 +23,11 @@ public class SubraceMapper {
         );
     }
 
+    /**
+     * Преобразует данные для запрошенной операции.
+     * @param subrace параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     public static SubraceDescriptionResponse toDescriptionResponse(Subrace subrace) {
         return new SubraceDescriptionResponse(
                 subrace.getId(),

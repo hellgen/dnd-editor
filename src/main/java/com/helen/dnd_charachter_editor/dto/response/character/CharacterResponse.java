@@ -3,6 +3,9 @@ package com.helen.dnd_charachter_editor.dto.response.character;
 import java.util.List;
 import java.time.OffsetDateTime;
 
+/**
+ * Объект передачи данных `CharacterResponse`.
+ */
 public record CharacterResponse(
         String characterName,
         String race,

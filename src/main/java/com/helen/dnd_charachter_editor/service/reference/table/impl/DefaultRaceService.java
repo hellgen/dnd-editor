@@ -27,6 +27,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Реализация сервиса `DefaultRaceService`.
+ */
 @Service
 @RequiredArgsConstructor
 public class DefaultRaceService implements RaceService {
@@ -35,6 +38,10 @@ public class DefaultRaceService implements RaceService {
     private final SubraceRepository subraceRepository;
     private final SubraceFeatureRepository subraceFeatureRepository;
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
+     */
     @Override
     public List<RaceResponse> getAllRaces() {
         return raceRepository.findAll()
@@ -43,6 +50,11 @@ public class DefaultRaceService implements RaceService {
                 .toList();
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public RaceResponse getRaceResponse(UUID raceId) {
         Race race = getRaceByIdOrThrow(raceId);
@@ -50,11 +62,21 @@ public class DefaultRaceService implements RaceService {
         return RaceMapper.toListResponse(race);
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public Race getRace(UUID raceId) {
         return getRaceByIdOrThrow(raceId);
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public RaceDescriptionResponse getRaceDescription(UUID raceId) {
         Race race = getRaceByIdOrThrow(raceId);
@@ -62,6 +84,11 @@ public class DefaultRaceService implements RaceService {
         return RaceMapper.toRaceDescriptionResponse(race);
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public List<RaceFeatureResponse> getAllFeaturesByRaceId(UUID raceId) {
         getRaceByIdOrThrow(raceId);
@@ -72,6 +99,12 @@ public class DefaultRaceService implements RaceService {
                 .toList();
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param featureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public RaceFeatureResponse getRaceFeatureResponse(UUID raceId, UUID featureId) {
         RaceFeature raceFeature = getRaceFeatureByIdAndRaceIdOrThrow(raceId, featureId);
@@ -79,6 +112,11 @@ public class DefaultRaceService implements RaceService {
         return RaceFeatureMapper.toResponse(raceFeature);
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public List<SubraceResponse> getAllSubracesByRaceId(UUID raceId) {
         getRaceByIdOrThrow(raceId);
@@ -89,6 +127,12 @@ public class DefaultRaceService implements RaceService {
                 .toList();
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public SubraceResponse getSubraceResponse(UUID raceId, UUID subraceId) {
         Subrace subrace = getSubraceByIdAndRaceIdOrThrow(raceId, subraceId);
@@ -96,6 +140,12 @@ public class DefaultRaceService implements RaceService {
         return SubraceMapper.toListResponse(subrace);
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public List<SubraceFeatureResponse> getAllFeaturesBySubraceId(UUID raceId, UUID subraceId) {
         getSubraceByIdAndRaceIdOrThrow(raceId, subraceId);
@@ -106,6 +156,13 @@ public class DefaultRaceService implements RaceService {
                 .toList();
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @param featureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public SubraceFeatureResponse getSubraceFeatureResponse(UUID raceId, UUID subraceId, UUID featureId) {
         getSubraceByIdAndRaceIdOrThrow(raceId, subraceId);
@@ -114,11 +171,23 @@ public class DefaultRaceService implements RaceService {
         return SubraceFeatureMapper.toResponse(subraceFeature);
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public Subrace getSubrace(UUID raceId, UUID subraceId) {
         return getSubraceByIdAndRaceIdOrThrow(raceId, subraceId);
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     public SubraceDescriptionResponse getSubraceDescription(UUID raceId, UUID subraceId) {
         Subrace subrace = getSubraceByIdAndRaceIdOrThrow(raceId, subraceId);
@@ -126,6 +195,11 @@ public class DefaultRaceService implements RaceService {
         return SubraceMapper.toDescriptionResponse(subrace);
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private Race getRaceByIdOrThrow(UUID raceId) {
         return raceRepository.findById(raceId)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -134,6 +208,12 @@ public class DefaultRaceService implements RaceService {
                 ));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param featureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private RaceFeature getRaceFeatureByIdAndRaceIdOrThrow(UUID raceId, UUID featureId) {
         return raceFeatureRepository.findByIdAndRaceId(featureId, raceId)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -142,6 +222,12 @@ public class DefaultRaceService implements RaceService {
                 ));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param raceId параметр, используемый при выполнении операции
+     * @param subraceId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private Subrace getSubraceByIdAndRaceIdOrThrow(UUID raceId, UUID subraceId) {
         return subraceRepository.findByIdAndRaceId(subraceId, raceId)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -150,6 +236,12 @@ public class DefaultRaceService implements RaceService {
                 ));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param subraceId параметр, используемый при выполнении операции
+     * @param featureId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private SubraceFeature getSubraceFeatureByIdAndSubraceIdOrThrow(UUID subraceId, UUID featureId) {
         return subraceFeatureRepository.findByIdAndSubraceId(featureId, subraceId)
                 .orElseThrow(() -> new ResponseStatusException(

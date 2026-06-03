@@ -17,6 +17,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Контроллер REST API для обработки запросов `AbilityControllerTest`.
+ */
 class AbilityControllerTest {
 
     private final AbilityService abilityService = mock(AbilityService.class);
@@ -25,6 +28,10 @@ class AbilityControllerTest {
             .build();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getAllAbilitiesReturnsBaseAbilities() throws Exception {
         List<AbilityResponse> abilities = List.of(
@@ -46,6 +53,10 @@ class AbilityControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(abilities)));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getAbilityReturnsOneBaseAbility() throws Exception {
         UUID abilityId = UUID.fromString("11111111-1111-1111-1111-111111111111");

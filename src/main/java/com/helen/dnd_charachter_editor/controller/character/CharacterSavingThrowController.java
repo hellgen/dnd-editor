@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Контроллер REST API для обработки запросов `CharacterSavingThrowController`.
+ */
 @RestController
 @RequestMapping("/characters/{characterId}/saving-throws")
 @RequiredArgsConstructor
@@ -22,6 +25,11 @@ public class CharacterSavingThrowController {
 
     private final CharacterSavingThrowService characterSavingThrowService;
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @GetMapping
     public List<CharacterSavingThrowResponse> getCharacterSavingThrows(
             @PathVariable UUID characterId
@@ -29,6 +37,13 @@ public class CharacterSavingThrowController {
         return characterSavingThrowService.getCharacterSavingThrows(characterId);
     }
 
+    /**
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @PatchMapping("/{abilityId}")
     public CharacterSavingThrowResponse updateCharacterSavingThrow(
             @PathVariable UUID characterId,

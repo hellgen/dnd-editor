@@ -7,6 +7,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
+/**
+ * Объект передачи данных `SetCharacterAbilityValueRequest`.
+ */
 public record SetCharacterAbilityValueRequest(
         @NotNull
         UUID abilityId,

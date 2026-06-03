@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Контроллер REST API для обработки запросов `CharacterSkillController`.
+ */
 @RestController
 @RequestMapping("/characters/{characterId}/skills")
 @RequiredArgsConstructor
@@ -22,6 +25,11 @@ public class CharacterSkillController {
 
     private final CharacterSkillService characterSkillService;
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @GetMapping
     public List<CharacterSkillResponse> getCharacterSkills(
             @PathVariable UUID characterId
@@ -29,6 +37,13 @@ public class CharacterSkillController {
         return characterSkillService.getCharacterSkills(characterId);
     }
 
+    /**
+     * Обновляет данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param skillId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @PutMapping("/{skillId}")
     public CharacterSkillResponse updateCharacterSkill(
             @PathVariable UUID characterId,

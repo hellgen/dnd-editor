@@ -11,6 +11,9 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.UUID;
 
+/**
+ * JPA-сущность `CharacterSkill`.
+ */
 @Getter
 @Setter
 @Entity

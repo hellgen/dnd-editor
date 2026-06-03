@@ -21,6 +21,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Конфигурационный класс `SecurityConfig`.
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -31,6 +34,12 @@ public class SecurityConfig {
     private final CustomLogoutHandler customLogoutHandler;
 //    private final AuthService userDetailsService;
 
+    /**
+     * Фильтрует данные для запрошенной операции.
+     * @param http параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -46,10 +55,13 @@ public class SecurityConfig {
                                 HttpMethod.GET,
                                 "/abilities",
                                 "/abilities/*",
+                                "/spells",
+                                "/spells/*",
                                 "/classes",
                                 "/classes/*",
                                 "/classes/*/features",
                                 "/classes/*/features/*",
+                                "/classes/*/spells",
                                 "/classes/*/class-archetypes",
                                 "/classes/*/class-archetypes/*",
                                 "/classes/*/class-archetypes/*/features",
@@ -89,11 +101,21 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Выполняет запрошенную операцию.
+     * @return результат выполнения операции
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Выполняет запрошенную операцию.
+     * @param config параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

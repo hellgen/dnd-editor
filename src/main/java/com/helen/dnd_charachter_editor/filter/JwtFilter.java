@@ -22,6 +22,9 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
 
+/**
+ * Фильтр `JwtFilter` для обработки запросов.
+ */
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
@@ -29,6 +32,14 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
+    /**
+     * Выполняет запрошенную операцию.
+     * @param request параметр, используемый при выполнении операции
+     * @param response параметр, используемый при выполнении операции
+     * @param filterChain параметр, используемый при выполнении операции
+     * @throws ServletException если операцию невозможно выполнить
+     * @throws IOException если операцию невозможно выполнить
+     */
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,

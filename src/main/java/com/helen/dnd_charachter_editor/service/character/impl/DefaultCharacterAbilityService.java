@@ -35,6 +35,9 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Реализация сервиса `DefaultCharacterAbilityService`.
+ */
 @Service
 @RequiredArgsConstructor
 public class DefaultCharacterAbilityService implements CharacterAbilityService {
@@ -47,6 +50,11 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
     private final SubraceAbilityBonusRepository subraceAbilityBonusRepository;
     private final DndRulesService dndRulesService;
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     @Transactional(readOnly = true)
     public List<CharacterAbilityResponse> getCharacterAbilities(UUID characterId) {
@@ -66,6 +74,13 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
                 .toList();
     }
 
+    /**
+     * Устанавливает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     @Transactional
     public CharacterAbilityResponse setCharacterAbility(UUID characterId, UUID abilityId, SetCharacterAbilityRequest request) {
@@ -93,6 +108,12 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
         return CharacterAbilityMapper.toResponse(savedCharacterAbility, raceBonus, subraceBonus, dndRulesService);
     }
 
+    /**
+     * Устанавливает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     @Override
     @Transactional
     public List<CharacterAbilityResponse> setCharacterAbilities(UUID characterId, SetCharacterAbilitiesRequest request) {
@@ -141,17 +162,37 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
                 .toList();
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param characterId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private UserCharacter getCurrentUserCharacter(UUID characterId) {
         User user = authService.getCurrentUser();
         return characterRepository.findByIdAndUser_Id(characterId, user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Персонаж не найден"));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param abilityId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private Ability getAbility(UUID abilityId) {
         return abilityRepository.findById(abilityId)
                 .orElseThrow(() -> new EntityNotFoundException("Характеристика не найдена"));
     }
 
+    /**
+     * Формирует данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @param ability параметр, используемый при выполнении операции
+     * @param currentCharacterAbility параметр, используемый при выполнении операции
+     * @param request параметр, используемый при выполнении операции
+     * @param raceBonus параметр, используемый при выполнении операции
+     * @param subraceBonus параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private CharacterAbility buildCharacterAbility(
             UserCharacter character,
             Ability ability,
@@ -174,6 +215,10 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
         return characterAbility;
     }
 
+    /**
+     * Проверяет корректность данных для запрошенной операции.
+     * @param abilityRequests параметр, используемый при выполнении операции
+     */
     private void validateUniqueAbilities(List<SetCharacterAbilityValueRequest> abilityRequests) {
         Set<UUID> abilityIds = new HashSet<>();
         boolean hasDuplicate = abilityRequests.stream()
@@ -185,6 +230,11 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
         }
     }
 
+    /**
+     * Проверяет корректность данных для запрошенной операции.
+     * @param abilityIds параметр, используемый при выполнении операции
+     * @param abilitiesById параметр, используемый при выполнении операции
+     */
     private void validateAllAbilitiesExist(List<UUID> abilityIds, Map<UUID, Ability> abilitiesById) {
         abilityIds.stream()
                 .filter(abilityId -> !abilitiesById.containsKey(abilityId))
@@ -194,12 +244,22 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
                 });
     }
 
+    /**
+     * Проверяет корректность данных для запрошенной операции.
+     * @param value параметр, используемый при выполнении операции
+     */
     private void validateAbilityBounds(Integer value) {
         if (value < 1 || value > 20) {
             throw new IllegalArgumentException("baseValue должен быть в диапазоне 1..20");
         }
     }
 
+    /**
+     * Проверяет корректность данных для запрошенной операции.
+     * @param baseValue параметр, используемый при выполнении операции
+     * @param raceBonus параметр, используемый при выполнении операции
+     * @param subraceBonus параметр, используемый при выполнении операции
+     */
     private void validateFinalAbilityValue(Integer baseValue, Integer raceBonus, Integer subraceBonus) {
         int finalValue = baseValue + raceBonus + subraceBonus;
         if (finalValue > 20) {
@@ -207,6 +267,10 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
         }
     }
 
+    /**
+     * Проверяет корректность данных для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     */
     private void validateCharacterRaceAndSubrace(UserCharacter character) {
         if (character.getRace() == null) {
             throw new IllegalArgumentException("У персонажа не выбрана раса");
@@ -228,14 +292,31 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
         }
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private Integer getRaceBonus(UserCharacter character, UUID abilityId) {
         return getRaceBonuses(character).getOrDefault(abilityId, 0);
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @param abilityId параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private Integer getSubraceBonus(UserCharacter character, UUID abilityId) {
         return getSubraceBonuses(character).getOrDefault(abilityId, 0);
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private Map<UUID, Integer> getRaceBonuses(UserCharacter character) {
         UUID raceId = character.getRace().getId();
 
@@ -247,6 +328,11 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
                 ));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @param character параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     private Map<UUID, Integer> getSubraceBonuses(UserCharacter character) {
         if (character.getSubrace() == null) {
             return Map.of();

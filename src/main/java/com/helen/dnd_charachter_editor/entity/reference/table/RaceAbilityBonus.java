@@ -9,6 +9,9 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.UUID;
 
+/**
+ * JPA-сущность `RaceAbilityBonus`.
+ */
 @Getter
 @Setter
 @Entity

@@ -19,6 +19,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Контроллер REST API для обработки запросов `CharacterSkillControllerTest`.
+ */
 class CharacterSkillControllerTest {
 
     private final CharacterSkillService characterSkillService = mock(CharacterSkillService.class);
@@ -27,6 +30,10 @@ class CharacterSkillControllerTest {
             .build();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getCharacterSkillsReturnsSkillList() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -52,6 +59,10 @@ class CharacterSkillControllerTest {
                 .andExpect(jsonPath("$[0].totalModifier").value(5));
     }
 
+    /**
+     * Обновляет данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void updateCharacterSkillReturnsDoubleProficiencyModifier() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");

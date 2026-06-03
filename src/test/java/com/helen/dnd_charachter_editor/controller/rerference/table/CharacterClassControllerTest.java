@@ -5,7 +5,9 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.CharacterCla
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassArchetypeFeatureResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassArchetypeResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassFeatureResponse;
+import com.helen.dnd_charachter_editor.dto.response.reference.table.SpellResponse;
 import com.helen.dnd_charachter_editor.service.reference.table.CharacterClassService;
+import com.helen.dnd_charachter_editor.service.reference.table.SpellService;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -20,14 +22,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Контроллер REST API для обработки запросов `CharacterClassControllerTest`.
+ */
 class CharacterClassControllerTest {
 
     private final CharacterClassService characterClassService = mock(CharacterClassService.class);
+    private final SpellService spellService = mock(SpellService.class);
     private final MockMvc mockMvc = MockMvcBuilders
-            .standaloneSetup(new CharacterClassController(characterClassService))
+            .standaloneSetup(new CharacterClassController(characterClassService, spellService))
             .build();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getAllClassesReturnsClassList() throws Exception {
         List<CharacterClassResponse> classes = List.of(
@@ -53,6 +63,10 @@ class CharacterClassControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(classes)));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getClassByIdReturnsOneClass() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -74,6 +88,10 @@ class CharacterClassControllerTest {
                 .andExpect(jsonPath("$.spellcastingStartLevel").doesNotExist());
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getClassFeaturesReturnsFeatureList() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -100,6 +118,10 @@ class CharacterClassControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(features)));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getClassFeaturesCanFilterByLevel() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -119,6 +141,10 @@ class CharacterClassControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(features)));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getClassFeatureByIdReturnsOneFeature() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -141,6 +167,28 @@ class CharacterClassControllerTest {
                 .andExpect(jsonPath("$.levelRequired").value(1));
     }
 
+
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
+    @Test
+    void getClassSpellsReturnsSpellList() throws Exception {
+        UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        when(spellService.getSpellsByClassId(classId)).thenReturn(List.of(spellResponse(
+                UUID.fromString("22222222-2222-2222-2222-222222222222"),
+                "Волшебная стрела"
+        )));
+
+        mockMvc.perform(get("/classes/{classId}/spells", classId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].spellName").value("Волшебная стрела"));
+    }
+
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getClassArchetypesReturnsArchetypeListForClass() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -165,6 +213,10 @@ class CharacterClassControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(archetypes)));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getClassArchetypeByIdReturnsOneArchetypeForClass() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -185,6 +237,10 @@ class CharacterClassControllerTest {
                 .andExpect(jsonPath("$.description").value("Архетип воина, сосредоточенный на грубой боевой мощи"));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getClassArchetypeFeaturesReturnsFeatureListForArchetype() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -217,6 +273,10 @@ class CharacterClassControllerTest {
     }
 
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getClassArchetypeFeaturesCanFilterByLevel() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -241,6 +301,10 @@ class CharacterClassControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(features)));
     }
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @throws Exception если операцию невозможно выполнить
+     */
     @Test
     void getClassArchetypeFeatureByIdReturnsOneFeatureForArchetype() throws Exception {
         UUID classId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -267,6 +331,27 @@ class CharacterClassControllerTest {
                 .andExpect(jsonPath("$.featureName").value("Улучшенные критические попадания"))
                 .andExpect(jsonPath("$.featureDescription").value("Критическое попадание происходит при результате 19 или 20"))
                 .andExpect(jsonPath("$.levelRequired").value(3));
+    }
+
+
+    /**
+     * Выполняет запрошенную операцию.
+     * @param spellId параметр, используемый при выполнении операции
+     * @param spellName параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
+    private SpellResponse spellResponse(UUID spellId, String spellName) {
+        return new SpellResponse(
+                spellId,
+                spellName,
+                1,
+                "Воплощение",
+                "1 действие",
+                "120 футов",
+                "В, С",
+                "Мгновенная",
+                "Описание"
+        );
     }
 
 }

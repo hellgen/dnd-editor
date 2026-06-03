@@ -8,8 +8,21 @@ import com.helen.dnd_charachter_editor.entity.reference.table.ClassArchetype;
 import com.helen.dnd_charachter_editor.entity.reference.table.Race;
 import com.helen.dnd_charachter_editor.entity.reference.table.Subrace;
 
+/**
+ * Маппер `CharacterMapper` для преобразования данных между слоями приложения.
+ */
 public class CharacterMapper {
 
+    /**
+     * Преобразует данные для запрошенной операции.
+     * @param createCharacterRequest параметр, используемый при выполнении операции
+     * @param user параметр, используемый при выполнении операции
+     * @param race параметр, используемый при выполнении операции
+     * @param subrace параметр, используемый при выполнении операции
+     * @param characterClass параметр, используемый при выполнении операции
+     * @param classArchetype параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
     public static UserCharacter mapToUserCharacter(
             CreateCharacterRequest createCharacterRequest,
             User user,

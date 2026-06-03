@@ -2,6 +2,9 @@ package com.helen.dnd_charachter_editor.dto.request.character;
 
 import jakarta.validation.constraints.Min;
 
+/**
+ * Объект передачи данных `WalletUpdateRequest`.
+ */
 public record WalletUpdateRequest(
 
         @Min(0)

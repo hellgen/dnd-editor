@@ -14,6 +14,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * JPA-сущность `User`.
+ */
 @Getter
 @Setter
 @Entity
@@ -47,6 +50,10 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
+    /**
+     * Возвращает данные для запрошенной операции.
+     * @return результат выполнения операции
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();

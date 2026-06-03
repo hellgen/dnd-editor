@@ -5,5 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
+/**
+ * Репозиторий `SkillRepository` для доступа к данным.
+ */
 public interface SkillRepository extends JpaRepository<Skill, UUID> {
 }

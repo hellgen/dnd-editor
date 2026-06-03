@@ -13,6 +13,9 @@ import lombok.Setter;
 
 import java.util.UUID;
 
+/**
+ * JPA-сущность `Skill`.
+ */
 @Getter
 @Setter
 @Entity

@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
+/**
+ * Объект передачи данных `SetCharacterRaceRequest`.
+ */
 public record SetCharacterRaceRequest(
         @NotNull
         UUID raceId,

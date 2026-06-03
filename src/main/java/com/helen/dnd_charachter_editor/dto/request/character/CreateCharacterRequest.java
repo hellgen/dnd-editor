@@ -3,6 +3,9 @@ package com.helen.dnd_charachter_editor.dto.request.character;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Объект передачи данных `CreateCharacterRequest`.
+ */
 public record CreateCharacterRequest(
         String characterName,
         UUID raceId,
