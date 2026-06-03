@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
+/**
+ * Data transfer object for set character abilities request.
+ */
 public record SetCharacterAbilitiesRequest(
         @NotEmpty
         List<@Valid SetCharacterAbilityValueRequest> abilities

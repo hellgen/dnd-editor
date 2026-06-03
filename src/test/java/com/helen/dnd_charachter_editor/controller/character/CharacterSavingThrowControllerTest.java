@@ -19,6 +19,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * REST controller that exposes character saving throw controller test endpoints.
+ */
 class CharacterSavingThrowControllerTest {
 
     private final CharacterSavingThrowService characterSavingThrowService = mock(CharacterSavingThrowService.class);
@@ -27,6 +30,10 @@ class CharacterSavingThrowControllerTest {
             .build();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Returns character saving throws returns saving throw list.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getCharacterSavingThrowsReturnsSavingThrowList() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -52,6 +59,10 @@ class CharacterSavingThrowControllerTest {
                 .andExpect(jsonPath("$[0].totalModifier").value(7));
     }
 
+    /**
+     * Updates character saving throw returns updated modifier.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void updateCharacterSavingThrowReturnsUpdatedModifier() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");

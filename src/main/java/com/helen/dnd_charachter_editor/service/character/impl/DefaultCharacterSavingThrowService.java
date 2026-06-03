@@ -33,6 +33,9 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Default service implementation for default character saving throw service operations.
+ */
 @Service
 @RequiredArgsConstructor
 public class DefaultCharacterSavingThrowService implements CharacterSavingThrowService {
@@ -46,6 +49,11 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
     private final SubraceAbilityBonusRepository subraceAbilityBonusRepository;
     private final DndRulesService dndRulesService;
 
+    /**
+     * Returns character saving throws.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional(readOnly = true)
     public List<CharacterSavingThrowResponse> getCharacterSavingThrows(UUID characterId) {
@@ -59,6 +67,13 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
                 .toList();
     }
 
+    /**
+     * Updates character saving throw.
+     * @param characterId value used by this operation
+     * @param abilityId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterSavingThrowResponse updateCharacterSavingThrow(
@@ -86,18 +101,33 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
         return toResponse(savedSavingThrow, context);
     }
 
+    /**
+     * Returns current user character.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
     private UserCharacter getCurrentUserCharacter(UUID characterId) {
         User user = authService.getCurrentUser();
         return characterRepository.findByIdAndUser_Id(characterId, user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Персонаж не найден"));
     }
 
+    /**
+     * Validates proficiency level.
+     * @param proficiencyLevel value used by this operation
+     */
     private void validateProficiencyLevel(Integer proficiencyLevel) {
         if (proficiencyLevel == null || proficiencyLevel < 0 || proficiencyLevel > 1) {
             throw new IllegalArgumentException("proficiencyLevel должен быть в диапазоне 0..1");
         }
     }
 
+    /**
+     * Converts response.
+     * @param savingThrow value used by this operation
+     * @param context value used by this operation
+     * @return result of the operation
+     */
     private CharacterSavingThrowResponse toResponse(
             CharacterSavingThrow savingThrow,
             SavingThrowCalculationContext context
@@ -121,6 +151,12 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
         );
     }
 
+    /**
+     * Calculates ability modifier.
+     * @param ability value used by this operation
+     * @param context value used by this operation
+     * @return result of the operation
+     */
     private Integer calculateAbilityModifier(
             Ability ability,
             SavingThrowCalculationContext context
@@ -134,6 +170,11 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
         return dndRulesService.calculateAbilityModifier(finalValue);
     }
 
+    /**
+     * Executes the build calculation context operation.
+     * @param character value used by this operation
+     * @return result of the operation
+     */
     private SavingThrowCalculationContext buildCalculationContext(UserCharacter character) {
         Map<UUID, CharacterAbility> characterAbilitiesByAbilityId = characterAbilityRepository
                 .findAllByCharacterId(character.getId())
@@ -154,6 +195,11 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
         );
     }
 
+    /**
+     * Returns race bonuses.
+     * @param character value used by this operation
+     * @return result of the operation
+     */
     private Map<UUID, Integer> getRaceBonuses(UserCharacter character) {
         UUID raceId = character.getRace().getId();
 
@@ -165,6 +211,11 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
                 ));
     }
 
+    /**
+     * Returns subrace bonuses.
+     * @param character value used by this operation
+     * @return result of the operation
+     */
     private Map<UUID, Integer> getSubraceBonuses(UserCharacter character) {
         if (character.getSubrace() == null) {
             return Map.of();
@@ -180,6 +231,9 @@ public class DefaultCharacterSavingThrowService implements CharacterSavingThrowS
                 ));
     }
 
+    /**
+     * Default service implementation for saving throw calculation context operations.
+     */
     private record SavingThrowCalculationContext(
             Map<UUID, CharacterAbility> characterAbilitiesByAbilityId,
             Map<UUID, Integer> raceBonusesByAbilityId,

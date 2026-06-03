@@ -2,6 +2,9 @@ package com.helen.dnd_charachter_editor.dto.request.character;
 
 import jakarta.validation.constraints.Min;
 
+/**
+ * Data transfer object for wallet update request.
+ */
 public record WalletUpdateRequest(
 
         @Min(0)

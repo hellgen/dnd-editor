@@ -7,6 +7,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
+/**
+ * Data transfer object for set character ability value request.
+ */
 public record SetCharacterAbilityValueRequest(
         @NotNull
         UUID abilityId,

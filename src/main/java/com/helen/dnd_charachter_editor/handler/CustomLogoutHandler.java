@@ -9,12 +9,21 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Component;
 
+/**
+ * Component that handles custom logout handler concerns.
+ */
 @Component
 @RequiredArgsConstructor
 public class CustomLogoutHandler implements LogoutHandler {
 
     private final TokenRepository tokenRepository;
 
+    /**
+     * Logs out the requested operation.
+     * @param request value used by this operation
+     * @param response value used by this operation
+     * @param authentication value used by this operation
+     */
     @Override
     public void logout(HttpServletRequest request,
                        HttpServletResponse response,

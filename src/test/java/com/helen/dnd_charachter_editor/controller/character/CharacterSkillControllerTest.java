@@ -19,6 +19,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * REST controller that exposes character skill controller test endpoints.
+ */
 class CharacterSkillControllerTest {
 
     private final CharacterSkillService characterSkillService = mock(CharacterSkillService.class);
@@ -27,6 +30,10 @@ class CharacterSkillControllerTest {
             .build();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Returns character skills returns skill list.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getCharacterSkillsReturnsSkillList() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -52,6 +59,10 @@ class CharacterSkillControllerTest {
                 .andExpect(jsonPath("$[0].totalModifier").value(5));
     }
 
+    /**
+     * Updates character skill returns double proficiency modifier.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void updateCharacterSkillReturnsDoubleProficiencyModifier() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
