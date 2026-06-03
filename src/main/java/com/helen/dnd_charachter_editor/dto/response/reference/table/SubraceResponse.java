@@ -4,6 +4,9 @@ import java.util.UUID;
 
 public record SubraceResponse(
         UUID id,
-        String name
+        UUID raceId,
+        String raceName,
+        String name,
+        String description
 ) {
 }

@@ -1,8 +1,10 @@
 package com.helen.dnd_charachter_editor.controller.rerference.table;
 
 import com.helen.dnd_charachter_editor.dto.response.reference.table.RaceDescriptionResponse;
+import com.helen.dnd_charachter_editor.dto.response.reference.table.RaceFeatureResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.RaceResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.SubraceDescriptionResponse;
+import com.helen.dnd_charachter_editor.dto.response.reference.table.SubraceFeatureResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.SubraceResponse;
 import com.helen.dnd_charachter_editor.service.reference.table.RaceService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,19 @@ public class RaceController {
         return raceService.getAllSubracesByRaceId(raceId);
     }
 
+    @GetMapping("/{raceId}/features")
+    public List<RaceFeatureResponse> getRaceFeatures(@PathVariable UUID raceId) {
+        return raceService.getAllFeaturesByRaceId(raceId);
+    }
+
+    @GetMapping("/{raceId}/features/{featureId}")
+    public RaceFeatureResponse getRaceFeature(
+            @PathVariable UUID raceId,
+            @PathVariable UUID featureId
+    ) {
+        return raceService.getRaceFeatureResponse(raceId, featureId);
+    }
+
     @GetMapping("/{raceId}/description")
     public RaceDescriptionResponse getRaceDescription(@PathVariable UUID raceId) {
         return raceService.getRaceDescription(raceId);
@@ -43,6 +58,23 @@ public class RaceController {
             @PathVariable UUID subraceId
     ) {
         return raceService.getSubraceResponse(raceId, subraceId);
+    }
+
+    @GetMapping("/{raceId}/subraces/{subraceId}/features")
+    public List<SubraceFeatureResponse> getSubraceFeatures(
+            @PathVariable UUID raceId,
+            @PathVariable UUID subraceId
+    ) {
+        return raceService.getAllFeaturesBySubraceId(raceId, subraceId);
+    }
+
+    @GetMapping("/{raceId}/subraces/{subraceId}/features/{featureId}")
+    public SubraceFeatureResponse getSubraceFeature(
+            @PathVariable UUID raceId,
+            @PathVariable UUID subraceId,
+            @PathVariable UUID featureId
+    ) {
+        return raceService.getSubraceFeatureResponse(raceId, subraceId, featureId);
     }
 
     @GetMapping("/{raceId}/subraces/{subraceId}/description")

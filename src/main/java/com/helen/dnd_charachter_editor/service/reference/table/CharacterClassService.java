@@ -17,15 +17,11 @@ public interface CharacterClassService {
 
     CharacterClass getClassById(UUID classId);
 
-    List<ClassFeatureResponse> getAllFeaturesByLevel(
-            UUID classId,
-            Integer level
-    );
+    List<ClassFeatureResponse> getAllFeatures(UUID classId, Integer level);
 
     ClassFeatureResponse getClassFeatureById(
             UUID classId,
-            UUID classFeatureId,
-            Integer level
+            UUID classFeatureId
     );
 
     List<ClassArchetypeResponse> getAllArchetypes(UUID classId);
@@ -42,7 +38,8 @@ public interface CharacterClassService {
 
     List<ClassArchetypeFeatureResponse> getAllFeatures(
             UUID classId,
-            UUID classArchetypeId
+            UUID classArchetypeId,
+            Integer level
     );
 
     ClassArchetypeFeatureResponse getArchetypeFeatureById(

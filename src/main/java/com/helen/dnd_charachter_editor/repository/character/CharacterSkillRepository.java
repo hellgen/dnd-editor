@@ -4,8 +4,14 @@ import com.helen.dnd_charachter_editor.entity.character.CharacterSkill;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface CharacterSkillRepository extends JpaRepository<CharacterSkill, UUID> {
     List<CharacterSkill> findAllByCharacterId(UUID characterId);
+
+    Optional<CharacterSkill> findByCharacterIdAndSkillId(
+            UUID characterId,
+            UUID skillId
+    );
 }

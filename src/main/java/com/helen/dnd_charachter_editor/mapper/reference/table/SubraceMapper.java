@@ -8,7 +8,10 @@ public class SubraceMapper {
     public static SubraceResponse toListResponse(Subrace subrace) {
         return new SubraceResponse(
                 subrace.getId(),
-                subrace.getName()
+                subrace.getRace().getId(),
+                subrace.getRace().getName(),
+                subrace.getName(),
+                subrace.getDescription()
         );
     }
 
