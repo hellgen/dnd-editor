@@ -124,30 +124,38 @@ public class DefaultCharacterService implements CharacterService {
                 classArchetype
         );
 
-        UserCharacter savedCharacter = characterRepository.save(userCharacter);
+        UserCharacter savedCharacter = characterRepository.saveAndFlush(userCharacter);
 
-        List<Ability> abilities = characterAbilityRepository.findAllByIds(createCharacterRequest.abilities());
-        List<CharacterAbility> characterAbilities = abilities.stream()
+        List<UUID> requestedAbilityIds = requestIds(createCharacterRequest.abilities());
+        List<Ability> abilities = requestedAbilityIds.isEmpty()
+                ? List.of()
+                : characterAbilityRepository.findAllByIds(requestedAbilityIds);
+        validateReferenceIds(requestedAbilityIds, abilities.stream().map(Ability::getId).collect(Collectors.toSet()), "Abilities not found");
+        List<CharacterAbility> characterAbilities = characterAbilityRepository.saveAllAndFlush(abilities.stream()
                 .map(ability -> CharacterAbilityMapper.toEntity(savedCharacter, ability))
-                .toList();
-        characterAbilityRepository.saveAll(characterAbilities);
+                .toList());
 
         List<Skill> allSkills = skillRepository.findAll();
-        Set<java.util.UUID> selectedSkillIds = new HashSet<>(createCharacterRequest.skills());
-        List<CharacterSkill> characterSkills = allSkills.stream().map(skill -> {
+        Set<UUID> selectedSkillIds = new HashSet<>(requestIds(createCharacterRequest.skills()));
+        validateReferenceIds(
+                selectedSkillIds.stream().toList(),
+                allSkills.stream().map(Skill::getId).collect(Collectors.toSet()),
+                "Skills not found"
+        );
+        List<CharacterSkill> characterSkills = characterSkillRepository.saveAllAndFlush(allSkills.stream().map(skill -> {
             CharacterSkill entity = CharacterSkillMapper.toEntity(savedCharacter, skill);
             if (selectedSkillIds.contains(skill.getId())) {
                 entity.setProficiencyLevel(1);
             }
             return entity;
-        }).toList();
-        characterSkillRepository.saveAll(characterSkills);
+        }).toList());
 
-        List<Spell> spells = spellRepository.findAllById(createCharacterRequest.spells());
-        List<CharacterSpell> characterSpells = spells.stream()
+        List<UUID> requestedSpellIds = requestIds(createCharacterRequest.spells());
+        List<Spell> spells = spellRepository.findAllById(requestedSpellIds);
+        validateReferenceIds(requestedSpellIds, spells.stream().map(Spell::getId).collect(Collectors.toSet()), "Spells not found");
+        List<CharacterSpell> characterSpells = characterSpellRepository.saveAllAndFlush(spells.stream()
                 .map(spell -> CharacterSpellMapper.toEntity(savedCharacter, spell))
-                .toList();
-        characterSpellRepository.saveAll(characterSpells);
+                .toList());
 
         List<Ability> allAbilities = abilityRepository.findAll();
         List<CharacterSavingThrow> characterSavingThrows = new ArrayList<>();
@@ -159,7 +167,7 @@ public class DefaultCharacterService implements CharacterService {
             }
             characterSavingThrows.add(characterSavingThrow);
         }
-        characterSavingThrowRepository.saveAll(characterSavingThrows);
+        characterSavingThrows = characterSavingThrowRepository.saveAllAndFlush(characterSavingThrows);
 
         return CharacterResponseMapper.toResponse(
                 savedCharacter,
@@ -209,16 +217,25 @@ public class DefaultCharacterService implements CharacterService {
 
         UserCharacter savedCharacter = characterRepository.save(character);
 
-        List<Ability> abilities = characterAbilityRepository.findAllByIds(createCharacterRequest.abilities());
-        Set<java.util.UUID> abilityIds = abilities.stream().map(Ability::getId).collect(Collectors.toSet());
+        List<UUID> requestedAbilityIds = requestIds(createCharacterRequest.abilities());
+        List<Ability> abilities = requestedAbilityIds.isEmpty()
+                ? List.of()
+                : characterAbilityRepository.findAllByIds(requestedAbilityIds);
+        validateReferenceIds(requestedAbilityIds, abilities.stream().map(Ability::getId).collect(Collectors.toSet()), "Abilities not found");
+        Set<UUID> abilityIds = abilities.stream().map(Ability::getId).collect(Collectors.toSet());
         List<CharacterAbility> currentAbilities = characterAbilityRepository.findAllByCharacterId(characterId);
         if (!currentAbilities.stream().map(a -> a.getAbility().getId()).collect(Collectors.toSet()).equals(abilityIds)) {
             characterAbilityRepository.deleteAll(currentAbilities);
-            characterAbilityRepository.saveAll(abilities.stream().map(a -> CharacterAbilityMapper.toEntity(savedCharacter, a)).toList());
+            characterAbilityRepository.saveAllAndFlush(abilities.stream().map(a -> CharacterAbilityMapper.toEntity(savedCharacter, a)).toList());
         }
 
         List<Skill> skills = skillRepository.findAll();
-        Set<java.util.UUID> skillIds = new HashSet<>(createCharacterRequest.skills());
+        Set<UUID> skillIds = new HashSet<>(requestIds(createCharacterRequest.skills()));
+        validateReferenceIds(
+                skillIds.stream().toList(),
+                skills.stream().map(Skill::getId).collect(Collectors.toSet()),
+                "Skills not found"
+        );
         List<CharacterSkill> currentSkills = characterSkillRepository.findAllByCharacterId(characterId);
         if (!currentSkills.stream().map(s -> s.getSkill().getId()).collect(Collectors.toSet()).equals(skillIds)) {
             characterSkillRepository.deleteAll(currentSkills);
@@ -229,15 +246,17 @@ public class DefaultCharacterService implements CharacterService {
                 }
                 return entity;
             }).toList();
-            characterSkillRepository.saveAll(updatedSkills);
+            characterSkillRepository.saveAllAndFlush(updatedSkills);
         }
 
-        List<Spell> spells = spellRepository.findAllById(createCharacterRequest.spells());
-        Set<java.util.UUID> spellIds = spells.stream().map(Spell::getId).collect(Collectors.toSet());
+        List<UUID> requestedSpellIds = requestIds(createCharacterRequest.spells());
+        List<Spell> spells = spellRepository.findAllById(requestedSpellIds);
+        validateReferenceIds(requestedSpellIds, spells.stream().map(Spell::getId).collect(Collectors.toSet()), "Spells not found");
+        Set<UUID> spellIds = spells.stream().map(Spell::getId).collect(Collectors.toSet());
         List<CharacterSpell> currentSpells = characterSpellRepository.findAllByCharacterId(characterId);
         if (!currentSpells.stream().map(s -> s.getSpell().getId()).collect(Collectors.toSet()).equals(spellIds)) {
             characterSpellRepository.deleteAll(currentSpells);
-            characterSpellRepository.saveAll(spells.stream().map(s -> CharacterSpellMapper.toEntity(savedCharacter, s)).toList());
+            characterSpellRepository.saveAllAndFlush(spells.stream().map(s -> CharacterSpellMapper.toEntity(savedCharacter, s)).toList());
         }
 
         List<Ability> allAbilities = abilityRepository.findAll();
@@ -258,7 +277,7 @@ public class DefaultCharacterService implements CharacterService {
                 }
                 savingThrows.add(entity);
             }
-            characterSavingThrowRepository.saveAll(savingThrows);
+            characterSavingThrowRepository.saveAllAndFlush(savingThrows);
         }
 
         return buildCharacterResponse(savedCharacter);
@@ -1019,6 +1038,27 @@ public class DefaultCharacterService implements CharacterService {
      */
     private boolean hasText(String value) {
         return value != null && !value.trim().isEmpty();
+    }
+
+    /**
+     * Возвращает безопасный список идентификаторов для запрошенной операции.
+     * @param ids параметр, используемый при выполнении операции
+     * @return результат выполнения операции
+     */
+    private List<UUID> requestIds(List<UUID> ids) {
+        return ids != null ? ids : List.of();
+    }
+
+    /**
+     * Проверяет корректность данных для запрошенной операции.
+     * @param requestedIds параметр, используемый при выполнении операции
+     * @param foundIds параметр, используемый при выполнении операции
+     * @param message параметр, используемый при выполнении операции
+     */
+    private void validateReferenceIds(List<UUID> requestedIds, Set<UUID> foundIds, String message) {
+        if (!foundIds.containsAll(requestedIds)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
+        }
     }
 
     /**

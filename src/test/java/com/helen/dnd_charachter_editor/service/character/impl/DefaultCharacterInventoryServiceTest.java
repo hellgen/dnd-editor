@@ -223,7 +223,7 @@ class DefaultCharacterInventoryServiceTest {
         when(raceService.getSubrace(raceId, subraceId)).thenReturn(subrace);
         when(characterClassService.getClassById(classId)).thenReturn(characterClass);
         when(characterClassService.getClassArchetypeById(classId, classArchetypeId)).thenReturn(classArchetype);
-        when(characterRepository.save(any(UserCharacter.class))).thenAnswer(invocation -> {
+        when(characterRepository.saveAndFlush(any(UserCharacter.class))).thenAnswer(invocation -> {
             UserCharacter character = invocation.getArgument(0);
             character.setId(characterId);
             return character;
@@ -232,11 +232,15 @@ class DefaultCharacterInventoryServiceTest {
         when(skillRepository.findAll()).thenReturn(List.of(skill));
         when(spellRepository.findAllById(List.of(spellId))).thenReturn(List.of(spell));
         when(abilityRepository.findAll()).thenReturn(List.of(ability));
+        when(characterAbilityRepository.saveAllAndFlush(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        when(characterSkillRepository.saveAllAndFlush(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        when(characterSpellRepository.saveAllAndFlush(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        when(characterSavingThrowRepository.saveAllAndFlush(any())).thenAnswer(invocation -> invocation.getArgument(0));
 
         service.createCharacter(request);
 
         ArgumentCaptor<Iterable<CharacterSpell>> captor = ArgumentCaptor.forClass(Iterable.class);
-        verify(characterSpellRepository).saveAll(captor.capture());
+        verify(characterSpellRepository).saveAllAndFlush(captor.capture());
         CharacterSpell savedSpell = captor.getValue().iterator().next();
         assertEquals(characterId, savedSpell.getCharacter().getId());
         assertEquals(spellId, savedSpell.getSpell().getId());
