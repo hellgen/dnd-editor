@@ -5,5 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
+/**
+ * Repository for accessing character class repository data.
+ */
 public interface CharacterClassRepository extends JpaRepository<CharacterClass, UUID> {
 }

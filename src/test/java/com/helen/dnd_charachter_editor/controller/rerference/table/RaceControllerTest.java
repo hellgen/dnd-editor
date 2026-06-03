@@ -20,6 +20,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * REST controller that exposes race controller test endpoints.
+ */
 class RaceControllerTest {
 
     private final RaceService raceService = mock(RaceService.class);
@@ -28,6 +31,10 @@ class RaceControllerTest {
             .build();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Returns all races returns race list.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getAllRacesReturnsRaceList() throws Exception {
         List<RaceResponse> races = List.of(
@@ -57,6 +64,10 @@ class RaceControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(races)));
     }
 
+    /**
+     * Returns race returns one race.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getRaceReturnsOneRace() throws Exception {
         UUID raceId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -82,6 +93,10 @@ class RaceControllerTest {
                 .andExpect(jsonPath("$.description").value("Универсальная раса"));
     }
 
+    /**
+     * Returns race features returns feature list for race.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getRaceFeaturesReturnsFeatureListForRace() throws Exception {
         UUID raceId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -108,6 +123,10 @@ class RaceControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(features)));
     }
 
+    /**
+     * Returns race feature returns one feature for race.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getRaceFeatureReturnsOneFeatureForRace() throws Exception {
         UUID raceId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -130,6 +149,10 @@ class RaceControllerTest {
                 .andExpect(jsonPath("$.description").value("Преимущество к спасброскам против яда"));
     }
 
+    /**
+     * Returns subraces returns subrace list for race.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getSubracesReturnsSubraceListForRace() throws Exception {
         UUID raceId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -156,6 +179,10 @@ class RaceControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(subraces)));
     }
 
+    /**
+     * Returns subrace features returns feature list for subrace.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getSubraceFeaturesReturnsFeatureListForSubrace() throws Exception {
         UUID raceId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -187,6 +214,10 @@ class RaceControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(features)));
     }
 
+    /**
+     * Returns subrace feature returns one feature for subrace.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getSubraceFeatureReturnsOneFeatureForSubrace() throws Exception {
         UUID raceId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -214,6 +245,10 @@ class RaceControllerTest {
                 .andExpect(jsonPath("$.description").value("Вы знаете один заговор из списка волшебника"));
     }
 
+    /**
+     * Returns subrace returns one subrace for race.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void getSubraceReturnsOneSubraceForRace() throws Exception {
         UUID raceId = UUID.fromString("11111111-1111-1111-1111-111111111111");

@@ -4,6 +4,9 @@ import lombok.Builder;
 
 import java.util.UUID;
 
+/**
+ * Data transfer object for wallet response.
+ */
 @Builder
 public record WalletResponse(
         UUID characterWalletId,

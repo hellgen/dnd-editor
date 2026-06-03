@@ -8,8 +8,21 @@ import com.helen.dnd_charachter_editor.entity.reference.table.ClassArchetype;
 import com.helen.dnd_charachter_editor.entity.reference.table.Race;
 import com.helen.dnd_charachter_editor.entity.reference.table.Subrace;
 
+/**
+ * Mapper that converts character mapper values between layers.
+ */
 public class CharacterMapper {
 
+    /**
+     * Maps to user character.
+     * @param createCharacterRequest value used by this operation
+     * @param user value used by this operation
+     * @param race value used by this operation
+     * @param subrace value used by this operation
+     * @param characterClass value used by this operation
+     * @param classArchetype value used by this operation
+     * @return result of the operation
+     */
     public static UserCharacter mapToUserCharacter(
             CreateCharacterRequest createCharacterRequest,
             User user,

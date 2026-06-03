@@ -4,7 +4,9 @@ import com.helen.dnd_charachter_editor.dto.response.reference.table.CharacterCla
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassArchetypeFeatureResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassArchetypeResponse;
 import com.helen.dnd_charachter_editor.dto.response.reference.table.ClassFeatureResponse;
+import com.helen.dnd_charachter_editor.dto.response.reference.table.SpellResponse;
 import com.helen.dnd_charachter_editor.service.reference.table.CharacterClassService;
+import com.helen.dnd_charachter_editor.service.reference.table.SpellService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,18 +17,31 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * REST controller that exposes character class controller endpoints.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/classes")
 public class CharacterClassController {
 
     private final CharacterClassService characterClassService;
+    private final SpellService spellService;
 
+    /**
+     * Returns all classes.
+     * @return result of the operation
+     */
     @GetMapping
     public List<CharacterClassResponse> getAllClasses() {
         return characterClassService.getAllClasses();
     }
 
+    /**
+     * Returns class by id.
+     * @param classId value used by this operation
+     * @return result of the operation
+     */
     @GetMapping("/{classId}")
     public CharacterClassResponse getClassById(
             @PathVariable UUID classId
@@ -34,6 +49,12 @@ public class CharacterClassController {
         return characterClassService.getClassResponseById(classId);
     }
 
+    /**
+     * Returns all features.
+     * @param classId value used by this operation
+     * @param level value used by this operation
+     * @return result of the operation
+     */
     @GetMapping("/{classId}/features")
     public List<ClassFeatureResponse> getAllFeatures(
             @PathVariable UUID classId,
@@ -42,6 +63,12 @@ public class CharacterClassController {
         return characterClassService.getAllFeatures(classId, level);
     }
 
+    /**
+     * Returns class feature by id.
+     * @param classId value used by this operation
+     * @param classFeatureId value used by this operation
+     * @return result of the operation
+     */
     @GetMapping("/{classId}/features/{classFeatureId}")
     public ClassFeatureResponse getClassFeatureById(
             @PathVariable UUID classId,
@@ -53,6 +80,21 @@ public class CharacterClassController {
         );
     }
 
+    /**
+     * Returns spells available for class.
+     * @param classId value used by this operation
+     * @return result of the operation
+     */
+    @GetMapping("/{classId}/spells")
+    public List<SpellResponse> getSpellsByClassId(@PathVariable UUID classId) {
+        return spellService.getSpellsByClassId(classId);
+    }
+
+    /**
+     * Returns all archetypes.
+     * @param classId value used by this operation
+     * @return result of the operation
+     */
     @GetMapping("/{classId}/class-archetypes")
     public List<ClassArchetypeResponse> getAllArchetypes(
             @PathVariable UUID classId
@@ -60,6 +102,12 @@ public class CharacterClassController {
         return characterClassService.getAllArchetypes(classId);
     }
 
+    /**
+     * Returns class archetype by id.
+     * @param classId value used by this operation
+     * @param classArchetypeId value used by this operation
+     * @return result of the operation
+     */
     @GetMapping("/{classId}/class-archetypes/{classArchetypeId}")
     public ClassArchetypeResponse getClassArchetypeById(
             @PathVariable UUID classId,
@@ -71,6 +119,13 @@ public class CharacterClassController {
         );
     }
 
+    /**
+     * Returns all features.
+     * @param classId value used by this operation
+     * @param classArchetypeId value used by this operation
+     * @param level value used by this operation
+     * @return result of the operation
+     */
     @GetMapping("/{classId}/class-archetypes/{classArchetypeId}/features")
     public List<ClassArchetypeFeatureResponse> getAllFeatures(
             @PathVariable UUID classId,
@@ -84,6 +139,13 @@ public class CharacterClassController {
         );
     }
 
+    /**
+     * Returns archetype feature by id.
+     * @param classId value used by this operation
+     * @param classArchetypeId value used by this operation
+     * @param classArchetypeFeatureId value used by this operation
+     * @return result of the operation
+     */
     @GetMapping("/{classId}/class-archetypes/{classArchetypeId}/features/{classArchetypeFeatureId}")
     public ClassArchetypeFeatureResponse getArchetypeFeatureById(
             @PathVariable UUID classId,

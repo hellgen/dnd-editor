@@ -5,5 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
+/**
+ * Repository for accessing race repository data.
+ */
 public interface RaceRepository extends JpaRepository<Race, UUID> {
 }

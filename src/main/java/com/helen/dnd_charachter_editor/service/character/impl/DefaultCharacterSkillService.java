@@ -36,6 +36,9 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Default service implementation for default character skill service operations.
+ */
 @Service
 @RequiredArgsConstructor
 public class DefaultCharacterSkillService implements CharacterSkillService {
@@ -50,6 +53,11 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
     private final SubraceAbilityBonusRepository subraceAbilityBonusRepository;
     private final DndRulesService dndRulesService;
 
+    /**
+     * Returns character skills.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional(readOnly = true)
     public List<CharacterSkillResponse> getCharacterSkills(UUID characterId) {
@@ -63,6 +71,13 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
                 .toList();
     }
 
+    /**
+     * Updates character skill.
+     * @param characterId value used by this operation
+     * @param skillId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterSkillResponse updateCharacterSkill(
@@ -90,18 +105,33 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
         return toResponse(savedCharacterSkill, context);
     }
 
+    /**
+     * Returns current user character.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
     private UserCharacter getCurrentUserCharacter(UUID characterId) {
         User user = authService.getCurrentUser();
         return characterRepository.findByIdAndUser_Id(characterId, user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Персонаж не найден"));
     }
 
+    /**
+     * Validates proficiency level.
+     * @param proficiencyLevel value used by this operation
+     */
     private void validateProficiencyLevel(Integer proficiencyLevel) {
         if (proficiencyLevel == null || proficiencyLevel < 0 || proficiencyLevel > 2) {
             throw new IllegalArgumentException("proficiencyLevel должен быть в диапазоне 0..2");
         }
     }
 
+    /**
+     * Converts response.
+     * @param characterSkill value used by this operation
+     * @param context value used by this operation
+     * @return result of the operation
+     */
     private CharacterSkillResponse toResponse(
             CharacterSkill characterSkill,
             CharacterSkillCalculationContext context
@@ -125,6 +155,12 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
         );
     }
 
+    /**
+     * Calculates ability modifier.
+     * @param skill value used by this operation
+     * @param context value used by this operation
+     * @return result of the operation
+     */
     private Integer calculateAbilityModifier(
             Skill skill,
             CharacterSkillCalculationContext context
@@ -140,6 +176,12 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
         return dndRulesService.calculateAbilityModifier(finalValue);
     }
 
+    /**
+     * Finds ability for skill.
+     * @param skill value used by this operation
+     * @param abilitiesByNormalizedCode value used by this operation
+     * @return result of the operation
+     */
     private Optional<Ability> findAbilityForSkill(
             Skill skill,
             Map<String, Ability> abilitiesByNormalizedCode
@@ -147,6 +189,11 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
         return Optional.ofNullable(abilitiesByNormalizedCode.get(normalizeAbilityCode(skill.getAbility())));
     }
 
+    /**
+     * Executes the build calculation context operation.
+     * @param character value used by this operation
+     * @return result of the operation
+     */
     private CharacterSkillCalculationContext buildCalculationContext(UserCharacter character) {
         Map<String, Ability> abilitiesByNormalizedCode = abilityRepository.findAll()
                 .stream()
@@ -174,6 +221,11 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
         );
     }
 
+    /**
+     * Returns race bonuses.
+     * @param character value used by this operation
+     * @return result of the operation
+     */
     private Map<UUID, Integer> getRaceBonuses(UserCharacter character) {
         UUID raceId = character.getRace().getId();
 
@@ -185,6 +237,11 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
                 ));
     }
 
+    /**
+     * Returns subrace bonuses.
+     * @param character value used by this operation
+     * @return result of the operation
+     */
     private Map<UUID, Integer> getSubraceBonuses(UserCharacter character) {
         if (character.getSubrace() == null) {
             return Map.of();
@@ -200,6 +257,11 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
                 ));
     }
 
+    /**
+     * Executes the normalize ability code operation.
+     * @param abilityCode value used by this operation
+     * @return result of the operation
+     */
     private String normalizeAbilityCode(String abilityCode) {
         if (abilityCode == null) {
             return null;
@@ -218,6 +280,9 @@ public class DefaultCharacterSkillService implements CharacterSkillService {
         };
     }
 
+    /**
+     * Default service implementation for character skill calculation context operations.
+     */
     private record CharacterSkillCalculationContext(
             Map<String, Ability> abilitiesByNormalizedCode,
             Map<UUID, CharacterAbility> characterAbilitiesByAbilityId,

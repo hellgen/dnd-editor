@@ -35,6 +35,9 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Default service implementation for default character ability service operations.
+ */
 @Service
 @RequiredArgsConstructor
 public class DefaultCharacterAbilityService implements CharacterAbilityService {
@@ -47,6 +50,11 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
     private final SubraceAbilityBonusRepository subraceAbilityBonusRepository;
     private final DndRulesService dndRulesService;
 
+    /**
+     * Returns character abilities.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional(readOnly = true)
     public List<CharacterAbilityResponse> getCharacterAbilities(UUID characterId) {
@@ -66,6 +74,13 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
                 .toList();
     }
 
+    /**
+     * Sets character ability.
+     * @param characterId value used by this operation
+     * @param abilityId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public CharacterAbilityResponse setCharacterAbility(UUID characterId, UUID abilityId, SetCharacterAbilityRequest request) {
@@ -93,6 +108,12 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
         return CharacterAbilityMapper.toResponse(savedCharacterAbility, raceBonus, subraceBonus, dndRulesService);
     }
 
+    /**
+     * Sets character abilities.
+     * @param characterId value used by this operation
+     * @param request value used by this operation
+     * @return result of the operation
+     */
     @Override
     @Transactional
     public List<CharacterAbilityResponse> setCharacterAbilities(UUID characterId, SetCharacterAbilitiesRequest request) {
@@ -141,17 +162,37 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
                 .toList();
     }
 
+    /**
+     * Returns current user character.
+     * @param characterId value used by this operation
+     * @return result of the operation
+     */
     private UserCharacter getCurrentUserCharacter(UUID characterId) {
         User user = authService.getCurrentUser();
         return characterRepository.findByIdAndUser_Id(characterId, user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Персонаж не найден"));
     }
 
+    /**
+     * Returns ability.
+     * @param abilityId value used by this operation
+     * @return result of the operation
+     */
     private Ability getAbility(UUID abilityId) {
         return abilityRepository.findById(abilityId)
                 .orElseThrow(() -> new EntityNotFoundException("Характеристика не найдена"));
     }
 
+    /**
+     * Executes the build character ability operation.
+     * @param character value used by this operation
+     * @param ability value used by this operation
+     * @param currentCharacterAbility value used by this operation
+     * @param request value used by this operation
+     * @param raceBonus value used by this operation
+     * @param subraceBonus value used by this operation
+     * @return result of the operation
+     */
     private CharacterAbility buildCharacterAbility(
             UserCharacter character,
             Ability ability,
@@ -174,6 +215,10 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
         return characterAbility;
     }
 
+    /**
+     * Validates unique abilities.
+     * @param abilityRequests value used by this operation
+     */
     private void validateUniqueAbilities(List<SetCharacterAbilityValueRequest> abilityRequests) {
         Set<UUID> abilityIds = new HashSet<>();
         boolean hasDuplicate = abilityRequests.stream()
@@ -185,6 +230,11 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
         }
     }
 
+    /**
+     * Validates all abilities exist.
+     * @param abilityIds value used by this operation
+     * @param abilitiesById value used by this operation
+     */
     private void validateAllAbilitiesExist(List<UUID> abilityIds, Map<UUID, Ability> abilitiesById) {
         abilityIds.stream()
                 .filter(abilityId -> !abilitiesById.containsKey(abilityId))
@@ -194,12 +244,22 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
                 });
     }
 
+    /**
+     * Validates ability bounds.
+     * @param value value used by this operation
+     */
     private void validateAbilityBounds(Integer value) {
         if (value < 1 || value > 20) {
             throw new IllegalArgumentException("baseValue должен быть в диапазоне 1..20");
         }
     }
 
+    /**
+     * Validates final ability value.
+     * @param baseValue value used by this operation
+     * @param raceBonus value used by this operation
+     * @param subraceBonus value used by this operation
+     */
     private void validateFinalAbilityValue(Integer baseValue, Integer raceBonus, Integer subraceBonus) {
         int finalValue = baseValue + raceBonus + subraceBonus;
         if (finalValue > 20) {
@@ -207,6 +267,10 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
         }
     }
 
+    /**
+     * Validates character race and subrace.
+     * @param character value used by this operation
+     */
     private void validateCharacterRaceAndSubrace(UserCharacter character) {
         if (character.getRace() == null) {
             throw new IllegalArgumentException("У персонажа не выбрана раса");
@@ -228,14 +292,31 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
         }
     }
 
+    /**
+     * Returns race bonus.
+     * @param character value used by this operation
+     * @param abilityId value used by this operation
+     * @return result of the operation
+     */
     private Integer getRaceBonus(UserCharacter character, UUID abilityId) {
         return getRaceBonuses(character).getOrDefault(abilityId, 0);
     }
 
+    /**
+     * Returns subrace bonus.
+     * @param character value used by this operation
+     * @param abilityId value used by this operation
+     * @return result of the operation
+     */
     private Integer getSubraceBonus(UserCharacter character, UUID abilityId) {
         return getSubraceBonuses(character).getOrDefault(abilityId, 0);
     }
 
+    /**
+     * Returns race bonuses.
+     * @param character value used by this operation
+     * @return result of the operation
+     */
     private Map<UUID, Integer> getRaceBonuses(UserCharacter character) {
         UUID raceId = character.getRace().getId();
 
@@ -247,6 +328,11 @@ public class DefaultCharacterAbilityService implements CharacterAbilityService {
                 ));
     }
 
+    /**
+     * Returns subrace bonuses.
+     * @param character value used by this operation
+     * @return result of the operation
+     */
     private Map<UUID, Integer> getSubraceBonuses(UserCharacter character) {
         if (character.getSubrace() == null) {
             return Map.of();

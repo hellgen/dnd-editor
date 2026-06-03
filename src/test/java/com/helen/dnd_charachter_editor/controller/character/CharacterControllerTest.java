@@ -1,10 +1,17 @@
 package com.helen.dnd_charachter_editor.controller.character;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.helen.dnd_charachter_editor.dto.request.character.AddCharacterInventoryRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.AddCharacterSpellRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassArchetypeRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterClassRequest;
 import com.helen.dnd_charachter_editor.dto.request.character.SetCharacterRaceRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.UpdateCharacterInventoryRequest;
+import com.helen.dnd_charachter_editor.dto.request.character.WalletUpdateRequest;
+import com.helen.dnd_charachter_editor.dto.response.character.CharacterInventoryResponse;
 import com.helen.dnd_charachter_editor.dto.response.character.CharacterResponse;
+import com.helen.dnd_charachter_editor.dto.response.character.WalletResponse;
+import com.helen.dnd_charachter_editor.dto.response.reference.table.SpellResponse;
 import com.helen.dnd_charachter_editor.service.character.CharacterService;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -15,12 +22,18 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * REST controller that exposes character controller test endpoints.
+ */
 class CharacterControllerTest {
 
     private final CharacterService characterService = mock(CharacterService.class);
@@ -29,6 +42,10 @@ class CharacterControllerTest {
             .build();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Applies character class returns character with selected class and archetype.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void applyCharacterClassReturnsCharacterWithSelectedClassAndArchetype() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -47,6 +64,10 @@ class CharacterControllerTest {
                 .andExpect(jsonPath("$.classArchetype").value("Чемпион"));
     }
 
+    /**
+     * Updates character class returns character with changed class and no archetype.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void updateCharacterClassReturnsCharacterWithChangedClassAndNoArchetype() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -66,6 +87,10 @@ class CharacterControllerTest {
     }
 
 
+    /**
+     * Applies character class archetype returns character with selected archetype.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void applyCharacterClassArchetypeReturnsCharacterWithSelectedArchetype() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -83,6 +108,10 @@ class CharacterControllerTest {
                 .andExpect(jsonPath("$.classArchetype").value("Чемпион"));
     }
 
+    /**
+     * Updates character class archetype returns character with changed archetype.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void updateCharacterClassArchetypeReturnsCharacterWithChangedArchetype() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -100,6 +129,10 @@ class CharacterControllerTest {
                 .andExpect(jsonPath("$.classArchetype").value("Мастер боевых искусств"));
     }
 
+    /**
+     * Applies character race returns character with selected race and subrace.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void applyCharacterRaceReturnsCharacterWithSelectedRaceAndSubrace() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -118,6 +151,10 @@ class CharacterControllerTest {
                 .andExpect(jsonPath("$.subrace").value("Высший эльф"));
     }
 
+    /**
+     * Updates character race returns character with changed race and no subrace.
+     * @throws Exception when the operation cannot be completed
+     */
     @Test
     void updateCharacterRaceReturnsCharacterWithChangedRaceAndNoSubrace() throws Exception {
         UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
@@ -136,6 +173,276 @@ class CharacterControllerTest {
                 .andExpect(jsonPath("$.subrace").doesNotExist());
     }
 
+
+
+    /**
+     * Returns character spells.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void getCharacterSpellsReturnsSpellList() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        when(characterService.getCharacterSpells(characterId)).thenReturn(List.of(spellResponse(
+                UUID.fromString("22222222-2222-2222-2222-222222222222"),
+                "Волшебная стрела"
+        )));
+
+        mockMvc.perform(get("/characters/{characterId}/spells", characterId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].spellName").value("Волшебная стрела"));
+    }
+
+    /**
+     * Adds character spell.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void addCharacterSpellReturnsAddedSpell() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        UUID spellId = UUID.fromString("22222222-2222-2222-2222-222222222222");
+        AddCharacterSpellRequest request = new AddCharacterSpellRequest(spellId);
+        when(characterService.addCharacterSpell(characterId, request)).thenReturn(spellResponse(spellId, "Волшебная стрела"));
+
+        mockMvc.perform(post("/characters/{characterId}/spells", characterId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(spellId.toString()))
+                .andExpect(jsonPath("$.spellName").value("Волшебная стрела"));
+    }
+
+    /**
+     * Deletes character spell.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void deleteCharacterSpellDeletesSpell() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        UUID spellId = UUID.fromString("22222222-2222-2222-2222-222222222222");
+
+        mockMvc.perform(delete("/characters/{characterId}/spells/{spellId}", characterId, spellId))
+                .andExpect(status().isNoContent());
+
+        verify(characterService).deleteCharacterSpell(characterId, spellId);
+    }
+
+    /**
+     * Returns character inventory.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void getCharacterInventoryReturnsItems() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        when(characterService.getCharacterInventory(characterId))
+                .thenReturn(List.of(inventoryItem(characterId, "Longsword", 1)));
+
+        mockMvc.perform(get("/characters/{characterId}/inventory", characterId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].itemName").value("Longsword"))
+                .andExpect(jsonPath("$[0].quantity").value(1));
+    }
+
+    /**
+     * Returns character inventory item by name.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void getCharacterInventoryItemReturnsItemByName() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        when(characterService.getCharacterInventoryItem(characterId, "Longsword"))
+                .thenReturn(inventoryItem(characterId, "Longsword", 1));
+
+        mockMvc.perform(get("/characters/{characterId}/inventory/item", characterId)
+                        .param("itemName", "Longsword"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.itemName").value("Longsword"));
+    }
+
+    /**
+     * Adds character inventory item.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void addCharacterInventoryItemReturnsAddedItem() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        AddCharacterInventoryRequest request = new AddCharacterInventoryRequest(
+                null,
+                "Longsword",
+                "A sharp blade",
+                1,
+                true,
+                "Family heirloom"
+        );
+        when(characterService.addCharacterInventoryItem(characterId, request))
+                .thenReturn(inventoryItem(characterId, "Longsword", 1));
+
+        mockMvc.perform(post("/characters/{characterId}/inventory/item", characterId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.itemName").value("Longsword"));
+    }
+
+    /**
+     * Updates character inventory items.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void updateCharacterInventoryItemsReturnsUpdatedItems() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        List<UpdateCharacterInventoryRequest> request = List.of(new UpdateCharacterInventoryRequest(
+                "Longsword",
+                "Silver Longsword",
+                "Silvered blade",
+                2,
+                false,
+                "Polished"
+        ));
+        when(characterService.updateCharacterInventoryItems(characterId, request))
+                .thenReturn(List.of(inventoryItem(characterId, "Silver Longsword", 2)));
+
+        mockMvc.perform(put("/characters/{characterId}/inventory/items", characterId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].itemName").value("Silver Longsword"))
+                .andExpect(jsonPath("$[0].quantity").value(2));
+    }
+
+    /**
+     * Deletes character inventory item by name.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void deleteCharacterInventoryItemDeletesItemByName() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+
+        mockMvc.perform(delete("/characters/{characterId}/inventory/item", characterId)
+                        .param("itemName", "Longsword"))
+                .andExpect(status().isNoContent());
+
+        verify(characterService).deleteCharacterInventoryItem(characterId, "Longsword");
+    }
+
+
+
+    /**
+     * Returns character wallet.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void getCharacterWalletReturnsWallet() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        when(characterService.getCharacterWallet(characterId)).thenReturn(walletResponse(characterId, 10, 5, 1, 2, 0));
+
+        mockMvc.perform(get("/characters/{characterId}/wallet", characterId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.characterId").value(characterId.toString()))
+                .andExpect(jsonPath("$.copper").value(10))
+                .andExpect(jsonPath("$.gold").value(2));
+    }
+
+    /**
+     * Updates character wallet.
+     * @throws Exception when the operation cannot be completed
+     */
+    @Test
+    void updateCharacterWalletReturnsUpdatedWallet() throws Exception {
+        UUID characterId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        WalletUpdateRequest request = new WalletUpdateRequest(10, 5, 1, 2, 0);
+        when(characterService.updateCharacterWallet(characterId, request))
+                .thenReturn(walletResponse(characterId, 10, 5, 1, 2, 0));
+
+        mockMvc.perform(put("/characters/{characterId}/wallet", characterId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.copper").value(10))
+                .andExpect(jsonPath("$.silver").value(5))
+                .andExpect(jsonPath("$.electrum").value(1))
+                .andExpect(jsonPath("$.gold").value(2))
+                .andExpect(jsonPath("$.platinum").value(0));
+    }
+
+
+
+    /**
+     * Executes spell response operation.
+     * @param spellId value used by this operation
+     * @param spellName value used by this operation
+     * @return result of the operation
+     */
+    private SpellResponse spellResponse(UUID spellId, String spellName) {
+        return new SpellResponse(
+                spellId,
+                spellName,
+                1,
+                "Воплощение",
+                "1 действие",
+                "120 футов",
+                "В, С",
+                "Мгновенная",
+                "Описание"
+        );
+    }
+
+    /**
+     * Executes the wallet response operation.
+     * @param characterId value used by this operation
+     * @param copper value used by this operation
+     * @param silver value used by this operation
+     * @param electrum value used by this operation
+     * @param gold value used by this operation
+     * @param platinum value used by this operation
+     * @return result of the operation
+     */
+    private WalletResponse walletResponse(
+            UUID characterId,
+            Integer copper,
+            Integer silver,
+            Integer electrum,
+            Integer gold,
+            Integer platinum
+    ) {
+        return WalletResponse.builder()
+                .characterWalletId(characterId)
+                .characterId(characterId)
+                .copper(copper)
+                .silver(silver)
+                .electrum(electrum)
+                .gold(gold)
+                .platinum(platinum)
+                .build();
+    }
+
+    /**
+     * Executes the inventory item operation.
+     * @param characterId value used by this operation
+     * @param itemName value used by this operation
+     * @param quantity value used by this operation
+     * @return result of the operation
+     */
+    private CharacterInventoryResponse inventoryItem(UUID characterId, String itemName, Integer quantity) {
+        return new CharacterInventoryResponse(
+                UUID.fromString("99999999-9999-9999-9999-999999999999"),
+                characterId,
+                null,
+                itemName,
+                null,
+                quantity,
+                false,
+                null
+        );
+    }
+
+    /**
+     * Executes the character response operation.
+     * @param race value used by this operation
+     * @param subrace value used by this operation
+     * @param characterClass value used by this operation
+     * @param classArchetype value used by this operation
+     * @return result of the operation
+     */
     private CharacterResponse characterResponse(
             String race,
             String subrace,

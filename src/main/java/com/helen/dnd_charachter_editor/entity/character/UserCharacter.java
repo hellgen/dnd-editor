@@ -27,6 +27,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+/**
+ * JPA entity representing user character.
+ */
 @Getter
 @Setter
 @Entity
