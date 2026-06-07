@@ -4,6 +4,8 @@
 
 План рассчитан на запуск **без GUI** — так рекомендуют делать реальные нагрузочные прогоны, чтобы интерфейс JMeter не искажал результаты и не потреблял лишние ресурсы.
 
+> Важно: команды с путями вида `docs/load-testing/jmeter/...` нужно запускать **из корня репозитория** `dnd-editor`. Если вы уже находитесь в папке `docs/load-testing/jmeter`, используйте короткие пути `dnd-editor-load-test.jmx`, `results/smoke.jtl`, `report/smoke` или скрипт `./run-local.sh`. Иначе путь продублируется как `docs/load-testing/jmeter/docs/load-testing/jmeter/...`.
+
 ## 0. Что нужно заранее
 
 - Запущенное приложение DND Editor API на `http://localhost:8080`.
@@ -102,7 +104,35 @@ curl -f http://localhost:8080/actuator/health
 
 Smoke-прогон нужен, чтобы проверить, что JMeter видит приложение, план открывается, а эндпоинты отвечают `200`.
 
-### Локальный JMeter
+### Самый простой способ: скрипт из любой папки
+
+Скрипт сам определяет расположение `dnd-editor-load-test.jmx`, поэтому его можно запускать и из корня проекта, и из `docs/load-testing/jmeter`:
+
+```bash
+./docs/load-testing/jmeter/run-local.sh smoke
+```
+
+Если вы уже в папке `docs/load-testing/jmeter`:
+
+```bash
+./run-local.sh smoke
+```
+
+Переопределить параметры можно переменными окружения:
+
+```bash
+THREADS=5 RAMP_UP=10 LOOPS=3 HOST=localhost PORT=8080 ./docs/load-testing/jmeter/run-local.sh smoke
+```
+
+### Локальный JMeter из корня репозитория
+
+Перейдите в корень проекта — туда, где лежат `build.gradle`, `docker-compose.yml` и папка `docs`:
+
+```bash
+cd /Users/gkudrjavtsev/IdeaProjects/dnd-editor
+```
+
+После этого команда с путями `docs/load-testing/jmeter/...` будет корректной:
 
 ```bash
 mkdir -p docs/load-testing/jmeter/results docs/load-testing/jmeter/report
@@ -118,6 +148,38 @@ jmeter -n \
   -Jthreads=1 \
   -JrampUp=1 \
   -Jloops=1
+```
+
+### Локальный JMeter из папки `docs/load-testing/jmeter`
+
+Если терминал уже находится здесь:
+
+```bash
+/Users/gkudrjavtsev/IdeaProjects/dnd-editor/docs/load-testing/jmeter
+```
+
+то не добавляйте префикс `docs/load-testing/jmeter/` второй раз. Запускайте так:
+
+```bash
+mkdir -p results report
+rm -f results/smoke.jtl
+rm -rf report/smoke
+jmeter -n \
+  -t dnd-editor-load-test.jmx \
+  -l results/smoke.jtl \
+  -e -o report/smoke \
+  -Jhost=localhost \
+  -Jport=8080 \
+  -Jprotocol=http \
+  -Jthreads=1 \
+  -JrampUp=1 \
+  -Jloops=1
+```
+
+Именно это исправляет ошибку вида:
+
+```text
+Cannot write to '/.../docs/load-testing/jmeter/docs/load-testing/jmeter/report/smoke'
 ```
 
 ### JMeter через Docker на Linux
@@ -167,6 +229,18 @@ docker run --rm \
 ## 4. Запустить обычный baseline-прогон
 
 После успешного smoke-прогона можно дать умеренную нагрузку: 10 виртуальных пользователей, плавный разгон за 30 секунд, 20 повторов сценария на пользователя.
+
+Через скрипт из любой папки:
+
+```bash
+./docs/load-testing/jmeter/run-local.sh baseline
+```
+
+Или, если вы уже в `docs/load-testing/jmeter`:
+
+```bash
+./run-local.sh baseline
+```
 
 ```bash
 mkdir -p docs/load-testing/jmeter/results docs/load-testing/jmeter/report
