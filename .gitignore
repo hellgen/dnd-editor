@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### JMeter load-test artifacts ###
+docs/load-testing/jmeter/results/
+docs/load-testing/jmeter/report/
