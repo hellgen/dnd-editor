@@ -1,16 +1,26 @@
 # Нагрузочное тестирование DND Editor API через JMeter
 
-В каталоге лежит готовый JMeter-план `dnd-editor-load-test.jmx` для базового нагрузочного теста публичных GET-эндпоинтов приложения: `/actuator/health`, `/abilities`, `/races`, `/classes`, `/spells`.
+В каталоге лежит готовый JMeter-план `dnd-editor-load-test.jmx` для базового нагрузочного теста API приложения. План ходит в `/actuator/health`, `/abilities`, `/races`, `/classes`, `/spells`.
 
-План рассчитан на запуск **без GUI** — так рекомендуют делать реальные нагрузочные прогоны, чтобы интерфейс JMeter не искажал результаты и не потреблял лишние ресурсы.
+План рассчитан на запуск **без GUI** — так реальные нагрузочные прогоны меньше искажаются ресурсами самого интерфейса JMeter.
 
-> Важно: команды с путями вида `docs/load-testing/jmeter/...` нужно запускать **из корня репозитория** `dnd-editor`. Если вы уже находитесь в папке `docs/load-testing/jmeter`, используйте короткие пути `dnd-editor-load-test.jmx`, `results/smoke.jtl`, `report/smoke` или скрипт `./run-local.sh`. Иначе путь продублируется как `docs/load-testing/jmeter/docs/load-testing/jmeter/...`.
+## 0. Что изменилось с авторизацией
 
-## 0. Что нужно заранее
+Если API отвечает `401 Unauthorized`, это значит, что запросы попали в защищённые Spring Security endpoints без JWT-токена.
+
+Чтобы не открывать API полностью в конфигурации безопасности, JMeter-план теперь делает авторизацию внутри сценария:
+
+1. Каждый виртуальный пользователь один раз выполняет `POST /auth/register`.
+2. Из JSON-ответа извлекается `accessToken`.
+3. Все основные API-запросы отправляются с заголовком `Authorization: Bearer ${accessToken}`.
+
+Поэтому в отчёте JMeter вы увидите не только GET-запросы, но и служебный запрос `POST /auth/register`. Это нормально: он нужен, чтобы получить токен для потока.
+
+## 1. Что нужно заранее
 
 - Запущенное приложение DND Editor API на `http://localhost:8080`.
-- Java JDK/JRE, потому что JMeter — Java-приложение. Для ручной установки лучше ставить **JDK**, так как он содержит дополнительные утилиты Java.
-- Сам Apache JMeter или Docker, если вы хотите запускать JMeter без установки на машину.
+- Java JDK/JRE, потому что JMeter — Java-приложение.
+- Сам Apache JMeter или Docker, если хотите запускать JMeter без установки на машину.
 
 Полезные официальные ссылки:
 
@@ -18,11 +28,9 @@
 - Getting Started / Installation: <https://jmeter.apache.org/usermanual/get-started.html>
 - Downloads: <https://jmeter.apache.org/download_jmeter.cgi>
 
-## 1. Установить JMeter
+## 2. Установить JMeter
 
 ### Вариант A — через Docker, без локальной установки JMeter
-
-Это самый быстрый способ, если Docker уже установлен. JMeter будет скачан как Docker-образ при первом запуске команды:
 
 ```bash
 docker pull justb4/jmeter:5.6.3
@@ -46,8 +54,6 @@ brew install openjdk jmeter
 java -version
 jmeter --version
 ```
-
-Если `jmeter` не находится в терминале, закройте и заново откройте terminal или проверьте, что путь Homebrew добавлен в `PATH`.
 
 ### Вариант C — Linux через архив Apache JMeter
 
@@ -82,7 +88,7 @@ java -version
 jmeter --version
 ```
 
-## 2. Поднять приложение
+## 3. Поднять приложение
 
 Из корня репозитория:
 
@@ -100,39 +106,11 @@ curl -f http://localhost:8080/actuator/health
 
 Если всё хорошо, вы увидите JSON со статусом `UP` или HTTP-ответ `200`.
 
-## 3. Запустить первый smoke-прогон
+## 4. Запустить первый smoke-прогон
 
-Smoke-прогон нужен, чтобы проверить, что JMeter видит приложение, план открывается, а эндпоинты отвечают `200`.
+Smoke-прогон нужен, чтобы проверить, что JMeter видит приложение, регистрирует тестового пользователя, извлекает JWT-токен и получает `200` на API-запросах.
 
-### Самый простой способ: скрипт из любой папки
-
-Скрипт сам определяет расположение `dnd-editor-load-test.jmx`, поэтому его можно запускать и из корня проекта, и из `docs/load-testing/jmeter`:
-
-```bash
-./docs/load-testing/jmeter/run-local.sh smoke
-```
-
-Если вы уже в папке `docs/load-testing/jmeter`:
-
-```bash
-./run-local.sh smoke
-```
-
-Переопределить параметры можно переменными окружения:
-
-```bash
-THREADS=5 RAMP_UP=10 LOOPS=3 HOST=localhost PORT=8080 ./docs/load-testing/jmeter/run-local.sh smoke
-```
-
-### Локальный JMeter из корня репозитория
-
-Перейдите в корень проекта — туда, где лежат `build.gradle`, `docker-compose.yml` и папка `docs`:
-
-```bash
-cd /Users/gkudrjavtsev/IdeaProjects/dnd-editor
-```
-
-После этого команда с путями `docs/load-testing/jmeter/...` будет корректной:
+Команду ниже запускайте **из корня репозитория** `dnd-editor`:
 
 ```bash
 mkdir -p docs/load-testing/jmeter/results docs/load-testing/jmeter/report
@@ -150,15 +128,7 @@ jmeter -n \
   -Jloops=1
 ```
 
-### Локальный JMeter из папки `docs/load-testing/jmeter`
-
-Если терминал уже находится здесь:
-
-```bash
-/Users/gkudrjavtsev/IdeaProjects/dnd-editor/docs/load-testing/jmeter
-```
-
-то не добавляйте префикс `docs/load-testing/jmeter/` второй раз. Запускайте так:
+Если терминал уже находится в папке `docs/load-testing/jmeter`, используйте короткие пути:
 
 ```bash
 mkdir -p results report
@@ -176,13 +146,9 @@ jmeter -n \
   -Jloops=1
 ```
 
-Именно это исправляет ошибку вида:
+## 5. Запустить JMeter через Docker
 
-```text
-Cannot write to '/.../docs/load-testing/jmeter/docs/load-testing/jmeter/report/smoke'
-```
-
-### JMeter через Docker на Linux
+### Linux
 
 ```bash
 mkdir -p docs/load-testing/jmeter/results docs/load-testing/jmeter/report
@@ -203,7 +169,7 @@ docker run --rm --network host \
   -Jloops=1
 ```
 
-### JMeter через Docker на macOS/Windows Docker Desktop
+### macOS/Windows Docker Desktop
 
 На macOS/Windows контейнеру обычно нужно обращаться к приложению на хосте через `host.docker.internal`:
 
@@ -226,21 +192,9 @@ docker run --rm \
   -Jloops=1
 ```
 
-## 4. Запустить обычный baseline-прогон
+## 6. Запустить обычный baseline-прогон
 
 После успешного smoke-прогона можно дать умеренную нагрузку: 10 виртуальных пользователей, плавный разгон за 30 секунд, 20 повторов сценария на пользователя.
-
-Через скрипт из любой папки:
-
-```bash
-./docs/load-testing/jmeter/run-local.sh baseline
-```
-
-Или, если вы уже в `docs/load-testing/jmeter`:
-
-```bash
-./run-local.sh baseline
-```
 
 ```bash
 mkdir -p docs/load-testing/jmeter/results docs/load-testing/jmeter/report
@@ -274,7 +228,7 @@ jmeter -n \
 | `-JrampUp=30` | За сколько секунд JMeter постепенно запустит всех пользователей. |
 | `-Jloops=20` | Сколько раз каждый пользователь выполнит сценарий. |
 
-## 5. Подобрать профиль нагрузки
+## 7. Подобрать профиль нагрузки
 
 Параметры передаются через `-J...` и переопределяют значения по умолчанию внутри `dnd-editor-load-test.jmx`:
 
@@ -297,7 +251,7 @@ jmeter -n \
 
 Не увеличивайте нагрузку резким скачком. Сравнивайте p95/p99, процент ошибок, CPU/RAM приложения и PostgreSQL между прогонами.
 
-## 6. Где смотреть результаты
+## 8. Где смотреть результаты
 
 После прогона доступны:
 
@@ -307,19 +261,7 @@ jmeter -n \
 Откройте отчёт в браузере:
 
 ```bash
-xdg-open docs/load-testing/jmeter/report/baseline/index.html
-```
-
-На macOS:
-
-```bash
 open docs/load-testing/jmeter/report/baseline/index.html
-```
-
-На Windows PowerShell:
-
-```powershell
-start docs/load-testing/jmeter/report/baseline/index.html
 ```
 
 В отчёте в первую очередь смотрите:
@@ -337,7 +279,7 @@ start docs/load-testing/jmeter/report/baseline/index.html
 - Throughput растёт при увеличении потоков до точки насыщения.
 - Приложение, PostgreSQL и Docker host не уходят в OOM/перезапуски.
 
-## 7. Частые проблемы
+## 9. Частые проблемы
 
 ### JMeter пишет, что `.jtl` уже существует
 
@@ -365,15 +307,18 @@ curl -f http://localhost:8080/actuator/health
 
 Если JMeter запущен в Docker на macOS/Windows, используйте `-Jhost=host.docker.internal`.
 
-### Много `401 Unauthorized`
+### `401 Unauthorized`
 
-Текущий план должен ходить только в публичные read-only эндпоинты и `/actuator/health`. Если вы добавили authenticated endpoints, сначала нужно добавить авторизацию: `POST /auth/login`, JSON Extractor для `accessToken` и заголовок `Authorization: Bearer <token>`.
+Проверьте в отчёте запрос `POST /auth/register`:
 
-## 8. Что добавить следующим шагом
+- если он упал, JMeter не получил `accessToken`, и все следующие запросы пойдут без валидного токена;
+- если он успешный, но GET-запросы всё равно дают `401`, откройте sampler `GET ...` и проверьте, что в request headers есть `Authorization: Bearer ...`;
+- если тест запускается много раз, старые `.jtl` и папку отчёта лучше удалять перед новым запуском, чтобы не смотреть устаревшие ошибки.
 
-Текущий план безопасно нагружает публичные read-only эндпоинты. Для полной картины можно добавить отдельные сценарии:
+## 10. Что добавить следующим шагом
 
-- авторизация: `POST /auth/register`, `POST /auth/login`, extraction `accessToken`;
+Текущий план регистрирует тестового пользователя и нагружает read-only эндпоинты. Для полной картины можно добавить отдельные сценарии:
+
 - authenticated flow создания персонажа через `POST /characters`;
 - CSV Data Set Config с заранее подготовленными пользователями/персонажами;
 - Backend Listener для отправки метрик в InfluxDB/Prometheus/Grafana.
